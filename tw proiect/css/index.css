@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+body{
+	font-family: Montserrat, sans-serif;
+	background-image:url("../views/images/background.png");
+}
+
+#navbar
+{
+display: flex;
+justify-content:space-evenly;
+text-align:center;
+}
+#search{
+display:block;
+width:20em;
+margin:0 auto;
+}
+label button:first-of-type
+{
+	font-family: Montserrat, sans-serif;
+	background-color:#E8DED1;
+	border-radius:2em;
+	height:2.5em;
+	width:4.5em;
+}
+
+#navbar a{
+	align-self:center;
+}
+
+#navbar #logo
+{
+	width:11em;
+	max-height:fit-content;
+}
+
+#navbar img
+{
+width: 35%;
+margin: auto;
+}
+
+#mySearch{
+	height:3em;
+	width:17em;
+	margin:auto;
+	border-color:green;
+	border-radius:2em;
+	font-family: Montserrat, sans-serif;
+	background-color:#E8DED1;
+;
+}
+nav
+{
+	display: inline;
+}
