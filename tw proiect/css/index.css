@@ -3,6 +3,8 @@
 body{
 	font-family: Montserrat, sans-serif;
 	background-image:url("../views/images/background.png");
+	padding:0px;
+	margin:0px;
 }
 
 #navbar
@@ -37,7 +39,7 @@ label button:first-of-type
 
 #navbar img
 {
-width: 35%;
+width: 2em;
 margin: auto;
 }
 
@@ -55,3 +57,49 @@ nav
 {
 	display: inline;
 }
+
+.containerRetete{
+	margin:5em 0;
+	display:flex;
+	justify-content:space-evenly;
+	flex-wrap:wrap;
+}
+
+.reteta{
+	border-radius:2em;
+	border-color:cadetblue;
+	padding:2em;
+	margin:1em;
+	background-color:rgba(0, 99, 71, 0.3);
+}
+
+.reteta img{
+	width:12em;
+	height:12em;
+}
+
+.reteta p{
+	font-size:1em;
+}
+
+footer{
+	margin-left:0px;
+	margin-right:0px;
+	padding:3em;
+	background-color:rgba(0,0,0,0.01);
+	font-size:1em;
+}
+
+
+footer{
+	font-family:Montserrat, sans-serif;
+	text-align: center;
+}
+.creators{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-evenly;
+	column-count: 3;
+	column-gap:40px;
+}
+
