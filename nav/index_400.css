@@ -1,0 +1,7 @@
+@media screen and (max-width: 400px) {
+    .search:focus {
+        width: 2em;
+        padding: 0 1em 0 1em;
+    }
+
+}

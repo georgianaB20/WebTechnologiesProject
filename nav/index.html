@@ -6,12 +6,20 @@
         <link rel="icon" type="image" href="../images/favicon%20(2).ico">
         <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" type="text/css" href="index_400.css">
     </head>
     <body>
         <header>
             <nav>
                 <ul>
-                    <li><i class="fas fa-search"></i></li>
+                    <li class="search-container">
+                            <form action="/search" method="get" autocomplete="off">
+                                <input class="search expand-right" id="search-right" type="search" name="q" placeholder="Caută ">
+                                <label class="button search-button" for="search-right"><span class="mglass"><i class="fas fa-search"></i> </span>
+                                </label>
+                            </form>
+                    </li>
+
                     <li><i class="fas fa-utensils"></i></li>
                     <li><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></li>
                     <li><i class="far fa-heart"></i></li>
@@ -20,6 +28,6 @@
             </nav>
         </header>
         <main>
-        </main>
+         </main>
     </body>
 </html>
