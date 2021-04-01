@@ -1,11 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
-body{
+
+html,body{
 	font-family: Montserrat, sans-serif;
+	padding:0px;
+	margin:0px;
+	height:100%;
+
 	background-image:url("../views/images/background.png");
-  	background-size: cover;
-	height: auto;
-  	overflow: hidden;
+	background-size: 100% auto;
+  	background-repeat: repeat-y;
 	padding:0px;
 	margin:0px;
 }
@@ -62,23 +66,36 @@ nav
 }
 
 footer{
-	margin-left:0px;
-	margin-right:0px;
-	padding:3em;
-	background-color:rgba(0,0,0,0.01);
-	font-size:1em;
-}
-
-
-footer{
+	padding:0;
+	background-color: rgb(64,90,39,0.7);
+	font-size:17px;
 	font-family:Montserrat, sans-serif;
 	text-align: center;
+	display: block;
+  	bottom: 0;
+	width:100%;
+	position:sticky;
+	height:fit-content;
 }
-.creators{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:space-evenly;
+
+footer p{
+	margin: 0 auto;
+}
+
+footer .creators{
 	column-count: 3;
-	column-gap:40px;
+	column-gap:auto;
+	display:inline-block;
+	padding:10px 0px;
 }
+
+.creator{
+	padding:0;
+	margin:5px;
+}
+
+.creator a{
+	margin:auto 0;
+}
+
 

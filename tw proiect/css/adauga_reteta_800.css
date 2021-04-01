@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+@media screen and (max-width:800px){
+
+
+form{
+    padding:0em;
+}
+
+form div{
+    display: block;
+}
+
+#preparare{
+    resize:vertical;
+}
+}
+
