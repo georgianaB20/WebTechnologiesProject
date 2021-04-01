@@ -1,7 +1,9 @@
 @media screen and (max-width:400px){
     
-    .formular form{
-        display:block;
-        float: left;
+    form div{
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
     }
 }    

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/index_800.css">
     <link rel="stylesheet" href="../css/contul_meu.css">
+    <link rel="stylesheet" href="../css/contul_meu400.css">
+
 
     <!-- libraria pentru icon-urile de la meniu: font-awesome.min.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,12 +28,12 @@
                 <form method="POST" action="">
                     <div>
                     <label for="username">Username nou:</label>
-                    <input type="text" id="username" name="username" maxlength="30">
+                    <input type="text" id="username" name="username" maxlength="30" required>
                     </div>
 
                     <div>
                     <label for="parola">Parola:</label>
-                    <input type="password" id="parola" name="parola">
+                    <input type="password" id="parola" name="parola" required>
                     </div>
                     <input type="submit" id="schimba_username" name="schimba_username" value="Confirma">
                 </form>
@@ -42,17 +44,17 @@
                 <form method="POST" action="">
                     <div>
                     <label for="email_vechi">Email vechi:</label>
-                    <input type="email" id="email_vechi" name="email_vechi" maxlength="30">
+                    <input type="email" id="email_vechi" name="email_vechi" maxlength="30" required>
                     </div>
 
                     <div>
                         <label for="email_nou">Email nou:</label>
-                        <input type="email" id="email_nou" name="email_nou">
+                        <input type="email" id="email_nou" name="email_nou" required>
                     </div>
 
                     <div>
                     <label for="parola">Parola:</label>
-                    <input type="password" id="parola" name="parola">
+                    <input type="password" id="parola" name="parola" required>
                     </div>                
                     <input type="submit" id="schimba_email" name="schimba_email" value="Confirma">
                 </form>
@@ -63,12 +65,12 @@
                 <form method="POST" action="">
                     <div>
                     <label for="parola_veche">Parola veche:</label>
-                    <input type="password" id="parola_veche" name="parola_veche" maxlength="30">
+                    <input type="password" id="parola_veche" name="parola_veche" maxlength="30" required>
                     </div>
 
                     <div>
                     <label for="parola_noua">Parola:</label>
-                    <input type="password" id="parola_noua" name="parola_noua">
+                    <input type="password" id="parola_noua" name="parola_noua" required>
                     </div>
                     <input type="submit" id="schimba_parola" name="schimba_parola" value="Confirma">
                 </form>
