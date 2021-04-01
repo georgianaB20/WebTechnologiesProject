@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+form{
+    border-style:solid;
+    border-color:transparent;
+    margin:0 auto;
+    background-color: transparent;
+    border-radius: 1em;
+    display:block;
+    width:fit-content;
+    padding:1em;
+}
+
+input,select,select *,textarea{
+    width:max-content;
+    border-style:double;
+    border-color:green;
+    border-radius:1em;
+    background-color:transparent;
+    outline: none;
+	font-family: Montserrat, sans-serif;
+}
+
+input:focus,select:focus,textarea:focus,option:focus {
+    border-style:solid;
+    border-color:rgb(150, 143, 64);
+    border-radius:1em;
+    outline: none;
+}
+
+form div{
+    text-align:center;
+    margin:1em;
+}
+form label{
+    float:left;
+}
+
+#ingrediente{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#ingrediente input{
+    width: 60%;
+    align-self: center;
+    outline: none;
+    margin:2px;
+}
+
+form button{
+    box-sizing: border-box;
+    background-color:darkkhaki;
+    padding:0.2em;
+    border-style: solid;
+    border-width: 0.15em;
+    border-color: rgba(72, 126, 61, 0.959);
+    border-radius: 1em;
+    color: rgb(71, 67, 23);
+    font-family: Montserrat,sans-serif;
+    text-align:justify;
+}
+
+
+
+
+
+
+
