@@ -1,0 +1,7 @@
+@media screen and (max-width:400px){
+    
+    .formular form{
+        display:block;
+        float: left;
+    }
+}    

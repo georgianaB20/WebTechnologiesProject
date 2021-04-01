@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
-
 html,body{
 	font-family: Montserrat, sans-serif;
 	padding:0px;
@@ -12,6 +11,11 @@ html,body{
   	background-repeat: repeat-y;
 	padding:0px;
 	margin:0px;
+	overflow: scroll;
+}
+
+main{
+	margin-bottom: 19vh;
 }
 
 #navbar
@@ -66,15 +70,15 @@ nav
 }
 
 footer{
+	bottom: 0;
+	width:100%;
+	position:sticky;
 	padding:0;
 	background-color: rgb(64,90,39,0.7);
 	font-size:17px;
 	font-family:Montserrat, sans-serif;
 	text-align: center;
 	display: block;
-  	bottom: 0;
-	width:100%;
-	position:sticky;
 	height:fit-content;
 }
 
