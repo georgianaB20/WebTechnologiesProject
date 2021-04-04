@@ -2,9 +2,9 @@
 
 body{
 	font-family: Montserrat, sans-serif;
-	background-image:url("../views/images/background.png");
-	padding:0px;
-	margin:0px;
+	background-image:url("../../images/background.png");
+	padding:0;
+	margin:0;
 }
 
 #navbar
@@ -83,8 +83,8 @@ nav
 }
 
 footer{
-	margin-left:0px;
-	margin-right:0px;
+	margin-left:0;
+	margin-right:0;
 	padding:3em;
 	background-color:rgba(0,0,0,0.01);
 	font-size:1em;

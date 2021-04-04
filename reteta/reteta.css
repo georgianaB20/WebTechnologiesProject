@@ -13,7 +13,7 @@
 }
 
 .img {
-    position: sticky;
+    /*position: sticky;*/
     height: 30em;
     width: 20em;
 }
@@ -31,17 +31,19 @@ header {
 .recipe-info {
     display: flex;
     flex-direction: row;
+
+    margin-right: 3em;
 }
 
 h1 {
     font-family: Montserrat, sans-serif;
-    justify-content: right;
+    /*justify-content: right;*/
     font-size: 2em;
 }
 
 .adauga-favorite {
     margin-top: 0.6em;
-    margin-left: 2em;
+    margin-left: 1em;
     font-size: 2em;
 }
 
@@ -73,6 +75,8 @@ h1 {
     display: flex;
     flex-direction: column;
     /*justify-content: space-between;*/
+
+    font-size: 1em;
 }
 
 .ingrediente {
@@ -89,5 +93,11 @@ h1 {
  }
 
  h2 {
+     margin-left: 1em;
+     text-align: left;
+ }
+
+ .pasi {
+     margin-right: 20em;
      text-align: left;
  }
