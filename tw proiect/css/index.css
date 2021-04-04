@@ -71,6 +71,30 @@ nav
 	display: inline;
 }
 
+.containerRetete{
+	margin:5em 0;
+	display:flex;
+	justify-content:space-evenly;
+	flex-wrap:wrap;
+}
+
+.reteta{
+	border-radius:2em;
+	border-color:cadetblue;
+	padding:2em;
+	margin:1em;
+	background-color:rgba(0, 99, 71, 0.3);
+}
+
+.reteta img{
+	width:12em;
+	height:12em;
+}
+
+.reteta p{
+	font-size:1em;
+}
+
 footer{
 	bottom: 0;
 	width:100%;
