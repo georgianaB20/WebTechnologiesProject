@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+.container-reteta {
+    display: flex;
+}
+
+.imagine-reteta {
+    justify-content: left;
+    position: relative;
+    padding-top: 3.5em;
+    padding-left: 12em;
+    padding-right: 4em;
+}
+
+.img {
+    position: sticky;
+    height: 30em;
+    width: 20em;
+}
+
+.img:hover {
+    border-radius: 1em;
+    transition: 0.4s;
+}
+
+header {
+    display: block;
+
+}
+
+.recipe-info {
+    display: flex;
+    flex-direction: row;
+}
+
+h1 {
+    font-family: Montserrat, sans-serif;
+    justify-content: right;
+    font-size: 2em;
+}
+
+.adauga-favorite {
+    margin-top: 0.6em;
+    margin-left: 2em;
+    font-size: 2em;
+}
+
+.filtre {
+    display: flex;
+    flex-direction: row;
+}
+
+.time {
+    /*border: 1px solid #E8DED1;*/
+    text-align: center;
+    border-radius: 3em;
+    white-space: nowrap;
+    width: 5em;
+    background-color: #cfb491;
+}
+
+.dificultate {
+    font-style: normal;
+    text-align: center;
+    border-radius: 3em;
+    white-space: nowrap;
+    width: 5em;
+    background-color: #cfb491;
+    margin-left: 0.3em;
+}
+
+.reteta {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+}
+
+.ingrediente {
+    padding-left: 1em;
+}
+
+ .container-ingredient {
+     display: flex;
+     flex-direction: row;
+ }
+
+ .gramaj {
+     padding-right: 0.2em;
+ }
+
+ h2 {
+     text-align: left;
+ }
