@@ -1,49 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
-body{
-	font-family: Montserrat, sans-serif;
-	background-image:url("../views/images/background.png");
-	padding:0px;
-	margin:0px;
-}
-
-#navbar
-{
-display: flex;
-justify-content:space-evenly;
-text-align:center;
-}
-
-label button:first-of-type
-{
-	font-family: Montserrat, sans-serif;
-	background-color:#E8DED1;
-	border-radius:2em;
-	height:2.5em;
-	width:4.5em;
-}
-
-#navbar a{
-	align-self:center;
-}
-
-#navbar #logo
-{
-	width:11em;
-	max-height:fit-content;
-}
-
-#navbar img
-{
-width: 2em;
-margin: auto;
-}
-
-nav
-{
-	display: inline;
-}
-
 .main {
 	background-color: #e8ded1;
 	width: 400px;
@@ -54,6 +10,7 @@ nav
 }
 
 .sign {
+	text-align:center;
 	padding-top: 40px;
 	color: #423f3b;
 	font-family: Montserrat, sans-serif;
@@ -122,30 +79,9 @@ nav
 }
 
 .forgot {
+	text-align:center;
 	text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
 	color: #1d1c1a;
 	padding-top: 15px;
-}
-
-
-footer{
-	margin-left:0px;
-	margin-right:0px;
-	padding:3em;
-	background-color:rgba(0,0,0,0.01);
-	font-size:1em;
-}
-
-
-footer{
-	font-family: Montserrat, sans-serif;
-	text-align: center;
-}
-.creators{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:space-evenly;
-	column-count: 3;
-	column-gap:40px;
 }
 
