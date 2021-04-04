@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Montserrat, sans-serif;
     margin: 0;
     padding: 0;
@@ -6,7 +6,7 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
     background-color: #E8DED1;
-}
+} */
 
 #logo-img {
     height: 7em;
@@ -67,4 +67,9 @@ body {
     border: 1px solid black;
     border-radius: 3em;
     transition: 0.6s;
+}
+
+nav a{
+    text-decoration: none;
+    color:inherit;
 }
