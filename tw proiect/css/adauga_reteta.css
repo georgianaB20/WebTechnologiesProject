@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+form{
+    border-style:solid;
+    border-color:transparent;
+    margin:0 auto;
+    background-color: transparent;
+    border-radius: 1em;
+    display:block;
+    width:fit-content;
+    padding:1em;
+    font-size: 1em;
+    box-sizing: content-box;
+    overflow:scroll;
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+
+form label{
+    position:relative;
+}
+
+#preparare{
+    max-width:20em;
+    max-height:10em;
+}
+
+input[type="number"]{
+    width:fit-content;
+    /*margin-right:2em;*/
+}
+
+input[type="file"]{
+    width:fit-content;
+    border-style:solid;
+    border-width: 2px;
+}
+
+select{
+    border-style:solid;
+    border-width: 2px;
+    margin-left: 0px;
+    width:max-content;
+}
+
+input,select,select *,textarea{
+    border-style:solid;
+    border-color:green;
+    border-radius:1em;
+    background-color:transparent;
+    outline: none;
+	font-family: Montserrat, sans-serif;
+}
+
+input:focus,select:focus,textarea:focus,option:focus {
+    border-style:solid;
+    border-color:rgb(150, 143, 64);
+    border-radius:1em;
+    outline: none;
+}
+
+form div{
+    text-align:center;
+    margin:1em;
+}
+form label{
+    float:left;
+}
+
+#ingrediente{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#ingrediente input{
+    width: 20em;
+    align-self: center;
+    outline: none;
+    margin:2px;
+}
+
+form button{
+    box-sizing: border-box;
+    background-color:darkkhaki;
+    padding:0.2em;
+    border-style: solid;
+    border-width: 0.15em;
+    border-color: rgba(72, 126, 61, 0.959);
+    border-radius: 1em;
+    color: rgb(71, 67, 23);
+    font-family: Montserrat,sans-serif;
+    text-align:justify;
+}
+
+
+
+
+
+
+

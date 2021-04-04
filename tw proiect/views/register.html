@@ -4,18 +4,18 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="../css/register.css">
 	<link rel="stylesheet" href="../css/index.css">
-	<link rel="stylesheet" href="../css/retete.css">
-
 	<link rel="icon" href="images/favicon1.ico">
     <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/nav.css">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Acasa</title>
+	<title>Inregistrare</title>
 </head>
 
 <body>
+	
 	<header>
         <nav>
             <ul class="nav">
@@ -35,56 +35,43 @@
         </nav>
     </header>
 
-	<div class="containerRetete">
-		<div class="reteta"><a href="index.html">
-			<img src="images/1.jpg" alt="reteta1"></a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:28</p>
-		</div>
-
-		<div class="reteta"><a href="index.html">
-			<img src="images/2.jpg" alt="reteta1"></a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:22</p>
-		</div>
-
-		<div class="reteta"><a href="index.html">
-			<img src="images/3.jpg" alt="reteta1"></a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:5</p>
-		</div>
-
-		<div class="reteta"> <a href="index.html">
-			<img src="images/4.jpg" alt="reteta1"> </a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:27</p>
-		</div>
-
-		<div class="reteta"> <a href="index.html">
-			<img src="images/5.jpg" alt="reteta1"> </a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:24</p>
-		</div>
+	<div class="main">
+		<p class="sign" >Inregistrare</p>
+		<form class="form1">
+			<input class="un " type="text" placeholder="Nume de utilizator">
+			<input class="email" type="email" placeholder="E-mail">
+			<input class="pass" type="password" placeholder="Parola">
+			<input class="pass" type="password" placeholder="Confirma parola">
+			<div class="gender">
+				<input type='radio' id='male' checked='checked' name='radio'>
+				<label for='male'>Male</label>
+				<input type='radio' id='female' name='radio'>
+				<label for='female'>Female</label>
+				<input type='radio' id='altceva' name='radio'>
+				<label for='altceva'>Altceva</label>
+			</div>
+			<a class="submit">Creeaza un cont</a>
+		</form>
 	</div>
 
 	<footer>
-	<p>Creators:</p>
-	<div class="creators">
-	<div class="creator">
-	<p>Boghiu Georgiana</p>
-		<a>cv link</a>
-	</div>
-	<div class="creator">
-	<p>Cernat Roxana</p>
-		<a>cv link2</a>
-	</div>
-	<div class="creator">
-	<p>Formagiu Miky</p>
-		<a>cv link3</a>
-	</div>
-	</div>
-	<p>Copyrights reserved.</p>
-	</footer>
+        <p>Creators:</p>
+        <div class="creators">
+            <div class="creator">
+                <p>Boghiu Georgiana</p>
+                <a>cv link</a>
+            </div>
+            <div class="creator">
+                <p>Cernat Roxana</p>
+                <a>cv link2</a>
+            </div>
+            <div class="creator">
+                <p>Formagiu Miky</p>
+                <a>cv link3</a>
+            </div>
+        </div>
+        <p>Copyrights reserved.</p>
+        </footer>
 </body>
 
 </html>

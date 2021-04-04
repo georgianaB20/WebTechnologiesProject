@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+#formulare_configurare{
+    margin:0 auto;
+    background-color: transparent;
+    border-radius: 1em;
+    display:block;
+    width:fit-content;
+    padding:1em;
+    font-size: 1em;
+    box-sizing: content-box;
+    overflow:scroll;
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+
+.formular{
+    border-color: green;
+    padding:2em;
+    color:green;
+    box-sizing: content-box;
+}
+
+.formular p,.formular form label{
+    text-align: justify;
+    text-align: center;
+}
+
+.formular form{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    box-sizing: content-box;
+}
+
+.formular input[type="submit"]{
+    align-self:flex-end;
+    width:fit-content;
+    color:rgb(0,200,100);
+    background-color: wheat;
+    font-weight: bold;
+
+}
+
+.formular input{
+    float:right;
+    background-color:transparent;
+    border-radius: 1em;
+}
+
+
+
+

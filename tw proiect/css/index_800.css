@@ -1,0 +1,9 @@
+@media screen and (max-width:800px){
+html, body{
+        background-image:url("../views/images/background_700.png");
+        background-size: 100% 100%;
+  	    background-repeat: repeat-y;
+    }
+}
+
+

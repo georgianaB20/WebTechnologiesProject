@@ -1,62 +1,25 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
 body{
+	
+
 	font-family: Montserrat, sans-serif;
-	background-image:url("../../images/background.png");
-	padding:0;
-	margin:0;
+    margin: 0;
+    padding: 0;
+    background-image: url("../views/images/background.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+	/* background-repeat: repeat-y; */
+	background-color: #E8DED1;
+	overflow: scroll;
+	overflow-y:visible;
+	overflow-x: visible;
 }
 
-#navbar
-{
-display: flex;
-justify-content:space-evenly;
-text-align:center;
-}
-#search{
-display:block;
-width:20em;
-margin:0 auto;
-}
-label button:first-of-type
-{
-	font-family: Montserrat, sans-serif;
-	background-color:#E8DED1;
-	border-radius:2em;
-	height:2.5em;
-	width:4.5em;
+main{
+	margin-bottom: 50vh;
 }
 
-#navbar a{
-	align-self:center;
-}
-
-#navbar #logo
-{
-	width:11em;
-	max-height:fit-content;
-}
-
-#navbar img
-{
-width: 2em;
-margin: auto;
-}
-
-#mySearch{
-	height:3em;
-	width:17em;
-	margin:auto;
-	border-color:green;
-	border-radius:2em;
-	font-family: Montserrat, sans-serif;
-	background-color:#E8DED1;
-;
-}
-nav
-{
-	display: inline;
-}
 
 .containerRetete{
 	margin:5em 0;
@@ -83,23 +46,36 @@ nav
 }
 
 footer{
-	margin-left:0;
-	margin-right:0;
-	padding:3em;
-	background-color:rgba(0,0,0,0.01);
-	font-size:1em;
-}
-
-
-footer{
+	bottom: 0;
+	width:100%;
+	position:sticky;
+	padding:0;
+	background-color: rgb(64,90,39,0.7);
+	font-size:17px;
 	font-family:Montserrat, sans-serif;
 	text-align: center;
+	display: block;
+	height:fit-content;
 }
-.creators{
-	display:flex;
-	flex-wrap:wrap;
-	justify-content:space-evenly;
+
+footer p{
+	margin: 0 auto;
+}
+
+footer .creators{
 	column-count: 3;
-	column-gap:40px;
+	column-gap:auto;
+	display:inline-block;
+	padding:10px 0px;
 }
+
+.creator{
+	padding:0;
+	margin:5px;
+}
+
+.creator a{
+	margin:auto 0;
+}
+
 
