@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/index_800.css">
+    <link rel="stylesheet" href="../css/contul_meu.css">
+    <link rel="stylesheet" href="../css/contul_meu400.css">
+
+
+    <!-- libraria pentru icon-urile de la meniu: font-awesome.min.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+    <title>Contul meu</title>
+</head>
+<body>
+    <header> <!--navbarul se va pune aici-->
+    </header>
+
+    <main>
+        <div id="formulare_configurare">
+
+            <div class="formular">
+                <p>Schimbare username</p>
+                <form method="POST" action="">
+                    <div>
+                    <label for="username">Username nou:</label>
+                    <input type="text" id="username" name="username" maxlength="30" required>
+                    </div>
+
+                    <div>
+                    <label for="parola_username">Parola:</label>
+                    <input type="password" id="parola_username" name="parola_username" required>
+                    </div>
+                    <input type="submit" id="schimba_username" name="schimba_username" value="Confirma">
+                </form>
+            </div>
+
+            <div class="formular">
+                <p>Schimbare email</p>
+                <form method="POST" action="">
+                    <div>
+                    <label for="email_vechi">Email vechi:</label>
+                    <input type="email" id="email_vechi" name="email_vechi" maxlength="30" required>
+                    </div>
+
+                    <div>
+                        <label for="email_nou">Email nou:</label>
+                        <input type="email" id="email_nou" name="email_nou" required>
+                    </div>
+
+                    <div>
+                    <label for="parola_email">Parola:</label>
+                    <input type="password" id="parola_email" name="parola_email" required>
+                    </div>                
+                    <input type="submit" id="schimba_email" name="schimba_email" value="Confirma">
+                </form>
+            </div>
+
+            <div class="formular">
+                <p>Schimbare parola</p>
+                <form method="POST" action="">
+                    <div>
+                    <label for="parola_veche">Parola veche:</label>
+                    <input type="password" id="parola_veche" name="parola_veche" maxlength="30" required>
+                    </div>
+
+                    <div>
+                    <label for="parola_noua">Parola noua:</label>
+                    <input type="password" id="parola_noua" name="parola_noua" required>
+                    </div>
+
+                    <div>
+                        <label for="parola_noua2">Confirma parola noua:</label>
+                        <input type="password" id="parola_noua2" name="parola_noua2" required>
+                    </div>
+                    <input type="submit" id="schimba_parola" name="schimba_parola" value="Confirma">
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>Creators:</p>
+        <div class="creators">
+            <div class="creator">
+                <p>Boghiu Georgiana</p>
+                <a>cv link</a>
+            </div>
+            <div class="creator">
+                <p>Cernat Roxana</p>
+                <a>cv link2</a>
+            </div>
+            <div class="creator">
+                <p>Formagiu Miky</p>
+                <a>cv link3</a>
+            </div>
+        </div>
+        <p>Copyrights reserved.</p>
+        </footer>
+</body>
+</html>
