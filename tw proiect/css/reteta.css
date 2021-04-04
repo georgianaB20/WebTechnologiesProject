@@ -17,7 +17,6 @@
 .img {
     height: 25em;
     width: 20em;
-
 }
 
 .img:hover {
@@ -27,14 +26,12 @@
 
 header {
     display: block;
-
 }
 
 .recipe-info {
     display: flex;
     flex-direction: row;
     margin-right: 3em;
-
     font-family: inherit;
 }
 
@@ -52,13 +49,11 @@ h1 {
 .filtre {
     display: flex;
     flex-direction: row;
-
     font-family: inherit;
 }
 
 .time {
     font-family: inherit;
-    /*border: 1px solid #E8DED1;*/
     text-align: center;
     border-radius: 3em;
     white-space: nowrap;
@@ -82,35 +77,31 @@ h1 {
     font-size: 1em;
 }
 
+.container-ingredient {
+    display: flex;
+    flex-direction: row;
+}
 
+.gramaj {
+    padding-right: 0.2em;
+}
 
- .container-ingredient {
-     display: flex;
-     flex-direction: row;
- }
+h2 {
+    text-align: left;
+}
 
- .gramaj {
-     padding-right: 0.2em;
- }
-
- h2 {
-     /*margin-left: 1em;*/
-     text-align: left;
- }
-
-<<<<<<< Updated upstream:reteta/reteta.css
- .pasi {
-     display: block;
-     padding-right: 15em;
-     overflow: hidden;
- }
-=======
 .pasi {
     display: block;
     padding-right: 15em;
     overflow: hidden;
 }
->>>>>>> Stashed changes:tw proiect/css/reteta.css
+
+.pasi {
+    display: block;
+    padding-right: 15em;
+    overflow: hidden;
+}
+
 .comentarii {
     display: flex;
     width: 10em;
