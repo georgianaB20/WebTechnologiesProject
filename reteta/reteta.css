@@ -2,25 +2,27 @@
 
 .container-reteta {
     display: flex;
+    font-family: Montserrat, sans-serif;
 }
 
 .imagine-reteta {
     justify-content: left;
     position: relative;
-    padding-top: 3.5em;
+    padding-top: 2.5em;
     padding-left: 12em;
     padding-right: 4em;
+    transition: 0.2s none;
 }
 
 .img {
-    /*position: sticky;*/
-    height: 30em;
+    height: 25em;
     width: 20em;
+
 }
 
 .img:hover {
     border-radius: 1em;
-    transition: 0.4s;
+    transform: scale(1.05);
 }
 
 header {
@@ -31,13 +33,13 @@ header {
 .recipe-info {
     display: flex;
     flex-direction: row;
-
     margin-right: 3em;
+
+    font-family: inherit;
 }
 
 h1 {
     font-family: Montserrat, sans-serif;
-    /*justify-content: right;*/
     font-size: 2em;
 }
 
@@ -50,9 +52,12 @@ h1 {
 .filtre {
     display: flex;
     flex-direction: row;
+
+    font-family: inherit;
 }
 
 .time {
+    font-family: inherit;
     /*border: 1px solid #E8DED1;*/
     text-align: center;
     border-radius: 3em;
@@ -74,14 +79,10 @@ h1 {
 .reteta {
     display: flex;
     flex-direction: column;
-    /*justify-content: space-between;*/
-
     font-size: 1em;
 }
 
-.ingrediente {
-    padding-left: 1em;
-}
+
 
  .container-ingredient {
      display: flex;
@@ -93,11 +94,32 @@ h1 {
  }
 
  h2 {
-     margin-left: 1em;
+     /*margin-left: 1em;*/
      text-align: left;
  }
 
  .pasi {
-     margin-right: 20em;
-     text-align: left;
+     display: block;
+     padding-right: 15em;
+     overflow: hidden;
  }
+.comentarii {
+    display: flex;
+    width: 10em;
+}
+
+.comentarii-btn {
+    flex-direction: column;
+    font-family: Montserrat, sans-serif;
+    outline: none;
+    border-color: #E8DED1;
+    border-radius: 3em;
+    background-color: #cfb491;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.comentarii-btn:hover {
+    transform: scale(1.1);
+}
