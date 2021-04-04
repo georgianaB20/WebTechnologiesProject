@@ -1,75 +1,25 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
-html,body{
-	font-family: Montserrat, sans-serif;
-	padding:0px;
-	margin:0px;
-	height:100%;
+body{
+	
 
-	background-image:url("../views/images/background.png");
-	background-size: 100% auto;
-  	background-repeat: repeat-y;
-	padding:0px;
-	margin:0px;
+	font-family: Montserrat, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("../views/images/background.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+	/* background-repeat: repeat-y; */
+	background-color: #E8DED1;
 	overflow: scroll;
 	overflow-y:visible;
 	overflow-x: visible;
 }
 
 main{
-	margin-bottom: 19vh;
+	margin-bottom: 50vh;
 }
 
-#navbar
-{
-display: flex;
-justify-content:space-evenly;
-text-align:center;
-}
-#search{
-display:block;
-width:20em;
-margin:0 auto;
-}
-label button:first-of-type
-{
-	font-family: Montserrat, sans-serif;
-	background-color:#E8DED1;
-	border-radius:2em;
-	height:2.5em;
-	width:4.5em;
-}
-
-#navbar a{
-	align-self:center;
-}
-
-#navbar #logo
-{
-	width:11em;
-	max-height:fit-content;
-}
-
-#navbar img
-{
-width: 2em;
-margin: auto;
-}
-
-#mySearch{
-	height:3em;
-	width:17em;
-	margin:auto;
-	border-color:green;
-	border-radius:2em;
-	font-family: Montserrat, sans-serif;
-	background-color:#E8DED1;
-;
-}
-nav
-{
-	display: inline;
-}
 
 .containerRetete{
 	margin:5em 0;
