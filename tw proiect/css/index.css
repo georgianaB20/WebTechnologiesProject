@@ -1,46 +1,23 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
-body{
-	font-family: Montserrat, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-image: url("../views/images/background.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-	/* background-repeat: repeat-y; */
-	background-color: #E8DED1;
-	overflow: scroll;
-	overflow-y:visible;
-	overflow-x: visible;
+.card .filtre {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	padding-bottom: 0.8rem;
 }
 
-main{
-	margin-bottom: 50vh;
+.card .filtre .bg {
+	text-align: center;
+	border-radius: 3em;
+	width: 5em;
+	background-color: #cfb491;
 }
 
-
-.containerRetete{
-	margin:5em 0;
-	display:flex;
-	justify-content:space-evenly;
-	flex-wrap:wrap;
-}
-
-.reteta{
-	border-radius:2em;
-	border-color:cadetblue;
-	padding:2em;
-	margin:1em;
-	background-color:rgba(0, 99, 71, 0.3);
-}
-
-.reteta img{
-	width:12em;
-	height:12em;
-}
-
-.reteta p{
-	font-size:1em;
+.dificultate,
+.popularitate {
+	margin-left: 0.3em
 }
 
 footer{
@@ -48,7 +25,7 @@ footer{
 	width:100%;
 	position:sticky;
 	padding:0;
-	background-color: rgb(64,90,39,0.7);
+	background-color: rgba(64,90,39, 0.7);
 	font-size:17px;
 	font-family:Montserrat, sans-serif;
 	text-align: center;
