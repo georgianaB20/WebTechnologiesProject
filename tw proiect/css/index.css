@@ -23,7 +23,7 @@
 footer{
 	bottom: 0;
 	width:100%;
-	position:sticky;
+	object-fit: fill;
 	padding:0;
 	background-color: rgba(64,90,39, 0.7);
 	font-size:17px;
