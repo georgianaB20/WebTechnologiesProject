@@ -53,19 +53,23 @@ h1 {
 }
 
 .time {
-    font-family: inherit;
     text-align: center;
     border-radius: 3em;
-    white-space: nowrap;
     width: 5em;
     background-color: #cfb491;
 }
 
 .dificultate {
-    font-style: normal;
     text-align: center;
     border-radius: 3em;
-    white-space: nowrap;
+    width: 5em;
+    background-color: #cfb491;
+    margin-left: 0.3em;
+}
+
+.popularitate {
+    text-align: center;
+    border-radius: 3em;
     width: 5em;
     background-color: #cfb491;
     margin-left: 0.3em;
