@@ -21,16 +21,16 @@
 }
 
 footer{
-	bottom: 0;
 	width:100%;
 	object-fit: fill;
 	padding:0;
-	background-color: rgba(64,90,39, 0.7);
+	background-color: rgba(207, 180, 145, 0.3);
 	font-size:17px;
 	font-family:Montserrat, sans-serif;
 	text-align: center;
 	display: block;
 	height:fit-content;
+	bottom: 0;
 }
 
 footer p{
@@ -39,7 +39,7 @@ footer p{
 
 footer .creators{
 	column-count: 3;
-	column-gap:auto;
+	column-gap: 3em;
 	display:inline-block;
 	padding:10px 0px;
 }

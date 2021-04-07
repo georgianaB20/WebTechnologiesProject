@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
+
 .container-reteta {
     display: flex;
     flex-direction: column;
@@ -7,6 +8,7 @@
     align-items: center;
     align-content: center;
     font-family: Montserrat, sans-serif;
+
 
 }
 
