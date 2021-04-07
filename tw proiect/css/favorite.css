@@ -13,28 +13,28 @@ section {
     padding: 2rem 0;
 }
 
-.heading {
-    text-transform: uppercase;
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-    margin-right: -3px;
-    margin-bottom: 5rem;
-    text-align: center;
-    color: #333;
-    position: relative;
-}
+/*.heading {*/
+/*    text-transform: uppercase;*/
+/*    font-size: 1.5rem;*/
+/*    letter-spacing: 1px;*/
+/*    margin-right: -3px;*/
+/*    margin-bottom: 5rem;*/
+/*    text-align: center;*/
+/*    color: #333;*/
+/*    position: relative;*/
+/*}*/
 
-.heading::after {
-    content: "";
-    width: 10rem;
-    height: .8rem;
-    background-color: #cfb491;
-    position: absolute;
-    bottom: -2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 2rem;
-}
+/*.heading::after {*/
+/*    content: "";*/
+/*    width: 10rem;*/
+/*    height: .8rem;*/
+/*    background-color: #cfb491;*/
+/*    position: absolute;*/
+/*    bottom: -2rem;*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    border-radius: 2rem;*/
+/*}*/
 
 .card-wrapper {
     display: flex;
