@@ -75,4 +75,24 @@ input[type="radio"] + label {
 	font-size: 13px;
 	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
+.ref {
+	text-decoration: none;
+	color: inherit;
+}
 
+.adauga {
+	font-family: Montserrat, sans-serif;
+	outline: none;
+	border-color: #cfb491;
+	border-radius: 3em;
+	background-color: #cfb491;
+	text-decoration: none;
+	cursor: pointer;
+	transition: 0.3s;
+	margin-left: 2em;
+	position: ;
+}
+
+.adauga:hover {
+	transform: scale(1.1);
+}
