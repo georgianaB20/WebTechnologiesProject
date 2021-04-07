@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
+main {
+    margin-bottom: 9em;
+}
+
 #formulare_configurare{
     margin:0 auto;
     background-color: transparent;
@@ -17,12 +21,12 @@
 .formular{
     border-color: green;
     padding:2em;
-    color:green;
+    color: black;
     box-sizing: content-box;
 }
 
 .formular p,.formular form label{
-    text-align: justify;
+    /*text-align: justify;*/
     text-align: center;
 }
 

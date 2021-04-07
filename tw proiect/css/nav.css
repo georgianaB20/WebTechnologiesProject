@@ -19,10 +19,11 @@ body {
     width: 7em;
 }
 
+
 header {
     position: sticky;
     top: 0;
-    background-color: rgba(207, 180, 145, 0.5);
+    background-color: rgba(207, 180, 145, 0.9);
 }
 
 .nav {
@@ -47,7 +48,7 @@ header {
 }
 
 .search-box:hover > .search-txt{
-    width: 7em;
+    width: 6em;
     padding-left: 0.4em;
 }
 
@@ -83,7 +84,6 @@ header {
 }
 
 .nav a{
-    display: block;
     text-decoration: none;
     color:inherit;
 }
