@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+
+.container-reteta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    font-family: Montserrat, sans-serif;
+
+
+}
+
+.imagine-reteta {
+    transition: 0.2s none;
+    margin-top: 2.5em;
+    padding-left: 2.5em;
+    padding-right: 4em;
+}
+
+.img {
+    height: 25em;
+    width: 19em;
+}
+
+.img:hover {
+    border-radius: 1em;
+    transform: scale(1.05);
+}
+
+.recipe-info {
+    display: flex;
+    flex-direction: row;
+    /*margin-right: 3em;*/
+    /*font-family: inherit;*/
+    padding-left: 2em;
+    padding-right: 4em;
+}
+
+h1 {
+    font-family: Montserrat, sans-serif;
+    font-size: 2em;
+}
+
+.adauga-favorite {
+    margin-top: 0.3em;
+    margin-left: 1em;
+    font-size: 1.5em;
+}
+
+.filtre {
+    display: flex;
+    flex-direction: row;
+    font-family: inherit;
+    font-size: 0.9rem;
+    margin-top: 1em;
+    justify-content: left;
+    padding-left: 2em;
+    padding-right: 4em;
+}
+
+.time {
+    text-align: center;
+    border-radius: 3em;
+    width: 5em;
+    background-color: #cfb491;
+}
+
+.dificultate,
+.popularitate{
+    text-align: center;
+    border-radius: 3em;
+    width: 5em;
+    background-color: #cfb491;
+    margin-left: 0.3em;
+}
+
+.reteta {
+    padding-left: 2em;
+    padding-right: 4em;
+}
+
+.container-ingredient {
+    display: flex;
+    flex-direction: row;
+}
+
+.gramaj {
+    padding-right: 0.2em;
+}
+
+.ref {
+    text-decoration: none;
+    color: inherit;
+}
+
+.comentarii-btn {
+    flex-direction: column;
+    font-family: Montserrat, sans-serif;
+    outline: none;
+    border-color: #cfb491;
+    border-radius: 3em;
+    background-color: #cfb491;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
+.comentarii-btn:hover {
+    transform: scale(1.1);
+}
+
+.container-comentarii {
+    margin-top: 5rem;
+    margin-left: 1em;
+    font-size: 1em;
+}
+
+.comm-wraper {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.comm-wraper .nume {
+    padding-right: 5rem;
+}
+
+.comm .coment-img {
+    width: 40%;
+}
+
+@media screen and (min-width: 1000px) {
+    .container-reteta {
+        flex-direction: row;
+        justify-content: left;
+        padding-left: 4rem;
+    }
+
+    .imagine-reteta {
+        padding-right: 4rem;
+        padding-left: 8rem;
+    }
+
+}

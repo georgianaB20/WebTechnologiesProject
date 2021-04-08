@@ -1,6 +1,31 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 
 
+.containerRetete{
+	margin:5em 0;
+	display:flex;
+	justify-content:space-evenly;
+	flex-wrap:wrap;
+}
+
+.reteta{
+	border-radius:2em;
+	border-color:cadetblue;
+	padding:2em;
+	margin:1em;
+	background-color:rgba(0, 99, 71, 0.3);
+}
+
+.reteta img{
+	width:19em;
+	height:25em;
+}
+
+.reteta p {
+	font-size: 1em;
+	margin-bottom: 0.5em;
+}
+
 .filter {
 	display: flex;
 	flex-direction: column;
@@ -23,7 +48,7 @@ input[type="radio"] + label {
 	border: 2px solid #7b8388;
 	cursor: pointer;
 	transition: all 200ms ease;
-	margin-bottom: 27px;
+	/*margin-bottom: 27px;*/
 }
 
 input[type="radio"]:checked + label {
@@ -43,12 +68,29 @@ input[type="radio"] + label {
 	color: #fff;
 	background: linear-gradient(to right, #423f3b, #847e77);
 	border: 0;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-bottom: 10px;
-	padding-top: 5px;
+	padding: 5px 10px 10px;
 	font-family: Montserrat, sans-serif;
 	font-size: 13px;
 	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
+.ref {
+	text-decoration: none;
+	color: inherit;
+}
 
+.adauga {
+	font-family: Montserrat, sans-serif;
+	outline: none;
+	border-color: #cfb491;
+	border-radius: 3em;
+	background-color: #cfb491;
+	text-decoration: none;
+	cursor: pointer;
+	transition: 0.3s;
+	margin-left: 7em;
+	font-size: 1.1em;
+}
+
+.adauga:hover {
+	transform: scale(1.1);
+}
