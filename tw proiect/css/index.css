@@ -58,3 +58,9 @@ footer .creators{
 	color: inherit;
 }
 
+@media screen and (max-height:1000px),
+		screen and (max-width:1000px){
+	footer{
+		margin-top: 10%;
+	}
+}
