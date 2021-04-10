@@ -47,7 +47,7 @@ input[type="file"]{
 select{
     border-style:solid;
     border-width: 2px;
-    margin-left: 0px;
+    margin-left: 0;
     width:max-content;
 }
 
@@ -98,10 +98,3 @@ form button{
     font-family: Montserrat,sans-serif;
     text-align:justify;
 }
-
-
-
-
-
-
-
