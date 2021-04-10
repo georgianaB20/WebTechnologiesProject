@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <title>WhaF Documentatie</title>
+  <link rel="stylesheet" type="text/css" href="https://w3c.github.io/scholarly-html/css/scholarly.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+</head>
+<body>
+   <header>
+       <h1>Documentatie What the Food</h1>
+   </header>
+    <section typeof="sa:Authors" class="main_container">
+        <h2>1. Despre echipa</h2>
+        <ul>
+            <li>
+                <h3>Autori</h3>
+                <ul>
+                    <li>Boghiu Georgiana-Viorica</li>
+                    <li>Cernat Roxana Monica</li>
+                    <li>Formagiu Michael-Gabriel</li>
+                </ul>
+            </li>
+            <li>
+                <h3>Facultate</h3>
+                <p>Facultatea de Informatica Iasi, Romania</p>
+            </li>
+            <li>
+                <h3>An 3, grupa X1</h3>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Abstract" class="main_container">
+        <h2>2. Abstract</h2>
+        <p>
+            What the Food este o aplicatie web a carui scop este formarea unei comunitati a oamenilor pasionati de arta culinara. Utilizatorii isi pot imbogati agenda de retete, explorand lumea aromata si condimentata a bucataritului. Acestia pot publica propriile retete pe site, impartasind cu ceilalti secretele unei mese gustoase, pot cauta o reteta usoara si rapida sau, dimpotriva, noua si provocatoare punandu-si abilitatile la incercare. 
+        </p>
+    </section>
+    <section typeof="sa:Introduction" class="main_container">
+        <h2>3. Proiect </h2>
+        <ul>
+            <li>
+                <h3> Titlu </h3>
+                <p>What the Food</p>
+            </li>
+            <li>
+                <h3> Descriere</h3>
+                <p>
+                    Se doreste creare unei aplicatii de retete culinare care permite sugerarea de retete pe baza unor ingrediente minimizand numarul de ingrediente suplimentare necesare. Un utilizator va putea adauga retete (ingrediente, pasi de preparare, dificultate, durata preparare, durata finalizare). Vizitatorii pot cauta retete introducand ingredientele pe care le au la dispozitie si o serie de alte criterii suplimentare, cum ar fi: ingrediente suplimentare indezirabile, dificultate, durata preparare, durata finalizare etc.). Lista rezultatelor va putea fi ordonata dupa diverse criterii: popularitate, durata preparare, durata finalizare, dificultate. Utilizatorul poate alege sa marcheze ca a preparat o retata adaugand minim o fotografie cu rezultatul final (in acest fel este determinata popularitate unei retete). Daca utilizatorul care cauta o reteta nu este autentificat, atunci preferintele ultimei cautari vor fi salvate la nivel de browser, altfel in contul utilizatorului respectiv. Se vor oferi clasamente in formatele HTML, CSV si JSON cu cele mai populare retete, cele mai populare ingrediente, ingredientele cele mai evitate.
+                </p>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Structure" class="main_container">
+        <h2>4. Structura </h2>
+        <ul>
+            <li>
+                <h3> Frontend </h3>
+                <ul>
+                    <li>
+                        <p>Am creat o interfata web folosind HTML5 si CSS3 pentru a pune la dispozitie o experienta estetica si flexibila pentru utilizatori.
+                            
+                        </p>
+                    </li>
+                    <li>
+                        <h4>Mockup</h4>
+                        <p>Inainte de a incepe lucrul la interfata, s-a creat un mockup pentru paginile aplicatiei pentru a avea un punct de pornire si o idee de design unitara.</p>
+                        <p>Acasa</p>
+                        <img src="images/acasa.png">
+                        <p>Retete</p>
+                        <img src="images/retete.png">
+                        <p>Afisare reteta</p>
+                        <img src="images/pagina_reteta.png">
+                    </li>
+                    <li>
+                        <h4>Paginile aplicatiei</h4>
+                        <ul>
+                            <li>Inregistrare</li>
+                            <p>Disponibila pentru utilizatorii nelogati, aici acestia se pot inregistra pe site cu un cont nou.</p>
+                            <li>Login</li>
+                            <p>Utilizatorii nelogati se pot loga intr-un cont.</p>
+                            <li>Acasa</li>
+                            <p>Pagina Acasa va afisa cele mai populare retete disponibile pe site.</p>
+                            <li>Retete</li>
+                            <p>Va afisa cele mai recente retete adaugate pe site. Ofera optiunea filtrarii retetelor si a ordonarii lor dupa popularitate, durata preparare, dificultate.</p>
+                            <li>Favorite</li>
+                            <p>Disponibila pentru utilizatorii inregistrati, pagina de Favorite va afisa retetele marcate ca preferate de un utilizator.Utilizatorul poate alege sa vizualizeze sau scoata o reteta de la Favorite.</p>
+                            <li>Retetele mele</li>
+                            <p>Pagina accesibila unui utiliator logat unde acesta poate manageria retetele adaugate de el, poate vizualiza,edita sau sterge o astfel de reteta.</p>
+                            <li>Afisare reteta</li>
+                            <p>Pagina de vizualizare contine detalii despre o reteta, precum: nivel de dificultate, timp de preparare, popularitate, lista de ingrediente, pasi de preparare si poze adaugate de alti utilizatori care au incercat reteta.</p>
+                            <li>Contul meu</li>
+                            <p>Pagina care permite utilizatorului sa schimbe detaliile contului precum: numele de utlizator, adresa de e-mail sau parola.</p>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3> Backend</h3>
+                <ul>
+                    <li>
+                        <h4>Technologies</h4>
+                        <p>
+                            Pentru implementarea aplicatiei dorim sa folosim NodeJS pe partea de server.
+                        </p>
+                        <p>Urmeaza a fi actualizat.</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3>Baza de date</h3>
+                <ul>
+                    <li>
+                        <h4>Tip</h4>
+                        <p>Baza de date folosita este MongoDB.</p>
+                        <p>Urmeaza a fi actualizat.</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Functionalities" class="main_container">
+        <h2>5. Interactiuni</h2>
+        <ul>
+            <li>
+                <h3>Utilizatorul</h3>
+                <ul>
+                    <li>Login</li>
+                    <li>Inregistrare</li>
+                    <li>Filtrare retete dupa criterii: popularitate, durata preparare, dificultate</li>
+                    <li>Cautare retete cu ajutorul functionalitatii de search dupa: ingrediente, timpul de preparare, nume</li>
+                    <li>Adaugarea unei retete</li>
+                    <li>Editarea sau stergerea unei retete proprii</li>
+                    <li>Salvarea unei retete in lista "Favorite"</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Ajutor" class="main_container">
+        <h2>6. Resurse externe</h2>
+        <ul>
+            <li>
+                <a href="https://trello.com/b/xNxQQMsn/tw">Trello</a>  pentru organizarea si distribuirea task-urilor membrilor echipei si monitorizarea progresului.
+            </li>
+            <li>
+                <a href="https://discord.com/">Discord</a> pentru a organiza intalniri si zile de lucru impreuna pentru integrarea proiectului.
+            </li>
+            <li>
+                <a href="https://github.com/georgianaB20/WebTechnologiesProject">Github</a> pentru publicarea proiectului.
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/">MDN</a>, 
+                <a href="https://www.w3schools.com">w3schools</a>, 
+                <a href="https://css-tricks.com">css-tricks</a> pentru a ne documenta in realizarea proiectului.
+                
+            </li>
+            <li>
+                <a href="https://www.freeformatter.com/html-validator.html">Free formater - HTML Validator</a>,
+                <a href="http://csslint.net">CSS Lint</a> pentru validarea codului de HTML, respectiv CSS.
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:Teamwork" class="main_container">
+        <h2>9. Lucru in echipa</h2>
+        <p>Pentru a distribui taskurile si manageria timpul de lucru, am organizat saptamanal intalniri pe Discord, 
+            unde am discutat lucrul pe saptamana curenta si taskurile pentru urmatoarea saptamana. Am lucrat impreuna la pagini
+             si la integrarea lor continua.
+        </p>
+        <p>Am tinut legatura constant, iar atunci când cineva se afla intr-un impas, am incercat cu totii sa rezolvam problema.</p>
+        <ul>
+            <li>
+                <h3>Boghiu Georgiana-Viorica</h3>
+                <p>
+                    A lucrat la paginile: Index, Contul meu, Adauga reteta.
+                    
+                </p>
+            </li>
+            <li>
+                <h3>Cernat Roxana Monica</h3>
+                <p>
+                    A lucrat la paginile: Index, Afisare reteta, Favorite, mockup interfata.
+                </p>
+            </li>
+            <li>
+                <h3>Formagiu Michael-Gabriel</h3>
+                <p>
+                    A lucrat la paginile: Index, Retete, Login, Inregistrare.
+                </p>
+            </li>
+        </ul>
+    </section>
+   
+</body>
+</html>

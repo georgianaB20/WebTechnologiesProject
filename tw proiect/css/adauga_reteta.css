@@ -17,10 +17,15 @@ form{
     overflow:scroll;
     overflow-x:hidden;
     overflow-y:hidden;
+    /* background-color: #e8ded1; */
+    background-color: #E8DED1;
+    z-index:-1;
 }
 
 form label{
     position:relative;
+    float:left;
+    z-index:0;
 }
 
 #preparare{
@@ -42,13 +47,13 @@ input[type="file"]{
 select{
     border-style:solid;
     border-width: 2px;
-    margin-left: 0px;
+    margin-left: 0;
     width:max-content;
 }
 
 input,select,select *,textarea{
     border-style:solid;
-    border-color:green;
+    border-color:rgb(131, 122, 28);
     border-radius:1em;
     background-color:transparent;
     outline: none;
@@ -66,9 +71,7 @@ form div{
     text-align:center;
     margin:1em;
 }
-form label{
-    float:left;
-}
+
 
 #ingrediente{
     display: flex;
@@ -95,10 +98,3 @@ form button{
     font-family: Montserrat,sans-serif;
     text-align:justify;
 }
-
-
-
-
-
-
-

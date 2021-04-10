@@ -58,3 +58,16 @@ footer .creators{
 	color: inherit;
 }
 
+.documentatie{
+	text-decoration:none;
+	color:inherit;
+	font-size: 15px;
+	margin-top: 8px;
+}
+
+@media screen and (max-height:1000px),
+		screen and (max-width:1000px){
+	footer{
+		margin-top: 10%;
+	}
+}

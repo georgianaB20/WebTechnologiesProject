@@ -24,6 +24,7 @@ header {
     position: sticky;
     top: 0;
     background-color: rgba(207, 180, 145, 0.9);
+    z-index:1;
 }
 
 .nav {
