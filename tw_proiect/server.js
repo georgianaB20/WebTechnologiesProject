@@ -1,6 +1,18 @@
 const http = require('http')
 
 const server = http.createServer((request,response) => {
+
+    const url=request.url;
+    switch(url)
+    {
+        case "/":
+            response.statusCode = 200
+            response.setHeader('Content-Type','text/html')
+            response.write('<h1> Hello there <h1>')
+            response.end()
+
+    }
+
     response.statusCode = 200
     response.setHeader('Content-Type','text/html')
     response.write('<h1> Hello there <h1>')
