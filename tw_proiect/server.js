@@ -1,24 +1,13 @@
-const http = require('http')
+const { Router } = require('./utils/Router')
+const { WebApp } = require('./utils/WebApp')
+const constants = require('./utils/constants')
+const { index } = require('./routes/index')
 
-const server = http.createServer((request,response) => {
+const router = new Router()
+router.use('', index)
+console.log(router)
 
-    const url=request.url;
-    switch(url)
-    {
-        case "/":
-            response.statusCode = 200
-            response.setHeader('Content-Type','text/html')
-            response.write('<h1> Hello there <h1>')
-            response.end()
+const app = new WebApp(constants.port, router)
+app.listen()
 
-    }
-
-    response.statusCode = 200
-    response.setHeader('Content-Type','text/html')
-    response.write('<h1> Hello there <h1>')
-    response.end()
-})
-
-const PORT = process.env.PORT || 5000
-
-server.listen(PORT,()=> console.log(`Server running on port ${PORT}`))
+console.log()
