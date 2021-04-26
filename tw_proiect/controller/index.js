@@ -14,7 +14,21 @@ function getIndexHTML (req, res) {
   try {
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/html')
-    res.write(indexHTML)
+    data=fs.readFile('../tw_proiect/views/index.html',null,function(error,data){
+      if(error){
+        console.log(error)
+        res.statusCode = 500
+        res.setHeader('Content-Type', 'text/html')
+        res.write('Internal server error')
+        
+      }
+      else{
+        //console.log(data)
+        res.write(data)
+      }
+      res.end()
+    })
+    
   } catch (e) {
     console.log(e)
     res.statusCode = 500
@@ -22,6 +36,8 @@ function getIndexHTML (req, res) {
     res.write('Internal server error')
   }
 }
+   
+
 function getIndexCSS (req, res) {
   try {
     res.statusCode = 200

@@ -6,7 +6,7 @@ var router = new Router()
 
 
 router.get('/', indexController.getIndexHTML)
-router.post('/login', userController.login )
+router.get('/login', userController.login)
 
 ///exemplu
 ///router.get(url_string, functieApelata)
