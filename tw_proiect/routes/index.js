@@ -7,6 +7,7 @@ var router = new Router()
 
 router.get('/', indexController.getIndexHTML)
 router.get('/login', userController.login)
+router.get('/tw_proiect/css/nav.css',indexController.getNavbarCSS)
 
 ///exemplu
 ///router.get(url_string, functieApelata)

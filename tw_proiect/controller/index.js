@@ -54,11 +54,25 @@ function getNavbarCSS (req, res) {
   try {
     res.statusCode = 200
     res.setHeader('Content-Type', 'text/css')
-    res.write(navBarCSS)
+    data=fs.readFile('/tw_proiect/css/nav.css',null,function(error,data){
+      if(error){
+        console.log(error)
+        res.statusCode = 500
+        res.setHeader('Content-Type', 'text/css')
+        res.write('Internal server error')
+        
+      }
+      else{
+        //console.log(data)
+        res.write(data)
+      }
+      res.end()
+    })
+    
   } catch (e) {
     console.log(e)
     res.statusCode = 500
-    res.setHeader('Content-Type', 'text/css')
+    res.setHeader('Content-Type', 'text/html')
     res.write('Internal server error')
   }
 }
