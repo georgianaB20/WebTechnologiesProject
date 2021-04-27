@@ -24,8 +24,16 @@ class Router {
 
   route (req, res) {
     var url = req.url.split('?')[0]
+    var aux_url=url.split('/')[1] //pentru a vedea daca luam fisiere (statice) din folderul public
     console.log('request at ' + url)
     if (req.method === 'GET') {
+      if(aux_url=== 'public')
+        try{
+          this.getRoutes['/'+aux_url](req,res)
+        }
+        catch(e){
+          console.log(e)
+        }
       if (this.getRoutes[url] !== undefined) {
         try {
           this.getRoutes[url](req, res)

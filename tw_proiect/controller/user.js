@@ -1,27 +1,32 @@
 const fs = require('fs');
 
-function login(req, res) {
-  try{
-    res.writeHead(200,{'Content-Type':'text/html'});
-    fs.readFile('/views/login.html',null, function(error,data){
-      console.log(data)
+function getLoginHTML(req, res) {
+  try {
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/html')
+    data=fs.readFile('../tw_proiect/views/login.html',null,function(error,data){
       if(error){
-        res.writeHead(404);
-        res.write('Page not found');
-      }else
-      {
+        console.log(error)
+        res.statusCode = 500
+        res.setHeader('Content-Type', 'text/html')
+        res.write('Internal server error')
+        
+      }
+      else{
         res.write(data)
       }
-
-      res.end();
-    });
-  }catch(e){
-    res.writeHead(500);
-    res.write('Internal server error');
+      res.end()
+    })
+    
+  } catch (e) {
+    console.log(e)
+    res.statusCode = 500
+    res.setHeader('Content-Type', 'text/html')
+    res.write('Internal server error')
     res.end()
   }
   // res.write("<h1>Am ajuns</h1>");
   // res.end();
 }
 
-module.exports = { login }
+module.exports = { getLoginHTML }
