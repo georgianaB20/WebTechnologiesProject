@@ -188,5 +188,9 @@ function getHTML(req,res,file){
   }
 }
 
+function getJS(req,res){
+  var url = req.url.split('/')
+}
+
 module.exports = { getIndexHTML, getIndexCSS, getIndexJS, exempleAPI, getStatics, getHTML}
 

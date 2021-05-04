@@ -9,7 +9,7 @@
 	<link rel="icon" href="/public/images/favicon1.ico">
     <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/public/css/nav.css"> 
-
+    <!-- <script src="/js/login.js"></script> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
 </head>
@@ -37,12 +37,13 @@
 
 	<div class="main">
 		<p class="sign">Login</p>
-		<form class="form1" method="POST" action="/login">
+		<form class="form1" action="/login" id="login_form" method="POST">
 			<input class="un" name="username" type="text" placeholder="Nume de utilizator">
 			<input class="pass" name="password" type="password" placeholder="Parola">
 			<input class="submit" type="submit" value="Intra in cont">
 			<p class="forgot" ><a href="#">Ai uitat parola?</a></p>
 			<p class="forgot" ><a href="register">Nu ai cont? Alatura-te!</a></p>
+            <script src="../js/login.js"></script>
 		</form>
 	</div>
 

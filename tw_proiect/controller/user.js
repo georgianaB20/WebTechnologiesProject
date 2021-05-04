@@ -17,7 +17,9 @@ function login(req,res){
     data += chunk;
   })
   req.on('end', () => {
-    console.log(data); // 'Buy the milk'
+    console.log(req)
+    //console.log(req['Form Data'])
+    console.log(data);
     res.end();
   })
 }
