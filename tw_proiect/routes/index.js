@@ -2,7 +2,6 @@ const { Router } = require('../utils/Router')
 const indexController = require('../controller/index')
 const userController = require('../controller/user')
 const recipeController = require('../controller/recipe')
-const loginJs = require('../js/login.js')
 var router = new Router()
 
 
@@ -13,6 +12,7 @@ router.get('/public',indexController.getStatics)
 router.get('/retetele_mele',recipeController.getRecipesHTML)
 router.get('/adauga_reteta',recipeController.getAddRecipeHTML)
 router.get('/favorite', recipeController.getFavoriteHTML)
+router.get('/js', indexController.getJS)
 
 router.post('/login',userController.login)
 //router.get('/')

@@ -1,16 +1,14 @@
-async function handleFormSubmit(event) {
+export async function handleFormSubmit(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
 
     const url = form.action;
 
-    const method = form.method;
-
     try {
         const formData = new FormData(form);
 
-        const responseData = await postFormDataAsJSON({url, formData, method});
+        const responseData = await postFormDataAsJSON({url, formData});
 
         console.log(responseData);
     } catch (error) {
@@ -18,13 +16,13 @@ async function handleFormSubmit(event) {
     }
 }
 
-async function postFormDataAsJSON({ url, formData, method }) {
+async function postFormDataAsJSON({ url, formData }) {
     const plainFormData = Object.fromEntries(formData.entries());
 
     const formDataJsonString = JSON.stringify(plainFormData);
 
     const fetchOptions = {
-        method: method,
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
@@ -41,5 +39,3 @@ async function postFormDataAsJSON({ url, formData, method }) {
 
     return response.json();
 }
-
-module.exports={handleFormSubmit}

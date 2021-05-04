@@ -2,21 +2,20 @@
 <html lang="ro">
 
 <head>
-	 <meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="stylesheet" href="/public/css/login.css">
-	<link rel="stylesheet" href="/public/css/index.css">
-	<link rel="icon" href="/public/images/favicon1.ico">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/public/css/login.css">
+    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="icon" href="/public/images/favicon1.ico">
     <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/public/css/nav.css"> 
-    <!-- <script src="/js/login.js"></script> -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
+    <link rel="stylesheet" href="/public/css/nav.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 </head>
 
 <body>
 
-	<header>
+    <header>
         <nav>
             <ul class="nav">
                 <li>
@@ -35,17 +34,19 @@
         </nav>
     </header>
 
-	<div class="main">
-		<p class="sign">Login</p>
-		<form class="form1" action="/login" id="login_form" method="POST">
-			<input class="un" name="username" type="text" placeholder="Nume de utilizator">
-			<input class="pass" name="password" type="password" placeholder="Parola">
-			<input class="submit" type="submit" value="Intra in cont">
-			<p class="forgot" ><a href="#">Ai uitat parola?</a></p>
-			<p class="forgot" ><a href="register">Nu ai cont? Alatura-te!</a></p>
-            <script src="../js/login.js"></script>
-		</form>
-	</div>
+    <div class="main">
+        <p class="sign">Login</p>
+        <form class="form1" action="/login" id="login_form">
+            <input class="un" name="username" type="text" placeholder="Nume de utilizator">
+            <input class="pass" name="password" type="password" placeholder="Parola">
+            <input class="submit" type="submit" id="submit" value="Intra in cont">
+            <p class="forgot"><a href="#">Ai uitat parola?</a></p>
+            <p class="forgot"><a href="register">Nu ai cont? Alatura-te!</a></p>
+
+            <script type="module" src='/js/formToJson.js'></script>
+            <script type="module" src='/js/login.js'></script>
+        </form>
+    </div>
 
     <footer>
         <p>Creators:</p>
@@ -70,8 +71,9 @@
             </div>
         </div>
         <p>Copyrights reserved.</p>
-        <a class="documentatie" href="documentatie.html" >About the project</a>
+        <a class="documentatie" href="documentatie.html">About the project</a>
     </footer>
 </body>
+
 
 </html>

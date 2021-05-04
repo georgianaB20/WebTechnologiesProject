@@ -17,9 +17,9 @@ function login(req,res){
     data += chunk;
   })
   req.on('end', () => {
-    console.log(req)
+    //console.log(req)
     //console.log(req['Form Data'])
-    console.log(data);
+    console.log("from userController:"+data);
     res.end();
   })
 }

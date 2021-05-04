@@ -28,7 +28,7 @@ class Router {
     console.log('request at ' + url)
     if (req.method === 'GET') { // tratam requesturile GET
 
-      if(aux_url=== 'public') // fisiere statice = imagini sau css
+      if(aux_url=== 'public' || aux_url==='js') // fisiere statice = imagini sau css
         try{
           this.getRoutes['/'+aux_url](req,res)
         }

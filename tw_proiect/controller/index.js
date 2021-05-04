@@ -80,6 +80,7 @@ function getIndexJS (req, res) {
 function getStatics(req,res){
   var url = req.url.split('/')
   //console.log(url)
+  //console.log(req.url)
 
   // PRELUAM CSS-urile
   if(url[2]=='css' && url[3] !== undefined){ //mergem in folderul /public/css
@@ -189,8 +190,45 @@ function getHTML(req,res,file){
 }
 
 function getJS(req,res){
+  //var url = req.url.split('/')[0]
+  //console.log('ceva bre');
+
   var url = req.url.split('/')
+
+  // PRELUAM JS-urile
+   if(url[1]=='js' && url[2] !== undefined){ //mergem in folderul /js/...
+    //console.log(req.url)
+    var type='text/javascript' //setam valoarea corecta pentru Content-Type
+    
+
+    //incarcam fisierul
+    try {
+      res.statusCode = 200
+      res.setHeader('Content-Type', type)
+      data=fs.readFile('.'+req.url,null,function(error,data){
+        if(error){
+          console.log(error)
+          res.statusCode = 500
+          res.setHeader('Content-Type', type)
+          res.write('Internal server error')
+          //res.end()
+        }
+        else{
+          //console.log(data)
+          res.write(data);
+        }
+        res.end()
+      })
+      
+    } catch (e) {
+      console.log(e)
+      res.statusCode = 500
+      res.setHeader('Content-Type', 'text/html')
+      res.write('Internal server error')
+      res.end()
+    }
+  }
 }
 
-module.exports = { getIndexHTML, getIndexCSS, getIndexJS, exempleAPI, getStatics, getHTML}
+module.exports = { getIndexHTML, getIndexCSS, getIndexJS, exempleAPI, getStatics, getHTML, getJS}
 
