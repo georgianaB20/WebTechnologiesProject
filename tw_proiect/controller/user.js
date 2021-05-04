@@ -1,32 +1,25 @@
 const fs = require('fs');
+const qs = require('querystring');
+const indexController = require('./index');
 
 function getLoginHTML(req, res) {
-  try {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/html')
-    data=fs.readFile('../tw_proiect/views/login.html',null,function(error,data){
-      if(error){
-        console.log(error)
-        res.statusCode = 500
-        res.setHeader('Content-Type', 'text/html')
-        res.write('Internal server error')
-        
-      }
-      else{
-        res.write(data)
-      }
-      res.end()
-    })
-    
-  } catch (e) {
-    console.log(e)
-    res.statusCode = 500
-    res.setHeader('Content-Type', 'text/html')
-    res.write('Internal server error')
-    res.end()
-  }
-  // res.write("<h1>Am ajuns</h1>");
-  // res.end();
+  indexController.getHTML(req,res,'login.html')
+ 
 }
 
-module.exports = { getLoginHTML }
+function getRegisterHTML(req,res){
+  indexController.getHTML(req,res,'register.html')
+}
+
+function login(req,res){
+  let data = '';
+  req.on('data', chunk => {
+    data += chunk;
+  })
+  req.on('end', () => {
+    console.log(data); // 'Buy the milk'
+    res.end();
+  })
+}
+
+module.exports = { getLoginHTML, getRegisterHTML,login }

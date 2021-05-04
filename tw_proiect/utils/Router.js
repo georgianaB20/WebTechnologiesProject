@@ -26,15 +26,17 @@ class Router {
     var url = req.url.split('?')[0]
     var aux_url=url.split('/')[1] //pentru a vedea daca luam fisiere (statice) din folderul public
     console.log('request at ' + url)
-    if (req.method === 'GET') {
-      if(aux_url=== 'public')
+    if (req.method === 'GET') { // tratam requesturile GET
+
+      if(aux_url=== 'public') // fisiere statice = imagini sau css
         try{
           this.getRoutes['/'+aux_url](req,res)
         }
         catch(e){
           console.log(e)
         }
-      if (this.getRoutes[url] !== undefined) {
+
+      if (this.getRoutes[url] !== undefined) { // html sau js
         try {
           this.getRoutes[url](req, res)
         } catch (e) {
@@ -42,7 +44,8 @@ class Router {
         }
       }
     }
-    if (req.method === 'POST') {
+
+    if (req.method === 'POST') { //tratam requesturile POST
       if (this.postRoutes[url] !== undefined) {
         try {
           this.postRoutes[url](req, res)

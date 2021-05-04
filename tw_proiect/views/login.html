@@ -37,10 +37,10 @@
 
 	<div class="main">
 		<p class="sign">Login</p>
-		<form class="form1" method="GET" action="localhost:5000/login">
-			<input class="un " type="text" placeholder="Nume de utilizator">
-			<input class="pass" type="password" placeholder="Parola">
-			<a class="submit">Intra in cont</a>
+		<form class="form1" method="POST" action="/login">
+			<input class="un" name="username" type="text" placeholder="Nume de utilizator">
+			<input class="pass" name="password" type="password" placeholder="Parola">
+			<input class="submit" type="submit" value="Intra in cont">
 			<p class="forgot" ><a href="#">Ai uitat parola?</a></p>
 			<p class="forgot" ><a href="register">Nu ai cont? Alatura-te!</a></p>
 		</form>

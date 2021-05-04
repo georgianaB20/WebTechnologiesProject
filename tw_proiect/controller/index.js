@@ -8,31 +8,7 @@ function exempleAPI(req,res)
   res.write(JSON.stringify({ success: true, message: 'example ran successfully' }))
 }
 function getIndexHTML (req, res) {
-  try {
-    res.statusCode = 200
-    res.setHeader('Content-Type', 'text/html')
-    data=fs.readFile('../tw_proiect/views/index.html',null,function(error,data){
-      if(error){
-        console.log(error)
-        res.statusCode = 500
-        res.setHeader('Content-Type', 'text/html')
-        res.write('Internal server error')
-        
-      }
-      else{
-        //console.log(data)
-        res.write(data)
-      }
-      res.end()
-    })
-    
-  } catch (e) {
-    console.log(e)
-    res.statusCode = 500
-    res.setHeader('Content-Type', 'text/html')
-    res.write('Internal server error')
-    res.end()
-  }
+  getHTML(req,res,'index.html')
 }
    
 function getIndexCSS (req, res) {
@@ -103,7 +79,7 @@ function getIndexJS (req, res) {
 
 function getStatics(req,res){
   var url = req.url.split('/')
-  console.log(url)
+  //console.log(url)
 
   // PRELUAM CSS-urile
   if(url[2]=='css' && url[3] !== undefined){ //mergem in folderul /public/css
@@ -184,5 +160,33 @@ function getStatics(req,res){
 
 }
 
-module.exports = { getIndexHTML, getIndexCSS, getIndexJS, exempleAPI, getStatics}
+function getHTML(req,res,file){
+  try {
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/html')
+    data=fs.readFile('../tw_proiect/views/'+file,null,function(error,data){
+      if(error){
+        console.log(error)
+        res.statusCode = 500
+        res.setHeader('Content-Type', 'text/html')
+        res.write('Internal server error')
+        
+      }
+      else{
+        //console.log(data)
+        res.write(data)
+      }
+      res.end()
+    })
+    
+  } catch (e) {
+    console.log(e)
+    res.statusCode = 500
+    res.setHeader('Content-Type', 'text/html')
+    res.write('Internal server error')
+    res.end()
+  }
+}
+
+module.exports = { getIndexHTML, getIndexCSS, getIndexJS, exempleAPI, getStatics, getHTML}
 
