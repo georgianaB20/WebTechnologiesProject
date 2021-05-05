@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ro">
+    <head>
+        <meta charset="UTF-8">
+        <title>Adaugă un comentariu</title>
+        <link rel="icon" href="../images/favicon1.ico">
+        <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../css/reteta.css">
+        <link rel="stylesheet" href="../css/nav.css">
+        <link rel="stylesheet" href="../css/comentarii.css">
+        <link rel="stylesheet" href="../css/index.css">
+    </head>
+    <body>
+    <header>
+        <nav>
+            <ul class="nav">
+                <li>
+                    <div class="search-box">
+                        <input class="search-txt" type="text" name="cauta" placeholder="Caută" aria-label="">
+                        <a class="search-button" href="#">
+                            <i class="fas fa-search"></i>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="retetele_mele.html"><i class="fas fa-utensils"></i></a></li>
+                <li><a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a> </li>
+                <li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
+                <li><a href="login.html"><i class="far fa-user"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+        <section>
+            <div class="comm">
+                <div class="wrapper">
+                    <form action="" class="form">
+                        <div class="input">
+                            <label class="txt" for="nume">Nume</label>
+                            <input type="text" name="nume" id="nume" placeholder="Introdu numele" required>
+                        </div>
+
+                        <div class="input textarea">
+                            <label  class="txt" for="comentariu">Adaugă un comentariu</label>
+                            <textarea name="comentariu" id="comentariu" placeholder="Adaugă un comentariu"></textarea>
+                        </div>
+
+                        <div class="poza">
+                            <label for="poza"></label>
+                            <input type="file" id="poza" placeholder="Atașează o fotografie" required>
+                        </div>
+                        <div class="submit-btn">
+                            <button class="submit">
+                                <span class="btn">Trimite</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    <footer>
+        <p>Creators:</p>
+        <div class="creators">
+            <div class="creator">
+                <p>Boghiu Georgiana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Cernat Roxana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Formagiu Miky</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+        </div>
+        <p>Copyrights reserved.</p>
+        <a class="documentatie" href="documentatie.html" >About the project</a>
+    </footer>
+    </body>
+</html>
