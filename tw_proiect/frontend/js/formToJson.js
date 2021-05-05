@@ -8,9 +8,7 @@ export async function handleFormSubmit(event) {
     try {
         const formData = new FormData(form);
 
-        const responseData = await postFormDataAsJSON({url, formData});
-
-        console.log(responseData);
+        await postFormDataAsJSON({url, formData});
     } catch (error) {
         console.error(error);
     }
