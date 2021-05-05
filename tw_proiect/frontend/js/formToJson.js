@@ -17,9 +17,15 @@ export async function handleFormSubmit(event) {
 }
 
 async function postFormDataAsJSON({ url, formData }) {
+    console.log(formData.entries())
+
     const plainFormData = Object.fromEntries(formData.entries());
 
+    console.log(plainFormData)
+
     const formDataJsonString = JSON.stringify(plainFormData);
+
+    console.log(formDataJsonString)
 
     const fetchOptions = {
         method: "POST",
