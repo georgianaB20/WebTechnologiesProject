@@ -14,7 +14,7 @@ class WebApp {
     var app = this
     var server = http.createServer(function (req, res) {
       app.router.route(req, res)
-      res.end()
+      //res.end()
     })
     server.listen(port)
     console.log(`app running on PORT: ${port}`)

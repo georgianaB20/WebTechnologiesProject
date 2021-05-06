@@ -4,18 +4,18 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="stylesheet" href="../css/login.css">
+	<link rel="stylesheet" href="../css/register.css">
 	<link rel="stylesheet" href="../css/index.css">
-	<link rel="icon" href="images/favicon1.ico">
+	<link rel="icon" href="../images/favicon1.ico">
     <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/nav.css">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login</title>
+	<title>Inregistrare</title>
 </head>
 
 <body>
-
+	
 	<header>
         <nav>
             <ul class="nav">
@@ -28,21 +28,31 @@
                     </div>
                 </li>
                 <li><a href="retetele_mele.html"><i class="fas fa-utensils"></i></a></li>
-                <li><a href="index.html"><img id="logo-img" src="images/logo.png" alt="Pagina acasa"></a> </li>
-                <li><a href="retetele_mele.html"><i class="far fa-heart"></i></a></li>
+                <li><a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a> </li>
+                <li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
                 <li><a href="login.html"><i class="far fa-user"></i></a></li>
             </ul>
         </nav>
     </header>
 
 	<div class="main">
-		<p class="sign">Login</p>
-		<form class="form1">
-			<input class="un " type="text" placeholder="Nume de utilizator">
-			<input class="pass" type="password" placeholder="Parola">
-			<a class="submit">Intra in cont</a>
-			<p class="forgot" ><a href="#">Ai uitat parola?</a></p>
-			<p class="forgot" ><a href="register.html">Nu ai cont? Alatura-te!</a></p>
+		<p class="sign" >Inregistrare</p>
+		<form class="form1" action="http://localhost:5000/register" id="register_form">
+			<input class="un " type="text" placeholder="Nume de utilizator" name="username">
+			<input class="email" type="email" placeholder="E-mail" name="email">
+			<input class="pass" type="password" placeholder="Parola" name="password">
+			<input class="pass" type="password" placeholder="Confirma parola" name="confirm_password">
+			<div class="gender">
+				<input type='radio' id='male' name='male'>
+				<label for='male'>Male</label>
+				<input type='radio' id='female' name='female'>
+				<label for='female'>Female</label>
+				<input type='radio' id='altceva' name='altceva'>
+				<label for='altceva'>Altceva</label>
+			</div>
+			<input class="submit" type="submit" value="Creeaza un cont">
+            <script type="module" src='../js/formToJson.js'></script>
+            <script type="module" src='../js/register.js'></script>
 		</form>
 	</div>
 

@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../css/adauga_reteta_800.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/index_800.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="icon" href="images/favicon1.ico">
+    <!-- <link rel="stylesheet" href="../css/footer.css"> -->
+    <link rel="icon" href="../images/favicon1.ico">
     <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/nav.css">
 
@@ -32,7 +32,7 @@
                 </div>
             </li>
             <li><a href="retetele_mele.html"><i class="fas fa-utensils"></i></a></li>
-            <li><a href="index.html"><img id="logo-img" src="images/logo.png" alt="Pagina acasa"></a> </li>
+            <li><a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a> </li>
             <li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
             <li><a href="login.html"><i class="far fa-user"></i></a></li>
         </ul>
@@ -41,7 +41,7 @@
 
 
     <main>
-    <form method="POST" action="">
+    <form method="POST" action="http://localhost:5000/adauga_reteta" id="adauga_reteta_form">
         <div>
         <label for="titlu">Titlu</label>
         <input type="text" id="titlu" name="titlu" placeholder="Titlu..." required><br>
@@ -76,12 +76,13 @@
         
         <div>
         <label>Lista de ingrediente</label><br>
-        <div id="ingrediente">
+        <div id="ingrediente" name="ingrediente">
         <label for="ingredient1"></label>
-        <input type="text" id="ingredient1">
+        <input type="text" id="ingredient1" name="ingredient1">
         </div>
         <button id="adauga_ingredient"><i class="fa fa-plus"></i>Adauga</button>
         <button id="sterge_ingredient"><i class="fa fa-minus"></i>Sterge</button><br>
+        <script src="../js/adauga_sterge_ingredient.js"></script>
         </div>
 
         <div>
@@ -91,8 +92,9 @@
 
         <div>
             <button><input type="submit" id="adauga_reteta" name="adauga_reteta" value="Adauga"></button>
-        </div>  
-        <script src="../js/adauga_sterge_ingredient.js"></script>
+        </div>
+        <script type="module" src='../js/formToJson.js'></script>
+        <script type="module" src='../js/adauga_reteta.js'></script>
     </form>
     </main>
 
