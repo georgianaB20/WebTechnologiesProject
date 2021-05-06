@@ -41,7 +41,7 @@
 
 
     <main>
-    <form method="POST" action="localhost:5000/adauga_reteta">
+    <form method="POST" action="http://localhost:5000/adauga_reteta" id="adauga_reteta_form">
         <div>
         <label for="titlu">Titlu</label>
         <input type="text" id="titlu" name="titlu" placeholder="Titlu..." required><br>
@@ -76,12 +76,13 @@
         
         <div>
         <label>Lista de ingrediente</label><br>
-        <div id="ingrediente">
+        <div id="ingrediente" name="ingrediente">
         <label for="ingredient1"></label>
-        <input type="text" id="ingredient1">
+        <input type="text" id="ingredient1" name="ingredient1">
         </div>
         <button id="adauga_ingredient"><i class="fa fa-plus"></i>Adauga</button>
         <button id="sterge_ingredient"><i class="fa fa-minus"></i>Sterge</button><br>
+        <script src="../js/adauga_sterge_ingredient.js"></script>
         </div>
 
         <div>
@@ -91,8 +92,9 @@
 
         <div>
             <button><input type="submit" id="adauga_reteta" name="adauga_reteta" value="Adauga"></button>
-        </div>  
-        <script src="../js/adauga_sterge_ingredient.js"></script>
+        </div>
+        <script type="module" src='../js/formToJson.js'></script>
+        <script type="module" src='../js/adauga_reteta.js'></script>
     </form>
     </main>
 
