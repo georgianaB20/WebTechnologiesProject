@@ -7,24 +7,26 @@ const userSchema = new Schema(
         type: String,
         required: true
       },
-      password: {
-        type: String,
-        required: true
-      },
-      type: {
-        type: String,
-        enum: ['admin','normal'],
-        default: 'normal'
-      },
       email: {
         type: String,
         default: null
+      },
+      password: {
+        type: String,
+        required: true
       },
       gender: {
         type: String,
         enum: ['M','F','Other'],
         default: 'Other'
       },
+      type: {
+        type: String,
+        enum: ['admin','normal'],
+        default: 'normal'
+      },
+      
+      
       favorite:{
           type: Array,
           default: null
