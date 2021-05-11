@@ -22,14 +22,27 @@ const userSchema = new Schema(
       },
       type: {
         type: String,
-        enum: ['admin','normal'],
+        enum: ['admin','moderator','normal'],
         default: 'normal'
       },
-      
-      
       favorite:{
           type: Array,
           default: null
+      },
+      can_comment:{
+        type: String,
+        enum: ['yes','no'],
+        default: 'yes'
+      },
+      access:{
+        type: String,
+        enum: ['yes','no'],
+        default: 'yes'
+      },
+      can_post:{
+        type: String,
+        enum: ['yes','no'],
+        default: 'yes'
       }
     },
     { timestamps: true }

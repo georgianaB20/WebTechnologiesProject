@@ -2,10 +2,30 @@
 
 main {
     margin-bottom: 9em;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
+aside{
+    padding-right:5em;
+    background-color: transparent;
+    border-radius: 1em;
+    display:block;
+    width:fit-content;
+    padding:1em;
+    font-size: 1em;
+    box-sizing: content-box;
+    overflow:scroll;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    padding-right:5em;
+}
+
+
 #formulare_configurare{
-    margin:0 auto;
+    /* margin:0 auto; */
     background-color: transparent;
     border-radius: 1em;
     display:block;
@@ -19,15 +39,20 @@ main {
 }
 
 .formular{
-    border-color: green;
+    background-color: transparent;
+    box-shadow: .5rem .5rem 3rem rgba(0,0,0,0.2);
     padding:2em;
     color: black;
-    box-sizing: content-box;
 }
 
-.formular p,.formular form label{
+.formular div{
+    margin-block: 2px;
+}
+
+.formular p{
     /*text-align: justify;*/
     text-align: center;
+    padding-bottom: 10px;
 }
 
 .formular form{
@@ -38,18 +63,23 @@ main {
 }
 
 .formular input[type="submit"]{
-    align-self:flex-end;
+    align-self:center;
     width:fit-content;
-    color:rgb(0,200,100);
-    background-color: wheat;
-    font-weight: bold;
-
+    color: rgba(255, 255, 255, 0.767);
+    background-color: transparent;
+    background: linear-gradient(to right, #423f3b, #847e77);
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    box-sizing: content-box;
+    margin-top:5px;
+    padding-inline: 1em;
+    margin-right:10px;
 }
 
 .formular input{
     float:right;
     background-color:transparent;
     border-radius: 1em;
+    border-color: rgba(56, 34, 0, 0.39);
 }
 
 

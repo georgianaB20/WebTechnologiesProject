@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,9 +17,10 @@
     <!-- libraria pentru icon-urile de la meniu: font-awesome.min.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    
+
     <title>Contul meu</title>
 </head>
+
 <body>
     <header>
         <nav>
@@ -38,21 +40,35 @@
             </ul>
         </nav>
     </header>
-
+    
+        
     <main>
+        <aside>
+            <div class="formular">
+                <p>Poza de profil</p>
+                <img src="../images/1.jpg" alt="Poza ta de profil">
+                <form method="POST" action="">
+                    <div>
+                        <input type="file" id="poza_profil" name="poza_profil" value="Adauga poza" required>
+                    </div>
+                    <input type="submit" id="schimba_poza" name="schimba_poza" value="Confirma">
+                </form>
+            </div>
+        </aside>
+
         <div id="formulare_configurare">
 
             <div class="formular">
                 <p>Schimbare username</p>
                 <form method="POST" action="">
                     <div>
-                    <label for="username">Username nou:</label>
-                    <input type="text" id="username" name="username" maxlength="30" required>
+                        <label for="username">Username nou:</label>
+                        <input type="text" id="username" name="username" maxlength="30" required>
                     </div>
 
                     <div>
-                    <label for="parola_username">Parola:</label>
-                    <input type="password" id="parola_username" name="parola_username" required>
+                        <label for="parola_username">Parola:</label>
+                        <input type="password" id="parola_username" name="parola_username" required>
                     </div>
                     <input type="submit" id="schimba_username" name="schimba_username" value="Confirma">
                 </form>
@@ -62,8 +78,8 @@
                 <p>Schimbare email</p>
                 <form method="POST" action="">
                     <div>
-                    <label for="email_vechi">Email vechi:</label>
-                    <input type="email" id="email_vechi" name="email_vechi" maxlength="30" required>
+                        <label for="email_vechi">Email vechi:</label>
+                        <input type="email" id="email_vechi" name="email_vechi" maxlength="30" required>
                     </div>
 
                     <div>
@@ -72,9 +88,9 @@
                     </div>
 
                     <div>
-                    <label for="parola_email">Parola:</label>
-                    <input type="password" id="parola_email" name="parola_email" required>
-                    </div>                
+                        <label for="parola_email">Parola:</label>
+                        <input type="password" id="parola_email" name="parola_email" required>
+                    </div>
                     <input type="submit" id="schimba_email" name="schimba_email" value="Confirma">
                 </form>
             </div>
@@ -83,13 +99,13 @@
                 <p>Schimbare parola</p>
                 <form method="POST" action="">
                     <div>
-                    <label for="parola_veche">Parola veche:</label>
-                    <input type="password" id="parola_veche" name="parola_veche" maxlength="30" required>
+                        <label for="parola_veche">Parola veche:</label>
+                        <input type="password" id="parola_veche" name="parola_veche" maxlength="30" required>
                     </div>
 
                     <div>
-                    <label for="parola_noua">Parola noua:</label>
-                    <input type="password" id="parola_noua" name="parola_noua" required>
+                        <label for="parola_noua">Parola noua:</label>
+                        <input type="password" id="parola_noua" name="parola_noua" required>
                     </div>
 
                     <div>
@@ -102,6 +118,7 @@
         </div>
 
     </main>
+
 
     <footer>
         <p>Creators:</p>
@@ -126,7 +143,8 @@
             </div>
         </div>
         <p>Copyrights reserved.</p>
-        <a class="documentatie" href="documentatie.html" >About the project</a>
+        <a class="documentatie" href="documentatie.html">About the project</a>
     </footer>
 </body>
+
 </html>

@@ -1,0 +1,15 @@
+{
+    "data":[
+        {
+            "title":"Salata",
+            "ingredients":"1 ceapa, 3 rosii, salata, 20ml ulei,sare dupa gust",
+            "time":"15",
+            "time_unit":"min",
+            "nivel_dificultate":"incepator",
+            "pasi_preparare":"Taiati ceapa, rosiile si salata, si puneti-le intr-un bol si amestecati-le cu ulei si sare.",
+            "poza": null,
+            "username":"georgiana",
+            "comentarii":null
+        }
+    ]
+}

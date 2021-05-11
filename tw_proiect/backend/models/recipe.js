@@ -32,11 +32,12 @@ const recipeSchema = new Schema(
       },
       poza:{
           type: Buffer,
-          ContentType: String
+          ContentType: String,
+          default:null
       },
       username:{
-          type: Schema.Types.ObjectId,
-          ref: 'users'
+          type: String,
+          // ref: 'users'
       },
       comentarii:{
           type: Array,
@@ -45,4 +46,4 @@ const recipeSchema = new Schema(
     },
     { timestamps: true }
   )
-module.exports = model('retete', recipeSchema)
+module.exports = model('whaf.retete', recipeSchema)
