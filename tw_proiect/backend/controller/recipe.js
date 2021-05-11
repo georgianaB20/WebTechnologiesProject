@@ -40,4 +40,4 @@ async function getMostPopular(req, res, headers) {
 //     console.log("am ajuns!")
 // }
 
-module.exports = {getMostPopular, add}
+module.exports = {getMostPopular}
