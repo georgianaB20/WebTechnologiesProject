@@ -1,0 +1,26 @@
+{
+    "data": [
+        {
+            "username": "georgiana",
+            "email": "georgiana@yahoo.com",
+            "password": "parola1234",
+            "gender": "F",
+            "type": "admin",
+            "favorite": null,
+            "can_comment": "yes",
+            "acces": "yes",
+            "can_post": "yes"
+        },
+        {
+            "username": "someone",
+            "email": "someone@yahoo.com",
+            "password": "parola5678",
+            "gender": "M",
+            "type": "normal",
+            "favorite": null,
+            "can_comment": "yes",
+            "acces": "yes",
+            "can_post": "yes"
+        }
+    ]
+}

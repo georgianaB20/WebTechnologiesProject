@@ -26,39 +26,44 @@
 	margin-bottom: 0.5em;
 }
 
-.filter {
+.filters {
+	justify-self: center;
+	padding-top:1em;
+	display: grid;
+	grid-template-rows: auto auto auto auto;
+	grid-auto-columns: 27.5% 15% 15% 15% 27.5%;
+}
+
+.filters p , .filters a{
+	grid-column: 3 / span 1;
+	margin:0 auto;
+	padding:1em;
+}
+
+.filters div{
+	/* -ms-grid-column-align: center; */
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: center;
+	grid-column: 2 / span 3;
+	flex-wrap: wrap;
+	padding-bottom: 0.5em;
+}
+
+.filters div div{
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 }
 
-input[type="radio"] {
-	display: none;
-}
-
-input[type="radio"] + label {
-	z-index: 10;
-	margin: 0 10px 10px 0;
-	position: relative;
-	color: #7b8388;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
-	font-weight: bold;
-	background-color: #e8ded1;
-	border: 2px solid #7b8388;
-	cursor: pointer;
-	transition: all 200ms ease;
-	/*margin-bottom: 27px;*/
-}
-
-input[type="radio"]:checked + label {
-	color: #e8ded1;
-	background-color: #45423e;
-}
-
-input[type="radio"] + label {
-	padding: 5px 20px;
-	border-radius: 15px;
+.filter_item input, .filter_item select, .filter_item option{
+	width: 15em;
+	height: 2em;
+	font-family: Montserrat;
+	border-radius: 2em;
+	border-color: burlywood;
 }
 
 
@@ -93,4 +98,5 @@ input[type="radio"] + label {
 
 .adauga:hover {
 	transform: scale(1.1);
+	z-index:-1;
 }

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/index_800.css">
+    <link rel="stylesheet" href="../css/contul_meu.css">
+    <link rel="stylesheet" href="../css/contul_meu400.css">
+    <link rel="icon" href="../images/favicon1.ico">
+    <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/nav.css">
+
+    <title>Restictionare</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul class="nav">
+                <li>
+                    <div class="search-box">
+                        <input class="search-txt" type="text" name="cauta" placeholder="Caută" aria-label="">
+                        <a class="search-button" href="#">
+                            <i class="fas fa-search"></i>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="retetele_mele.html"><i class="fas fa-utensils"></i></a></li>
+                <li><a href="/"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a> </li>
+                <li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
+                <li><a href="login.html"><i class="far fa-user"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <aside>
+            <div class="formular">
+                <p>Dreptul de a adauga comentarii</p>
+                <form method="POST" action="">
+                    <div>
+                        <label for="username_comentarii">Username</label>
+                        <input type="text" id="username_comentarii" name="username_comentarii" maxlength="30" required>
+                    </div>
+
+                    <div>
+                        <label for="email_comentarii">Email user</label>
+                        <input type="email" id="email_comentarii" name="email_comentarii" required>
+                    </div>
+
+                    <div>
+                        <label for="parola_admin_comentarii">Parola admin</label>
+                        <input type="password" id="parola_admin_comentarii" name="parola_admin_comentarii" required>
+                    </div>
+                    <div>
+                        <input type="submit" id="restrictioneaza_comentarii" name="restrictioneaza_comentarii"
+                            value="Restrictioneaza">
+                        <input type="submit" id="ofera_comentarii" name="ofera_comentarii" value="Ofera drept">
+                    </div>
+                </form>
+            </div>
+
+            <div class="formular">
+                <p>Dreptul de a posta retete</p>
+                <form method="POST" action="">
+                    <div>
+                        <label for="username_retete">Username</label>
+                        <input type="text" id="username_retete" name="username_retete" maxlength="30" required>
+                    </div>
+
+                    <div>
+                        <label for="email_retete">Email user</label>
+                        <input type="email" id="email_retete" name="email_retete" required>
+                    </div>
+
+                    <div>
+                        <label for="parola_admin_retete">Parola admin</label>
+                        <input type="password" id="parola_admin_retete" name="parola_admin_retete" required>
+                    </div>
+                    <div>
+                        <input type="submit" id="restrictioneaza_retete" name="restrictioneaza_retete"
+                            value="Restrictioneaza">
+                        <input type="submit" id="ofera_retete" name="ofera_retete" value="Ofera drept">
+                    </div>
+                </form>
+            </div>
+        </aside>
+
+        <div id="formulare_configurare">
+            <div class="formular">
+                <p>Acces utilizator</p>
+                <form method="POST" action="">
+                    <div>
+                        <label for="username_acces">Username</label>
+                        <input type="text" id="username_acces" name="username_acces" maxlength="30" required>
+                    </div>
+
+                    <div>
+                        <label for="email_acces">Email user</label>
+                        <input type="email" id="email_acces" name="email_acces" required>
+                    </div>
+
+                    <div>
+                        <label for="parola_admin_acces">Parola admin</label>
+                        <input type="password" id="parola_admin_acces" name="parola_admin_acces" required>
+                    </div>
+                    <div>
+                        <input type="submit" id="restrictioneaza_acces" name="restrictioneaza_acces"
+                            value="Restrictioneaza">
+                        <input type="submit" id="ofera_acces" name="ofera_acces" value="Ofera acces">
+                    </div>
+                </form>
+            </div>
+
+            <div class="formular">
+                <p>Promovare moderator</p>
+                <form method="POST" action="">
+                    <div>
+                        <label for="username_mod">Username</label>
+                        <input type="text" id="username_mod" name="username_mod" maxlength="30" required>
+                    </div>
+
+                    <div>
+                        <label for="email_mod">Email user</label>
+                        <input type="email" id="email_mod" name="email_mod" required>
+                    </div>
+
+                    <div>
+                        <label for="parola_admin_mod">Parola admin</label>
+                        <input type="password" id="parola_admin_mod" name="parola_admin_mod" required>
+                    </div>
+                    <div>
+                        <input type="submit" id="restrictioneaza_mod" name="restrictioneaza_mod"
+                            value="Restrictioneaza">
+                        <input type="submit" id="ofera_mod" name="ofera_mod" value="Ofera drept">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+    <footer>
+        <p>Creators:</p>
+        <div class="creators">
+            <div class="creator">
+                <p>Boghiu Georgiana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Cernat Roxana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Formagiu Miky</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+        </div>
+        <p>Copyrights reserved.</p>
+        <a class="documentatie" href="/views/documentatie.html">About the project</a>
+    </footer>
+
+</body>
+
+</html>
