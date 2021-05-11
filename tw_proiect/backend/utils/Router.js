@@ -44,6 +44,13 @@ class Router {
 
     if (req.method === 'GET') { // tratam requesturile GET
       console.log('GET')
+      if (this.getRoutes[url] !== undefined) {
+        try {
+          this.getRoutes[url](req, res, headers)
+        } catch (e) {
+          console.log(e)
+        }
+      }
     }
 
     if (req.method === 'POST') { //tratam requesturile POST
