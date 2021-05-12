@@ -6,7 +6,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
 console.log(mongoose.connection.readyState);
 
 async function getMostPopular(req, res, headers) {
-    console.log(mongoose.connection.readyState)
+    //console.log(mongoose.connection.readyState)
     console.log("recipeController:retetele cele mai populare");
 
 
@@ -36,8 +36,18 @@ async function getMostPopular(req, res, headers) {
 
 }
 
+async function getRecipe(req, res, headers){
+    console.log(req.url);
+    let url = req.url.split('/')//luam id-ul pt a l folosi in querry
+    let recipebyid = await Recipe.findById(url[2]);
+    console.log(recipebyid)
+    res.writeHead(200, headers);
+    res.write(JSON.stringify(recipebyid,null,4))
+    res.end()
+}
+
 // function add(req, res, headers) {
 //     console.log("am ajuns!")
 // }
 
-module.exports = {getMostPopular}
+module.exports = {getMostPopular, getRecipe}
