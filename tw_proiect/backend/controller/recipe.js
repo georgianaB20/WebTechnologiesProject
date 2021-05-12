@@ -24,15 +24,15 @@ async function getMostPopular(req, res, headers) {
             // console.log(recipe2.title, recipe2.pasi_preparare, recipe2.ingredients);
         });
      */
+    
+    let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
 
-    let recipe2 = await Recipe.findOne({ 'title': 'Salata' }, 'title pasi_preparare ingredients');
-    console.log(JSON.stringify(recipe2, null, 4));
 
     //datele primite de la bd le punem in loc de stringul de mai jos
 
     var data = '{"message":"Saliut saliut"}'
     res.writeHead(200, headers);
-    res.write(data)
+    res.write(JSON.stringify(recipe2, null, 4))
     res.end()
 
 }
