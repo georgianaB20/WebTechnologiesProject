@@ -3,8 +3,8 @@ const userController = require('../controller/user')
 const recipeController = require('../controller/recipe')
 var router = new Router()
 
-router.get('/index',recipeController.getMostPopular)
-router.get('/reteta',recipeController.getRecipe)
+router.get('/recipes',recipeController.getMostPopular)
+router.get('/recipe',recipeController.getRecipe)
 ////// get['/']=recipeController.getMostPopular
 
 
