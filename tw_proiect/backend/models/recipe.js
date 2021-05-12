@@ -46,4 +46,4 @@ const recipeSchema = new Schema(
     },
     { timestamps: true }
   )
-module.exports = model('whaf.retete', recipeSchema)
+module.exports = model('recipe', recipeSchema)

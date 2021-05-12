@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const  user = require('../models/user')
 
-mongoose.connect('mongodb+srv://TW:tw2021@cluster0.hgmw9.mongodb.net/whaf?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
-console.log(mongoose.connection.readyState);
 
 function login(req,res,headers){
   console.log(mongoose.connection.readyState);
@@ -50,9 +48,10 @@ function register(req,res,headers){
     else{
       delete data.confirm_password;
       const new_user=new user(data);
-      console.log(new_user.type)
-      new_user.save(function (err){if (err)
-      console.log(err);});
+      console.log(new_user.type);
+      new_user.save(function (err){
+        if (err) console.log(err);
+      });
       console.log("from userController:"+data);
       user.findOne({'username' : data.username},
       'username password email',
