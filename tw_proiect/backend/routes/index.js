@@ -4,6 +4,7 @@ const recipeController = require('../controller/recipe')
 var router = new Router()
 
 router.get('/index',recipeController.getMostPopular)
+router.get('/reteta',recipeController.getRecipe)
 ////// get['/']=recipeController.getMostPopular
 
 
