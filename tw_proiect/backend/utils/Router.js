@@ -1,9 +1,13 @@
 const userController = require('../controller/user')
+var url_lib = require('url')
 
 class Router {
   constructor() {
     this.getRoutes = {}
     this.postRoutes = {}
+    this.putRoutes = {}
+    this.deleteRoutes = {}
+    this.routes_with_id = ['/recipes/user','/recipe','/recipe/search','/favorites','']
   }
 
   use(url, router) {
@@ -23,6 +27,15 @@ class Router {
   get(url, controller) {
     this.getRoutes[url] = controller
   }
+
+  put(url, controller) {
+    this.putRoutes[url] = controller
+  }
+
+  delete(url, controller) {
+    this.deleteRoutes[url] = controller
+  }
+
 
   async route(req, res) {
     var url = req.url.split('?')[0]
@@ -44,11 +57,18 @@ class Router {
 
     if (req.method === 'GET') { // tratam requesturile GET
       console.log('GET')
-      let url = req.url.split('/')
-      console.log(url)
-      if (url[1] == 'reteta') {
-        this.getRoutes['/' + url[1]](req, res, headers)
-      }
+      // let url = req.url.split('/')
+      // console.log(url)
+      // console.log(req.url)
+
+      // var url_parts = url_lib.;
+      // var query = url_parts.query;
+      // console.log(req.query)
+
+      // if (url[1] == 'recipe') {
+      //   this.getRoutes['/' + url[1]](req, res, headers)
+      // }
+      //console.log(url_lib.parse(req.url))
       if (this.getRoutes[url] !== undefined) {
         try {
 
@@ -69,6 +89,29 @@ class Router {
         }
       }
     }
+
+    if (req.method === 'PUT') { //tratam requesturile PUT
+      console.log("PUT")
+      if (this.puttRoutes[url] !== undefined) {
+        try {
+          this.putRoutes[url](req, res, headers)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+
+    if (req.method === 'DELETE') { //tratam requesturile POST
+      console.log("DELETE")
+      if (this.deleteRoutes[url] !== undefined) {
+        try {
+          this.deleteRoutes[url](req, res, headers)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    }
+
   }
 }
 
