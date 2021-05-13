@@ -10,7 +10,7 @@ router.get('/recipe',recipeController.getRecipe)
 
 router.post('/login',userController.login)
 router.post('/register',userController.register)
-router.post('/adauga_reteta',recipeController.add)
+router.post('/recipes',recipeController.addRecipe)
 
 
 module.exports.index = router

@@ -3,19 +3,19 @@ const {Schema , model} = require('mongoose')
 
 const recipeSchema = new Schema(
     {
-      title: {
+      titlu: {
         type: String,
         required: true
       },
-      ingredients: {
+      ingrediente: {
         type: Array,
         required: true
       },
-      time: {
+      valoare_timp: {
         type: Number,
         required: true
       },
-      time_unit:{
+      unitate_timp:{
         type: String,
         enum: ['min','h','d'],
         required: true,
