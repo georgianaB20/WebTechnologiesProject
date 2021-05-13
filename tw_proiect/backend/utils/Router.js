@@ -68,7 +68,7 @@ class Router {
       // if (url[1] == 'recipe') {
       //   this.getRoutes['/' + url[1]](req, res, headers)
       // }
-      //console.log(url_lib.parse(req.url).pathname)
+      //console.log(url_lib.parse(req.url))
       if (this.getRoutes[url] !== undefined) {
         try {
 

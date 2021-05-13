@@ -2,46 +2,42 @@ const mongoose = require('mongoose');
 const recipe = require('../models/recipe');
 const Recipe = require('../models/recipe')
 const { db } = require('../utils/constants')
+var url = require('url')
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log(mongoose.connection.readyState);
+//console.log(mongoose.connection.readyState);
 
 async function getMostPopular(req, res, headers) {
-    //console.log(mongoose.connection.readyState)
-    console.log("recipeController:retetele cele mai populare");
-
-
-    /*
-    Recipe.findOne({'title': 'Salata'},
-        'title pasi_preparare ingredients',
-        null,
-        function (err, recipe2) {
-            if (err) {
-                console.log(`error: {err}`);
-                return;
-            }
-            console.log(JSON.stringify(recipe2));
-            // console.log(recipe2.title, recipe2.pasi_preparare, recipe2.ingredients);
-        });
-     */
-    
-    let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
-
-
-    //datele primite de la bd le punem in loc de stringul de mai jos
-
-    var data = '{"message":"Saliut saliut"}'
-    res.writeHead(200, headers);
-    res.write(JSON.stringify(recipe2, null, 4))
-    res.end()
+    try {
+        let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
+        if (recipe2 !== null) {
+            //datele primite de la bd le trimitem prin response
+            res.writeHead(200, headers);
+            res.write(JSON.stringify(recipe2, null, 4))
+            res.end()
+        }
+        else {
+            res.writeHead(404, headers);
+            res.write(JSON.stringify({ 'message': 'recipes not found' }, null, 4))
+            res.end()
+        }
+    }
+    catch (e) {
+        console.log(e)
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'recipes not found' }, null, 4))
+        res.end()
+    }
 
 }
 
 async function getRecipe(req, res, headers) {
-    console.log(req.url);
-    let url = req.url.split('/')//luam id-ul pt a l folosi in querry
+    //console.log(req.url);
+    let id = url.parse(req.url).query.split('&')[0] //luam id-ul pt a l folosi in query
+    id = id.split('=')[1]
+    //console.log(id)
     try {
-        let recipebyid = await Recipe.findById(url[2]);
+        let recipebyid = await Recipe.findById(id);
         console.log(recipebyid)
         if (recipebyid !== null) {
             res.writeHead(200, headers);
@@ -50,14 +46,14 @@ async function getRecipe(req, res, headers) {
         }
         else {
             res.writeHead(404, headers);
-            res.write(JSON.stringify({'message':'recipe not found'}, null, 4))
+            res.write(JSON.stringify({ 'message': 'recipe not found' }, null, 4))
             res.end()
         }
     }
     catch (e) {
         console.log(e)
         res.writeHead(404, headers);
-        res.write(JSON.stringify({'message':'recipe not found'}, null, 4))
+        res.write(JSON.stringify({ 'message': 'recipe not found' }, null, 4))
         res.end()
     }
 }
