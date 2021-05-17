@@ -3,34 +3,34 @@ const {Schema , model} = require('mongoose')
 
 const recipeSchema = new Schema(
     {
-      titlu: {
+      title: {
         type: String,
         required: true
       },
-      ingrediente: {
+      ingredients: {
         type: Array,
         required: true
       },
-      valoare_timp: {
+      time_value: {
         type: Number,
         required: true
       },
-      unitate_timp:{
+      time_unit:{
         type: String,
-        enum: ['min','h','d'],
+        enum: ['minute','ore','zile'],
         required: true,
-        default: 'min'
+        default: 'minute'
       },
-      nivel_dificultate: {
+      difficulty: {
         type: String,
         enum: ['incepator','mediu','bun','foarte_bun','master_chef'],
         default: 'incepator'
       },
-      pasi_preparare: {
+      description: {
         type: String,
         default: null
       },
-      poza:{
+      picture:{
           type: Buffer,
           ContentType: String,
           default:null
@@ -39,7 +39,7 @@ const recipeSchema = new Schema(
           type: String,
           // ref: 'users'
       },
-      comentarii:{
+      comments:{
           type: Array,
           default: null
       }

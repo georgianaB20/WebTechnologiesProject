@@ -86,7 +86,7 @@ function addRecipe(req, res, headers) {
             return;
         }
 
-        data.ingrediente = ingredient;
+        data.ingredients = ingredient;
 
             const new_recipe = new Recipe(data);
             console.log(new_recipe);

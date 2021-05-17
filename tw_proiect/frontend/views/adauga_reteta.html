@@ -44,19 +44,19 @@
     <form method="POST" action="http://localhost:5000/adauga_reteta" id="adauga_reteta_form">
         <div>
         <label for="titlu">Titlu</label>
-        <input type="text" id="titlu" name="titlu" placeholder="Titlu..." required><br>
+        <input type="text" id="titlu" name="title" placeholder="Titlu..." required><br>
         </div>
         <div>
         <label for="poza">Poza</label>
-        <input type="file" id="poza" name="poza" required><br>
+        <input type="file" id="poza" name="picture" required><br>
         </div>
 
         <div>
         <label for="valoare_timp">Timp de preparare</label>
-        <input type="number" id="valoare_timp" name="valoare_timp" min="1" required>
+        <input type="number" id="valoare_timp" name="time_value" min="1" required>
 
         <label for="unitate_timp"></label>
-        <select id="unitate_timp" name="unitate_timp">
+        <select id="unitate_timp" name="time_unit">
             <option value="minute">minute</option>
             <option value="ore">ore</option>
             <option value="zile">zile</option>
@@ -65,7 +65,7 @@
         
         <div>
         <label for="nivel_dificultate">Nivel de dificultate</label>
-        <select id="nivel_dificultate" name="nivel_dificultate">
+        <select id="nivel_dificultate" name="difficulty">
             <option value="incepator">Incepator</option>
             <option value="mediu">Mediu</option>
             <option value="bun">Bun</option>
@@ -87,7 +87,7 @@
 
         <div>
         <label for="preparare">Pasi de preparare:</label><br>
-        <textarea id="preparare" name="pasi_preparare" rows="4" cols="30"></textarea>
+        <textarea id="preparare" name="description" rows="4" cols="30"></textarea>
         </div>
 
         <div>
