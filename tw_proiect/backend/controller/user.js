@@ -33,7 +33,7 @@ function register(req,res,headers){
     else if(data.female!==undefined)
       {data.gender='F';
       delete data.female;}
-    else if (data.altceva!==undefined)
+    else if (data.other!==undefined)
     {data.gender='Other';
   delete data.altceva;}
   // console.log(data);

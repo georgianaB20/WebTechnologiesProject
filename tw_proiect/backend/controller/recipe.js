@@ -57,6 +57,26 @@ async function getRecipe(req, res, headers) {
     }
 }
 
+
+/*
+json sample for testing addRecipe
+{
+  "username":"georgiana",
+  "title":"Salata cu ton",
+  "picture":"",
+  "time_value": 20,
+  "time_unit":"minute",
+  "difficulty":"incepator",
+  "description": "Se taie rosiile,salata si se pun intr-un bol. Se pune tonul maruntit in bol, alaturi de salata si rosii. Se adauga ulei si sare dupa gust.",
+  "ingredient1":"salata",
+  "ingredient2":"rosii",
+  "ingredient3":"o conserva de ton",
+  "ingredient4":"ulei dupa gust",
+  "ingredient5":"sare dupa gust"
+}
+
+*/
+
 function addRecipe(req, res, headers) {
     let data = '';
 
@@ -86,7 +106,7 @@ function addRecipe(req, res, headers) {
             return;
         }
 
-        data.ingrediente = ingredient;
+        data.ingredients = ingredient;
 
             const new_recipe = new Recipe(data);
             console.log(new_recipe);
