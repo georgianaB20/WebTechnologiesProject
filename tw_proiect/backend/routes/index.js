@@ -12,5 +12,5 @@ router.post('/login',userController.login)
 router.post('/register',userController.register)
 router.post('/recipes',recipeController.addRecipe)
 
-
+router.put('/change',userController.change)
 module.exports.index = router
