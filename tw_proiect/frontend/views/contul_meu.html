@@ -47,7 +47,7 @@
             <div class="formular">
                 <p>Poza de profil</p>
                 <img src="../images/1.jpg" alt="Poza ta de profil">
-                <form method="POST" action="">
+                <form method="POST" action="http://localhost:5000/change?type_of_change=picture">
                     <div>
                         <input type="file" id="poza_profil" name="poza_profil" value="Adauga poza" required>
                     </div>
@@ -60,7 +60,7 @@
 
             <div class="formular">
                 <p>Schimbare username</p>
-                <form method="POST" action="">
+                <form method="POST" action="http://localhost:5000/change?type_of_change=username">
                     <div>
                         <label for="username">Username nou:</label>
                         <input type="text" id="username" name="username" maxlength="30" required>
@@ -68,7 +68,7 @@
 
                     <div>
                         <label for="parola_username">Parola:</label>
-                        <input type="password" id="parola_username" name="parola_username" required>
+                        <input type="password" id="parola_username" name="parola" required>
                     </div>
                     <input type="submit" id="schimba_username" name="schimba_username" value="Confirma">
                 </form>
@@ -76,7 +76,7 @@
 
             <div class="formular">
                 <p>Schimbare email</p>
-                <form method="POST" action="">
+                <form method="POST" action="http://localhost:5000/change?type_of_change=email">
                     <div>
                         <label for="email_vechi">Email vechi:</label>
                         <input type="email" id="email_vechi" name="email_vechi" maxlength="30" required>
@@ -89,7 +89,7 @@
 
                     <div>
                         <label for="parola_email">Parola:</label>
-                        <input type="password" id="parola_email" name="parola_email" required>
+                        <input type="password" id="parola_email" name="parola" required>
                     </div>
                     <input type="submit" id="schimba_email" name="schimba_email" value="Confirma">
                 </form>
@@ -97,7 +97,7 @@
 
             <div class="formular">
                 <p>Schimbare parola</p>
-                <form method="POST" action="">
+                <form method="POST" action="http://localhost:5000/change?type_of_change=password">
                     <div>
                         <label for="parola_veche">Parola veche:</label>
                         <input type="password" id="parola_veche" name="parola_veche" maxlength="30" required>

@@ -7,7 +7,6 @@ class Router {
     this.postRoutes = {}
     this.putRoutes = {}
     this.deleteRoutes = {}
-    this.routes_with_id = ['/recipes/user','/recipe','/recipe/search','/favorites','']
   }
 
   use(url, router) {
@@ -17,6 +16,12 @@ class Router {
     }
     for (el in router.postRoutes) {
       this.postRoutes[url + el] = router.postRoutes[el]
+    }
+    for (el in router.putRoutes) {
+      this.putRoutes[url + el] = router.putRoutes[el]
+    }
+    for (el in router.deleteRoutes) {
+      this.deleteRoutes[url + el] = router.deleteRoutes[el]
     }
   }
 
@@ -92,7 +97,7 @@ class Router {
 
     if (req.method === 'PUT') { //tratam requesturile PUT
       console.log("PUT")
-      if (this.puttRoutes[url] !== undefined) {
+      if (this.putRoutes[url] !== undefined) {
         try {
           this.putRoutes[url](req, res, headers)
         } catch (e) {
