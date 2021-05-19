@@ -101,29 +101,72 @@ function addRecipe(req, res, headers) {
 
         if (ingredient.length === 0) {
             res.writeHead(400, headers);
-            res.write(JSON.stringify({"message":"Nu puteti adauga o reteta fara ingrediente"}, null, 4));
+            res.write(JSON.stringify({ "message": "Nu puteti adauga o reteta fara ingrediente" }, null, 4));
             res.end();
             return;
         }
 
         data.ingredients = ingredient;
 
-            const new_recipe = new Recipe(data);
-            console.log(new_recipe);
-            new_recipe.save(function (err) {
+        const new_recipe = new Recipe(data);
+        console.log(new_recipe);
+        new_recipe.save(function (err) {
             if (err) {
                 console.log(err);
                 res.writeHead(500, headers);
-                res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
+                res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                 res.end()
             }
             else {
                 res.writeHead(200, headers);
-                res.write(JSON.stringify({"message": "Reteta adaugata cu succes!"}, null, 4))
+                res.write(JSON.stringify({ "message": "Reteta adaugata cu succes!" }, null, 4))
                 res.end()
             }
-            });
+        });
     })
 
 }
-module.exports = { getMostPopular, getRecipe, addRecipe }
+
+async function getRecipesUser(req, res, headers) {//returns a json with all reciepes from a user, by username
+    try {
+        if (req.url.split("?")[1].split('=')[0] == 'username') {
+            let user = req.url.split("?")[1].split('=')[1]
+            //let recipebyid = await Recipe.findById(id);
+            console.log(user)
+            let recipes = await Recipe.find({ username: user })
+            var len = recipes.length
+            if (len == 0) {
+                res.writeHead(404, headers)
+                res.write(JSON.stringify({ "message": "Rezultatul nu a fost gasit!" }, null, 4));
+                res.end();
+                return;
+            }
+            else{
+                res.writeHead(200, headers)
+                res.write(JSON.stringify(recipes, null, 4));
+                res.end();
+                return;
+            }
+            console.log(len)
+        }
+        else {
+            res.writeHead(400, headers);//bad request, nu se pot afisa retetele unui user decat cautate dupa username
+            res.write(JSON.stringify({ "message": "Nu puteti cauta retetele unui user decat dupa username-ul acestuia!" }, null, 4));
+            res.end();
+            return;
+        }
+    }
+
+    catch (e) {
+        console.log(e)
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
+        res.end()
+    }
+}
+
+
+function updateRecipe(req, res, headers) {
+    console.log(req.url.split("?")[1].split("=")[1])
+}
+module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser }
