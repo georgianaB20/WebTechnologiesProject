@@ -133,12 +133,29 @@ function register(req, res, headers) {
 
 
 /**
-fson sample for testing /change?type_of_change=username
+json sample for testing /change?type_of_change=username
 {
   "username":"user3",
   "password":"miaunel2",
   "id" : "60a2d0a2b24a5409bc9a5b73"
 }
+
+json sample for testing /change?type_of_change=password
+{
+  "parola_veche":"parola1234",
+  "parola_noua":"parola123",
+  "parola_noua2":"parola123",
+  "id": "6099a85c85afd46d920f4fbd"
+}
+
+json sample for testing /change?type_of_change=email
+{
+  "email_vechi":"someone@yahoo.com",
+  "email_nou":"someone@gmail.com",
+  "parola":"parola5678",
+  "id": "6099a94985afd46d920f4fbf"
+}
+
  */
 
 function change(req, res, headers) {
@@ -152,21 +169,21 @@ function change(req, res, headers) {
   req.on('end', async () => {
     try {
       data = JSON.parse(data);
-      console.log(req.url.split('?')[1].split('=')[1])
+      //console.log(req.url.split('?')[1].split('=')[1])
       let type_of_change = req.url.split('?')[1].split('=')[1]
 
       if (type_of_change === "username") {
-        let check_pass = await User.findOne({ _id : data.id }, "password")
-        let user = await User.findOne({ username : data.username }, "_id")
+        let check_pass = await User.findOne({ _id: data.id }, "password")
+        let user = await User.findOne({ username: data.username }, "_id")
 
-        if(data.username === undefined || data.password === undefined || data.id === undefined){
+        if (data.username === undefined || data.password === undefined || data.id === undefined) {
           res.writeHead(400, headers);
           res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
           res.end()
         }
         else if (check_pass === null) {
           res.writeHead(401, headers);
-          res.write(JSON.stringify({ 'message': 'Contul pe care incercati sa-l actualizati nu exista!' }, null, 4))
+          res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest id!' }, null, 4))
           res.end()
         }
         else if (check_pass.password !== data.password) {
@@ -188,9 +205,98 @@ function change(req, res, headers) {
 
       }
       else if (type_of_change === "password") {
-
+        //console.log(data);
+        let user = await User.findById(data.id)
+        //console.log(user)
+        //console.log(data.id === undefined,data.parola_veche === undefined,data.parola_noua === undefined,data.parola_noua2===undefined)
+        if (data.id === undefined || data.parola_veche === undefined || data.parola_noua === undefined || data.parola_noua2===undefined) {
+          //date incomplete
+          res.writeHead(400, headers);
+          res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
+          res.end()
+        }
+        else if (user === null) {
+          //userul nu exista
+          res.writeHead(401, headers);
+          res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest id!' }, null, 4))
+          res.end()
+        }
+        else if (user.password !== data.parola_veche) {
+          //parola incorecta
+          res.writeHead(401, headers);
+          res.write(JSON.stringify({ 'message': 'Parola incorecta!' }, null, 4))
+          res.end()
+        }
+        else if (data.parola_noua !== data.parola_noua2 || (data.parola_noua === data.parola_noua2 && data.parola_noua.length < 8)) {
+          //parolele noi nu coincid
+          res.writeHead(401, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare la confirmarea parola noua sau parola noua este prea scurta!' }, null, 4))
+          res.end()
+        }
+        else {
+          //totul ok , modificam datele in BD
+          user.password = data.parola_noua
+          let ok = await user.save()
+          //console.log(ok, user)
+          if (ok === user) {
+            res.writeHead(200, headers);
+            res.write(JSON.stringify({ 'message': 'Parola actualizata!' }, null, 4))
+            res.end()
+          }
+          else {
+            //console.log()
+            res.writeHead(500, headers);
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.end()
+          }
+        }
       }
       else if (type_of_change === "email") {
+        let user = await User.findById(data.id)
+        let user2 = await User.findOne({"email":data.email_nou})
+        if(data.email_nou === undefined || data.email_vechi === undefined || data.id === undefined || data.parola === undefined){
+          res.writeHead(400, headers);
+          res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
+          res.end()
+        }
+        else if (user === null) {
+          //userul nu exista
+          res.writeHead(401, headers);
+          res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest id!' }, null, 4))
+          res.end()
+        }
+        else if (user.password !== data.parola) {
+          //parola incorecta
+          res.writeHead(401, headers);
+          res.write(JSON.stringify({ 'message': 'Parola incorecta!' }, null, 4))
+          res.end()
+        }
+        else if(data.email_vechi !== user.email){
+          res.writeHead(401, headers);
+          res.write(JSON.stringify({ 'message': 'Email incorect!' }, null, 4))
+          res.end()
+        }
+        else if(user2 !== null && user2.id !== user.id){
+          res.writeHead(409, headers);
+          res.write(JSON.stringify({ 'message': 'Email-ul exista deja in baza de date!' }, null, 4))
+          res.end()
+        }
+        else{
+          user.email = data.email_nou
+          let ok = await user.save()
+
+          if (ok === user) {
+            res.writeHead(200, headers);
+            res.write(JSON.stringify({ 'message': 'Email actualizat!' }, null, 4))
+            res.end()
+          }
+          else {
+            //console.log(err)
+            res.writeHead(500, headers);
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.end()
+          }
+        }
 
       }
       else if (type_of_change === "picture") {
@@ -202,11 +308,36 @@ function change(req, res, headers) {
         res.end()
       }
 
+    }
+    catch (err) {
+      console.log(err)
+      res.writeHead(500, headers);
+      res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+      res.end()
+    }
+  })
+}
+
+
+function grant(req, res, headers) {
+  //console.log(req.url.split('?')[1].split('=')[1])
+
+  let data = '';
+
+  req.on('data', chunk => {
+    data += chunk;
+  })
+  req.on('end', async () => {
+    try {
+      data = JSON.parse(data);
+      //aici lucram cu datele primite, le prelucram etc
+      
+
 
       //trimitem raspunsul la server cu datele care trebuie
-      // res.writeHead(200, headers);
-      // res.write(JSON.stringify({ 'message': 'Ai modificat!' }, null, 4))
-      // res.end()
+      res.writeHead(200, headers);
+      res.write(JSON.stringify({ 'message': 'Ai modificat!' }, null, 4))
+      res.end()
 
     }
     catch (err) {
@@ -257,4 +388,4 @@ function change(req, res, headers) {
 */
 
 
-module.exports = { login, register, change }
+module.exports = { login, register, change, grant }
