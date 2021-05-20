@@ -6,11 +6,18 @@ let url = require('url')
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 //console.log(mongoose.connection.readyState);
 
+function compare(a,b){
+    if (a.comments.length>b.comments.length) return -1;
+    if (b.comments.length>a.comments.length) return 1;
+    return 0;
+}
+
 async function getMostPopular(req, res, headers) {
     try {
-        let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
+        let recipe2 = await Recipe.find({}, 'title description ingredients comments');
         if (recipe2 !== null) {
-            //datele primite de la bd le trimitem prin response
+            recipe2.sort(compare);
+            console.log(recipe2[0].length)
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipe2, null, 4))
             res.end()

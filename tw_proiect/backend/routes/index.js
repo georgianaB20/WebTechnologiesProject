@@ -14,4 +14,7 @@ router.post('/recipes',recipeController.addRecipe)
 
 router.put('/change',userController.change)
 router.put('/recipe',recipeController.updateRecipe)
+
+router.delete('/recipe', recipeController.deleteRecipe)
+
 module.exports.index = router
