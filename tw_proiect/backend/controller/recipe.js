@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/recipe')
+const User = require('../models/user')
 const { db } = require('../utils/constants')
 let url = require('url')
 
@@ -138,13 +139,22 @@ async function getRecipesUser(req, res, headers) {//returns a json with all reci
     try {
         if (req.url.split("?")[1].split('=')[0] == 'username') {
             let user = req.url.split("?")[1].split('=')[1]
+            let userexists = await User.findOne({username:user})
             //let recipebyid = await Recipe.findById(id);
             console.log(user)
             let recipes = await Recipe.find({ username: user })
             var len = recipes.length
-            if (len == 0) {
+            console.log(userexists)
+            if (userexists===null){
                 res.writeHead(404, headers)
-                res.write(JSON.stringify({ "message": "Rezultatul nu a fost gasit!" }, null, 4));
+                res.write(JSON.stringify({ "message": "Userul nu exista!" }, null, 4));
+                res.end();
+                return;
+            }
+            else
+            if (len === 0) {
+                res.writeHead(404, headers)
+                res.write(JSON.stringify({ "message": "Userul nu are retete" }, null, 4));
                 res.end();
                 return;
             }
@@ -154,7 +164,6 @@ async function getRecipesUser(req, res, headers) {//returns a json with all reci
                 res.end();
                 return;
             }
-            console.log(len)
         }
         else {
             res.writeHead(400, headers);//bad request, nu se pot afisa retetele unui user decat cautate dupa username
