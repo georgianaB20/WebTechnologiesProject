@@ -91,7 +91,6 @@ async function addFavorite(req, res, headers){
 }
 
 async function removeFavorite(req, res, headers) {
-    // console.log("fct remove favorites")
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
