@@ -5,7 +5,6 @@ const { db } = require('../utils/constants')
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
 async function getFavorites(req, res, headers){
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
@@ -48,7 +47,7 @@ async function addFavorite(req, res, headers){
     // console.log("recipe id: " + recipe_id);
 
     let user_by_id = await User.findById(user_id);
-    // let recipe_by_id = await Recipe.findById(recipe_id);
+    let recipe_by_id = await Recipe.findById(recipe_id);
     let duplicate = 0;
 
     try {
@@ -91,4 +90,48 @@ async function addFavorite(req, res, headers){
     }
 }
 
-module.exports = {getFavorites, addFavorite}
+async function removeFavorite(req, res, headers) {
+    // console.log("fct remove favorites")
+    const baseURL = 'http://' + req.headers.host + '/';
+    const parsedUrl = new URL(req.url, baseURL);
+
+
+    const user_id = parsedUrl.searchParams.get('user_id');
+    const recipe_id_str = parsedUrl.searchParams.get('recipe_id');
+    const recipe_id = mongoose.Types.ObjectId(recipe_id_str);
+
+    let user_by_id = undefined;
+
+    try {
+        user_by_id = await User.findById(user_id);
+
+
+        if (user_by_id === null) {
+            res.writeHead(404, headers);
+            res.write(JSON.stringify({'message': 'Userul nu a fost gasit!'}, null, 4))
+            res.end()
+            return;
+        }
+
+        const idx = user_by_id.favorite.some(el => el.equals(recipe_id))
+
+        if (idx) {
+            user_by_id.favorite.pull(recipe_id);
+            await user_by_id.save();
+            res.writeHead(200, headers);
+            res.write(JSON.stringify({"message": "Reteta a fost stearsa cu succes de la favorite!"}, null, 4))
+            res.end();
+        } else {
+            res.writeHead(404, headers);
+            res.write(JSON.stringify({'message': 'Reteta nu exista in favorite!'}, null, 4))
+            res.end()
+        }
+    } catch (e) {
+        console.log(e)
+        res.writeHead(500, headers);
+        res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
+        res.end()
+    }
+}
+
+module.exports = {getFavorites, addFavorite, removeFavorite}

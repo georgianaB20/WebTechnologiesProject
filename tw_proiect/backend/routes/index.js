@@ -12,6 +12,7 @@ router.post('/recipes',recipeController.addRecipe)
 
 router.get('/favorites', favoriteController.getFavorites)
 router.put('/favorites/add', favoriteController.addFavorite)
+router.put('/favorites/remove', favoriteController.removeFavorite)
 
 
 ////// get['/']=recipeController.getMostPopular
