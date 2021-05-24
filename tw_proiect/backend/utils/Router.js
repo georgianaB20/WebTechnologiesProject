@@ -1,5 +1,5 @@
-const userController = require('../controller/user')
-var url_lib = require('url')
+// const userController = require('../controller/user')
+// let url_lib = require('url')
 
 class Router {
   constructor() {

@@ -1,6 +1,5 @@
 const {Schema , model} = require('mongoose')
 
-
 const userSchema = new Schema(
     {
       username: {
@@ -25,10 +24,10 @@ const userSchema = new Schema(
         enum: ['admin','moderator','normal'],
         default: 'normal'
       },
-      favorite:{
-          type: Array,
-          default: null
-      },
+      favorite: [{
+          type: Schema.Types.ObjectId,
+          ref: 'Recipe'
+      }],
       can_comment:{
         type: String,
         enum: ['yes','no'],
@@ -48,4 +47,4 @@ const userSchema = new Schema(
     { timestamps: true }
   )
 
-module.exports = model('user', userSchema)
+module.exports = model('User', userSchema)
