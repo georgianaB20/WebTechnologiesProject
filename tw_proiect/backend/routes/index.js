@@ -20,4 +20,5 @@ router.post('/login',userController.login)
 router.post('/register',userController.register)
 
 router.put('/change',userController.change)
+
 module.exports.index = router
