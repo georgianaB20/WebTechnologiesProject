@@ -1,16 +1,26 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/recipe')
+const User = require('../models/user')
 const { db } = require('../utils/constants')
-let url = require('url')
+let url = require('url');
+const user = require('../models/user');
+const recipe = require('../models/recipe');
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 //console.log(mongoose.connection.readyState);
 
+function compare(a, b) {
+    if (a.comments.length > b.comments.length) return -1;
+    if (b.comments.length > a.comments.length) return 1;
+    return 0;
+}
+
 async function getMostPopular(req, res, headers) {
     try {
-        let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
+        let recipe2 = await Recipe.find({}, 'title description ingredients comments');
         if (recipe2 !== null) {
-            //datele primite de la bd le trimitem prin response
+            recipe2.sort(compare);
+            console.log(recipe2[0].length)
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipe2, null, 4))
             res.end()
@@ -101,29 +111,242 @@ function addRecipe(req, res, headers) {
 
         if (ingredient.length === 0) {
             res.writeHead(400, headers);
-            res.write(JSON.stringify({"message":"Nu puteti adauga o reteta fara ingrediente"}, null, 4));
+            res.write(JSON.stringify({ "message": "Nu puteti adauga o reteta fara ingrediente" }, null, 4));
             res.end();
             return;
         }
 
         data.ingredients = ingredient;
 
-            const new_recipe = new Recipe(data);
-            console.log(new_recipe);
-            new_recipe.save(function (err) {
+        const new_recipe = new Recipe(data);
+        console.log(new_recipe);
+        new_recipe.save(function (err) {
             if (err) {
                 console.log(err);
                 res.writeHead(500, headers);
-                res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
+                res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                 res.end()
             }
             else {
                 res.writeHead(200, headers);
-                res.write(JSON.stringify({"message": "Reteta adaugata cu succes!"}, null, 4))
+                res.write(JSON.stringify({ "message": "Reteta adaugata cu succes!" }, null, 4))
                 res.end()
             }
-            });
+        });
     })
 
 }
-module.exports = { getMostPopular, getRecipe, addRecipe }
+
+async function getRecipesUser(req, res, headers) {//returns a json with all reciepes from a user, by username
+    try {
+        if (req.url.split("?")[1].split('=')[0] == 'username') {
+            let user = req.url.split("?")[1].split('=')[1]
+            let userexists = await User.findOne({ username: user })
+            //let recipebyid = await Recipe.findById(id);
+            console.log(user)
+            let recipes = await Recipe.find({ username: user })
+            var len = recipes.length
+            console.log(userexists)
+            if (userexists === null) {
+                res.writeHead(404, headers)
+                res.write(JSON.stringify({ "message": "Userul nu exista!" }, null, 4));
+                res.end();
+                return;
+            }
+            else
+                if (len === 0) {
+                    res.writeHead(404, headers)
+                    res.write(JSON.stringify({ "message": "Userul nu are retete" }, null, 4));
+                    res.end();
+                    return;
+                }
+                else {
+                    res.writeHead(200, headers)
+                    res.write(JSON.stringify(recipes, null, 4));
+                    res.end();
+                    return;
+                }
+        }
+        else {
+            res.writeHead(400, headers);//bad request, nu se pot afisa retetele unui user decat cautate dupa username
+            res.write(JSON.stringify({ "message": "Nu puteti cauta retetele unui user decat dupa username-ul acestuia!" }, null, 4));
+            res.end();
+            return;
+        }
+    }
+
+    catch (e) {
+        console.log(e)
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
+        res.end()
+    }
+}
+
+
+
+
+function updateRecipe(req, res, headers) {
+    let userid = req.url.split('?')[1].split('&')[0].split('=')[1]
+    let recipeid = req.url.split('?')[1].split('&')[1].split('=')[1]
+    let data = '';
+
+    req.on('data', chunk => {
+        data += chunk;
+    })
+    req.on('end', async () => {
+        try {
+            data = JSON.parse(data);
+            //aici lucram cu datele primite, le prelucram etc
+            console.log(data)
+            if (userid === undefined || recipeid === undefined) {
+                res.writeHead(404, headers);
+                res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
+                res.end()
+                return;
+            }
+            else {
+                let user = await User.findById(userid)//daca nu gaseste=null
+                let recipe = await Recipe.findById(recipeid)
+                if (user === null) {
+                    res.writeHead(404, headers);
+                    res.write(JSON.stringify({ 'message': 'Userul nu exista' }, null, 4))
+                    res.end()
+                    return;
+                }
+                if (recipe === null) {
+                    res.writeHead(404, headers);
+                    res.write(JSON.stringify({ 'message': 'Reteta nu exista' }, null, 4))
+                    res.end()
+                    return;
+                }
+                if (user.username !== recipe.username) {
+                    res.writeHead(422, headers);
+                    res.write(JSON.stringify({ 'message': 'Nu puteti edita aceasta reteta.' }, null, 4))
+                    res.end()
+                    return;
+                }
+                if (data.description !== null) {
+                    recipe.description = data.description
+                }
+                if (data.difficulty !== null) {
+                    recipe.difficulty = data.difficulty
+                }
+                if (data.picture !== null) {
+                    recipe.picture = data.picture
+                }
+                if (data.picture !== null) {
+                    recipe.time_unit = data.time_unit
+                }
+                if (data.time_value !== null) {
+                    recipe.time_value = data.time_value
+                }
+                if (data.title !== null) {
+                    recipe.title = data.title
+                }
+                let no_ingredients = Object.keys(data).length - 6;
+                let ingredient = [];
+                for (let i = 1; i <= no_ingredients; i++) {
+                    if (data["ingredient" + i] !== "") {
+                        ingredient[i - 1] = data["ingredient" + i];
+                    }
+
+                    delete data["ingredient" + i];
+                }
+                if (ingredient.length !== 0) {
+                    recipe.ingredients = ingredient
+                }
+                console.log(recipe)
+
+                let ok = await recipe.save()
+                //console.log(ok, user)
+                if (ok === recipe) {
+                    res.writeHead(200, headers);
+                    res.write(JSON.stringify({ 'message': 'Reteta actualizata!' }, null, 4))
+                    res.end()
+                }
+                else {
+                    //console.log()
+                    res.writeHead(500, headers);
+                    res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                    res.end()
+                }
+            }
+
+        }
+        catch (err) {
+            console.log(err)
+            res.writeHead(500, headers);
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.end()
+        }
+    })
+}
+
+async function deleteRecipe(req, res, headers) {
+    try {
+        let userid = req.url.split('?')[1].split('&')[0].split('=')[1]
+        let recipeid = req.url.split('?')[1].split('&')[1].split('=')[1]
+
+        //data = JSON.parse(data);
+        //aici lucram cu datele primite, le prelucram etc
+        if (userid === undefined || recipeid === undefined) {
+            res.writeHead(404, headers);
+            res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
+            res.end()
+            return;
+        }
+        else {
+            let user = await User.findById(userid)//daca nu gaseste=null
+            let recipe = await Recipe.findById(recipeid)
+            if (user === null) {
+                res.writeHead(404, headers);
+                res.write(JSON.stringify({ 'message': 'Userul nu exista' }, null, 4))
+                res.end()
+                return;
+            }
+            if (recipe === null) {
+                res.writeHead(404, headers);
+                res.write(JSON.stringify({ 'message': 'Reteta nu exista' }, null, 4))
+                res.end()
+                return;
+            }
+            if (!(user.username === recipe.username || (user.type === 'admin'))) {
+                res.writeHead(422, headers);
+                res.write(JSON.stringify({ 'message': 'Nu puteti sterge aceasta reteta.' }, null, 4))
+                res.end()
+                return;
+            }
+            else {
+                Recipe.findByIdAndDelete(recipeid, function (err, docs) {
+                    if (err) {
+                        console.log(err)
+                        res.writeHead(500, headers);
+                        res.write(JSON.stringify({ 'message': 'Eroare de la baza de date' }, null, 4))
+                        res.end()
+                        return;
+                    }
+                    else {
+                        console.log("Deleted : ", docs);
+                        res.writeHead(200, headers);
+                        res.write(JSON.stringify({ 'message': 'Ati sters reteta' }, null, 4))
+                        res.end()
+                        return;
+                    }
+                });
+            }
+            //trimitem raspunsul la server cu datele care trebuie
+            //res.writeHead(200, headers);
+            //res.write(JSON.stringify({ 'message': 'Ai modificat!' }, null, 4))
+            //res.end()
+        }
+    }
+    catch (err) {
+        console.log(err)
+        res.writeHead(500, headers);
+        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+        res.end()
+    }
+}
+
+module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe }
