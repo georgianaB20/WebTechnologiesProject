@@ -8,7 +8,8 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function getMostPopular(req, res, headers) {
     try {
-        let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
+        //let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
+        let recipe2 = await Recipe.find({});
         if (recipe2 !== null) {
             //datele primite de la bd le trimitem prin response
             res.writeHead(200, headers);
