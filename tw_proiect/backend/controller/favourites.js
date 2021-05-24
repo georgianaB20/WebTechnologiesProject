@@ -6,12 +6,13 @@ const { db } = require('../utils/constants')
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function getFavorites(req, res, headers){
+    // http://localhost:5000/favorites?user_id=6099a85c85afd46d920f4fbd
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
-    const user_id = parsedUrl.searchParams.get('uid');
+    const user_id = parsedUrl.searchParams.get('user_id');
 
-    // console.log(user_id);
+    console.log(user_id);
 
     try {
         let user_by_id = await User.findById(user_id);
@@ -37,6 +38,7 @@ async function getFavorites(req, res, headers){
 }
 
 async function addFavorite(req, res, headers){
+    //http://localhost:5000/favorites/add?user_id=6099a85c85afd46d920f4fbd&recipe_id=609a73bf5c4932a37ad78a7e
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
@@ -91,6 +93,7 @@ async function addFavorite(req, res, headers){
 }
 
 async function removeFavorite(req, res, headers) {
+    // http://localhost:5000/favorites/remove?user_id=6099a85c85afd46d920f4fbd&recipe_id=609a73bf5c4932a37ad78a7e
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
