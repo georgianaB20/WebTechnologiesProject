@@ -32,11 +32,7 @@ xhttp.onreadystatechange = function () {
 
         element = document.getElementById("imagine-reteta")
         // console.log(recipe.picture.ContentType)
-        let picture=recipe.picture.data.reduce((acc, element) => {
-            elem = String.fromCharCode(element)
-            return acc+elem
-        }, "")
-        element.innerHTML = `<img class="img" src='data:${recipe.picture_type};base64,${btoa(picture)}' alt="Poza a retetei 1">`
+        element.innerHTML = `<img class="img" src='data:${recipe.picture_type};base64,${recipe.picture}' alt="Poza a retetei 1">`
     }
 }
 xhttp.open("GET", "http://localhost:5000/recipe?id="+id, true);

@@ -31,8 +31,7 @@ const recipeSchema = new Schema(
         default: null
       },
       picture:{
-          type: Buffer,
-          ContentType: String,
+          type: String,
           default:null
       },
       username:{
