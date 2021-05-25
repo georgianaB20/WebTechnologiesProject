@@ -7,6 +7,9 @@ xhttp.onreadystatechange = function () {
     //console.log(this.readyState);
     if (this.status == 200 && this.readyState == 4) {
         let recipe = JSON.parse(this.response)
+        element = document.getElementsByTagName("title")[0]
+        // console.log(element)
+        element.innerHTML = `${recipe.title}`
         element = document.getElementById("recipe-info")
         element.innerHTML=`<h1>${recipe.title}</h1>`+element.innerHTML
         element = document.getElementById("time")
