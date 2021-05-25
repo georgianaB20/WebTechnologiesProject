@@ -17,22 +17,21 @@ const recipeSchema = new Schema(
       },
       time_unit:{
         type: String,
-        enum: ['minute','ore','zile'],
+        enum: ['min','h','d'],
         required: true,
-        default: 'minute'
+        default: 'min'
       },
       difficulty: {
         type: String,
-        enum: ['incepator','mediu','bun','foarte_bun','master_chef'],
-        default: 'incepator'
+        enum: ['Usor','Mediu','Greu','Master Chef'],
+        default: 'Usor'
       },
       description: {
         type: String,
         default: null
       },
       picture:{
-          type: Buffer,
-          ContentType: String,
+          type: String,
           default:null
       },
       username:{
@@ -42,6 +41,10 @@ const recipeSchema = new Schema(
       comments:{
           type: Array,
           default: null
+      },
+      picture_type:{
+        type: String,
+        default: null
       }
     },
     { timestamps: true }

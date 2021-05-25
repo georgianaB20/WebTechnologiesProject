@@ -23,7 +23,7 @@ function login(req, res, headers) {
     try {
       data = JSON.parse(data);
       let user = await User.findOne({ "username": data.username }, '_id') //ca sa verificam daca userul exista
-      let user2 = await User.findOne({ "username": data.username, "password": data.password }, '_id') //verificam daca
+      let user2 = await User.findOne({ "username": data.username, "password": data.password }) //verificam daca parola este corecta
       //console.log(user2)
       if (user === null) {
         res.writeHead(500, headers);
@@ -35,9 +35,14 @@ function login(req, res, headers) {
         res.write(JSON.stringify({ 'message': 'Username sau parola gresita.' }, null, 4))
         res.end()
       }
-      else if (user2 !== null) {
+      else if (user2.acces === "yes") {
         res.writeHead(200, headers)
         res.write(JSON.stringify(user2, null, 4))
+        res.end()
+      }
+      else{
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Userul este restrictionat!' }, null, 4))
         res.end()
       }
     } catch (err) {
@@ -209,7 +214,7 @@ function change(req, res, headers) {
         let user = await User.findById(data.id)
         //console.log(user)
         //console.log(data.id === undefined,data.parola_veche === undefined,data.parola_noua === undefined,data.parola_noua2===undefined)
-        if (data.id === undefined || data.parola_veche === undefined || data.parola_noua === undefined || data.parola_noua2===undefined) {
+        if (data.id === undefined || data.parola_veche === undefined || data.parola_noua === undefined || data.parola_noua2 === undefined) {
           //date incomplete
           res.writeHead(400, headers);
           res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
@@ -253,8 +258,8 @@ function change(req, res, headers) {
       }
       else if (type_of_change === "email") {
         let user = await User.findById(data.id)
-        let user2 = await User.findOne({"email":data.email_nou})
-        if(data.email_nou === undefined || data.email_vechi === undefined || data.id === undefined || data.parola === undefined){
+        let user2 = await User.findOne({ "email": data.email_nou })
+        if (data.email_nou === undefined || data.email_vechi === undefined || data.id === undefined || data.parola === undefined) {
           res.writeHead(400, headers);
           res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
           res.end()
@@ -271,17 +276,17 @@ function change(req, res, headers) {
           res.write(JSON.stringify({ 'message': 'Parola incorecta!' }, null, 4))
           res.end()
         }
-        else if(data.email_vechi !== user.email){
+        else if (data.email_vechi !== user.email) {
           res.writeHead(401, headers);
           res.write(JSON.stringify({ 'message': 'Email incorect!' }, null, 4))
           res.end()
         }
-        else if(user2 !== null && user2.id !== user.id){
+        else if (user2 !== null && user2.id !== user.id) {
           res.writeHead(409, headers);
           res.write(JSON.stringify({ 'message': 'Email-ul exista deja in baza de date!' }, null, 4))
           res.end()
         }
-        else{
+        else {
           user.email = data.email_nou
           let ok = await user.save()
 
@@ -319,9 +324,21 @@ function change(req, res, headers) {
 }
 
 
+/*
+json sample for testing /grant?type={type_of_grant} , where {type_of_grant} = comments | post | access | moderator
+                        /restrict?type={type_of_restrict} , where  {type_of_restrict} = comments | post | access | moderator
+{
+  "username":"someone",
+  "email":"someone@gmail.com",
+  "parola_admin":"parola12",
+  "id": "6099a85c85afd46d920f4fbd"
+}
+*/
+
+
 function grant(req, res, headers) {
   //console.log(req.url.split('?')[1].split('=')[1])
-
+  let type_of_grant = req.url.split('?')[1].split('=')[1];
   let data = '';
 
   req.on('data', chunk => {
@@ -330,15 +347,201 @@ function grant(req, res, headers) {
   req.on('end', async () => {
     try {
       data = JSON.parse(data);
-      //aici lucram cu datele primite, le prelucram etc
-      
+
+      let user = await User.findOne({ username: data.username, email: data.email })
+      let admin = await User.findOne({ _id: data.id, password: data.parola_admin })
+      // console.log(admin)
+
+      if (user === null) {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest username si email!' }, null, 4))
+        res.end()
+      }
+      else if (admin === null) {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Nu exista un admin sau moderator cu acest id!' }, null, 4))
+        res.end()
+      }
+      else if ((type_of_grant === "comments" || type_of_grant === "post") && admin.type === "normal") {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Nu aveti rolul potrivit!' }, null, 4))
+        res.end()
+      }
+      else if (type_of_grant === "comments") {
+        user.can_comment = "yes";
+        let ok = await user.save()
+        // console.log(ok)
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Dreptul de a comenta a fost oferit!' }, null, 4))
+          res.end()
+        }
+        else {
+          // console.log("aICI")
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+          res.end()
+        }
+
+      }
+      else if (type_of_grant === "post") {
+        user.can_post = "yes";
+        let ok = await user.save()
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Dreptul de a posta retete a fost oferit!' }, null, 4))
+          res.end()
+        }
+        else {
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+          res.end()
+        }
+      }
+      else if (type_of_grant === "access") {
+        user.access = "yes";
+        let ok = await user.save()
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Userul poate accesa contul!' }, null, 4))
+          res.end()
+        }
+        else {
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+          res.end()
+        }
 
 
-      //trimitem raspunsul la server cu datele care trebuie
-      res.writeHead(200, headers);
-      res.write(JSON.stringify({ 'message': 'Ai modificat!' }, null, 4))
+      }
+      else if (type_of_grant === "moderator") {
+        user.type = "moderator";
+        let ok = await user.save()
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Userul a fost promovat in rolul de moderator!' }, null, 4))
+          res.end()
+        }
+        else {
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+          res.end()
+        }
+      }
+      else {
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'Not found!' }, null, 4))
+        res.end()
+      }
+
+    }
+    catch (err) {
+      console.log(error)
+      res.writeHead(500, headers);
+      res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
       res.end()
+    }
+  })
+}
 
+
+function restrict(req, res, headers) {
+  //console.log(req.url.split('?')[1].split('=')[1])
+  let type_of_restrict = req.url.split('?')[1].split('=')[1];
+  let data = '';
+
+  req.on('data', chunk => {
+    data += chunk;
+  })
+  req.on('end', async () => {
+    try {
+      data = JSON.parse(data);
+
+      let user = await User.findOne({ username: data.username, email: data.email })
+      let admin = await User.findOne({ _id: data.id, password: data.parola_admin })
+      // console.log(admin)
+
+      if (user === null) {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest username si email!' }, null, 4))
+        res.end()
+      }
+      else if (admin === null) {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Nu exista un admin sau moderator cu acest id!' }, null, 4))
+        res.end()
+      }
+      else if ((type_of_restrict === "comments" || type_of_restrict === "post") && admin.type === "normal") {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Nu aveti rolul potrivit!' }, null, 4))
+        res.end()
+      }
+      else if (type_of_restrict === "comments") {
+        user.can_comment = "no";
+        let ok = await user.save()
+        // console.log(ok)
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Dreptul de a comenta a fost restrictionat!' }, null, 4))
+          res.end()
+        }
+        else {
+          // console.log("aICI")
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+          res.end()
+        }
+
+      }
+      else if (type_of_restrict === "post") {
+        user.can_post = "no";
+        let ok = await user.save()
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Dreptul de a posta retete a fost restrictionat!' }, null, 4))
+          res.end()
+        }
+        else {
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+          res.end()
+        }
+      }
+      else if (type_of_restrict === "access") {
+        user.access = "no";
+        let ok = await user.save()
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Accesul userului a fost restrictionat !' }, null, 4))
+          res.end()
+        }
+        else {
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+          res.end()
+        }
+
+
+      }
+      else if (type_of_restrict === "moderator") {
+        user.type = "normal";
+        let ok = await user.save()
+        if (ok === user) {
+          res.writeHead(200, headers);
+          res.write(JSON.stringify({ 'message': 'Userul nu mai este moderator!' }, null, 4))
+          res.end()
+        }
+        else {
+          res.writeHead(500, headers);
+          res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+          res.end()
+        }
+      }
+      else {
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'Not found!' }, null, 4))
+        res.end()
+      }
     }
     catch (err) {
       console.log(error)
@@ -388,4 +591,4 @@ function change(req, res, headers) {
 */
 
 
-module.exports = { login, register, change, grant }
+module.exports = { login, register, change, grant, restrict }

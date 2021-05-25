@@ -9,8 +9,8 @@
 	<link rel="stylesheet" href="../css/favorite.css">
 
 	<link rel="icon" href="../images/favicon1.ico">
-    <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../css/nav.css">
+	<script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="../css/nav.css">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Retete</title>
@@ -29,65 +29,71 @@
 					</div>
 				</li>
 				<li><a href="retetele_mele.html"><i class="fas fa-utensils"></i></a></li>
-            	<li><a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a> </li>
-            	<li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
-            	<li><a href="login.html"><i class="far fa-user"></i></a></li>
+				<li><a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a> </li>
+				<li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
+				<li><a href="login.html"><i class="far fa-user"></i></a></li>
 			</ul>
 		</nav>
 	</header>
 
-	
-	<form class="filters" >
+
+	<form class="filters" method="GET">
 		<p>Afiseaza retetele dupa:</p>
-		
+
 		<div>
-		<div class="filter_item">
-		<label for="timp"> Timp preparare </label>
-		<input type="text" name="timp">
+
+			<div class="filter_item">
+				<label for="nivel_dificultate">Nivel de dificultate</label>
+				<select id="nivel_dificultate" name="nivel_dificultate">
+					<option value="-"></option>
+					<option value="incepator">Incepator</option>
+					<option value="mediu">Mediu</option>
+					<option value="bun">Bun</option>
+					<option value="foarte_bun">Foarte bun</option>
+					<option value="master_chef">Master chef</option>
+				</select>
+			</div>
+
+			<div class="filter_item">
+				<label for="include">Include ingrediente</label>
+				<input type="text" name="include">
+			</div>
+
+			<div class="filter_item">
+				<label for="exclude">Exclude ingrediente</label>
+				<input type="text" name="exclude">
+			</div>
+
+			<div class="filter_item">
+				<label for="timp"> Timp preparare </label>
+				<!-- <input type="text" name="timp"> -->
+				<select name="timp">
+					<option value="-"></option>
+					<option value="ascendent">ascendent</option>
+					<option value="descendent">descendent</option>
+				</select>
+			</div>
+
+			<div class="filter_item">
+				<label for="data">Data</label>
+				<select name="data">
+					<option value="-"></option>
+					<option value="ascendent">ascendent</option>
+					<option value="descendent">descendent</option>
+				</select>
+			</div>
+
+			<div class="filter_item">
+				<label for="popularitate">Popularitate</label>
+				<select name="popularitate">
+					<option value="-"></option>
+					<option value="ascendent">ascendent</option>
+					<option value="descendent">descendent</option>
+				</select>
+			</div>
 		</div>
 
-		<div class="filter_item">
-		<label for="nivel_dificultate">Nivel de dificultate</label>
-        <select id="nivel_dificultate" name="nivel_dificultate">
-			<option value="-"></option>
-            <option value="incepator">Incepator</option>
-            <option value="mediu">Mediu</option>
-            <option value="bun">Bun</option>
-            <option value="foarte_bun">Foarte bun</option>
-            <option value="master_chef">Master chef</option>
-        </select>
-		</div>
-
-		<div class="filter_item">
-		<label for="include">Include ingrediente</label>
-		<input type="text" name="include">
-		</div>
-
-		<div class="filter_item">
-		<label for="exclude">Exclude ingrediente</label>
-		<input type="text" name="exclude">
-		</div>
-
-		<div class="filter_item">
-			<label for="data">Data</label>
-			<select name="data">
-				<option value="-"></option>
-				<option value="ascendent">ascendent</option>
-				<option value="descendent">descendent</option>
-			</select>
-		</div>
-
-		<div class="filter_item">
-			<label for="popularitate">Popularitate</label>
-			<select name="popularitate">
-				<option value="-"></option>
-				<option value="ascendent">ascendent</option>
-				<option value="descendent">descendent</option>
-			</select>
-		</div>
-		</div>
-		
-		<a class="submit">Afiseaza</a>
+		<a class="submit"><input type="submit" value="Afiseaza"></a>
 	</form>
 
 	<div class="adauga-reteta">
@@ -153,7 +159,7 @@
 			</div>
 		</div>
 		<p>Copyrights reserved.</p>
-		<a class="documentatie" href="documentatie.html" >About the project</a>
+		<a class="documentatie" href="documentatie.html">About the project</a>
 	</footer>
 </body>
 

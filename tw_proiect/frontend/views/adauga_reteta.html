@@ -41,14 +41,14 @@
 
 
     <main>
-    <form method="POST" action="http://localhost:5000/adauga_reteta" id="adauga_reteta_form">
+    <form method="POST" action="http://localhost:5000/recipes" id="adauga_reteta_form">
         <div>
         <label for="titlu">Titlu</label>
         <input type="text" id="titlu" name="title" placeholder="Titlu..." required><br>
         </div>
         <div>
         <label for="poza">Poza</label>
-        <input type="file" id="poza" name="picture" required><br>
+        <input type="file" accept="image/png image/jpg" id="poza" name="picture" required><br>
         </div>
 
         <div>
@@ -57,20 +57,19 @@
 
         <label for="unitate_timp"></label>
         <select id="unitate_timp" name="time_unit">
-            <option value="minute">minute</option>
-            <option value="ore">ore</option>
-            <option value="zile">zile</option>
+            <option value="min">minute</option>
+            <option value="h">ore</option>
+            <option value="d">zile</option>
         </select><br>
         </div>
         
         <div>
         <label for="nivel_dificultate">Nivel de dificultate</label>
         <select id="nivel_dificultate" name="difficulty">
-            <option value="incepator">Incepator</option>
-            <option value="mediu">Mediu</option>
-            <option value="bun">Bun</option>
-            <option value="foarte_bun">Foarte bun</option>
-            <option value="master_chef">Master chef</option>
+            <option value="Usor">Usor</option>
+            <option value="Mediu">Mediu</option>
+            <option value="Greu">Greu</option>
+            <option value="Master Chef">Master Chef</option>
         </select><br>
         </div>
         

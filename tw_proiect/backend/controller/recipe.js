@@ -6,6 +6,9 @@ let url = require('url');
 const user = require('../models/user');
 const recipe = require('../models/recipe');
 
+const {Schema , model} = require('mongoose')
+
+
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 //console.log(mongoose.connection.readyState);
 
@@ -352,4 +355,49 @@ async function deleteRecipe(req, res, headers) {
     }
 }
 
-module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe }
+async function filter(req,res,headers){
+
+}
+
+function picture(req,res,headers){
+    let data = '';
+
+  req.on('data', chunk => {
+    data += chunk;
+  })
+  req.on('end', async () => {
+    try {
+    //   data = JSON.parse(data);
+      //aici lucram cu datele primite, le prelucram etc
+    console.log(data)
+    var ItemSchema = new Schema(
+        { img: 
+            { data: Buffer, contentType: String }
+        }
+      );
+      var Item = mongoose.model('Picture',ItemSchema);
+
+      var newItem = new Item();
+        newItem.img.data = data;
+        newItem.img.contentType = 'image/png';
+        console.log(await newItem.save());
+
+        console.log(Item.find({}))
+
+
+      //trimitem raspunsul la server cu datele care trebuie
+      res.writeHead(200, headers);
+      res.write(JSON.stringify({ 'message': 'Ai adaugat!' }, null, 4))
+      res.end()
+
+    }
+    catch (err) {
+      console.log(err)
+      res.writeHead(500, headers);
+      res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+      res.end()
+    }
+  })
+}
+
+module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, picture }
