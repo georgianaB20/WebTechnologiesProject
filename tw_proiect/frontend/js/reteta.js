@@ -7,6 +7,9 @@ xhttp.onreadystatechange = function () {
     //console.log(this.readyState);
     if (this.status == 200 && this.readyState == 4) {
         let recipe = JSON.parse(this.response)
+        element = document.getElementsByTagName("title")[0]
+        // console.log(element)
+        element.innerHTML = `${recipe.title}`
         element = document.getElementById("recipe-info")
         element.innerHTML=`<h1>${recipe.title}</h1>`+element.innerHTML
         element = document.getElementById("time")
@@ -16,6 +19,7 @@ xhttp.onreadystatechange = function () {
         element = document.getElementById("popularitate")
         element.innerHTML+=`<span class="txt">${recipe.comments.length}</span>`
         element = document.getElementById("ingrediente")
+        console.log(recipe.ingredients)
         recipe.ingredients.forEach(ingredient => {
             element.innerHTML+=
                 `<li>

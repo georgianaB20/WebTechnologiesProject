@@ -6,7 +6,9 @@ let url = require('url');
 const user = require('../models/user');
 const recipe = require('../models/recipe');
 
-const {Schema , model} = require('mongoose')
+const { Schema, model } = require('mongoose');
+const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
+const { index } = require('../routes');
 
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -23,10 +25,10 @@ async function getMostPopular(req, res, headers) {
 
         //let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
         let recipe2 = await Recipe.find({});
-        
+
         if (recipe2 !== null) {
             recipe2.sort(compare);
-            console.log(recipe2[0].length)
+            // console.log(recipe2[0].length)
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipe2, null, 4))
             res.end()
@@ -53,7 +55,7 @@ async function getRecipe(req, res, headers) {
     //console.log(id)
     try {
         let recipebyid = await Recipe.findById(id);
-        console.log(recipebyid)
+        // console.log(recipebyid)
         if (recipebyid !== null) {
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipebyid, null, 4))
@@ -105,12 +107,13 @@ function addRecipe(req, res, headers) {
         let no_ingredients = Object.keys(data).length - 6;
         let ingredient = [];
 
-        console.log(data);
+        //console.log(data);
 
         for (let i = 1; i <= no_ingredients; i++) {
-            if (data["ingredient" + i] !== "") {
+            if (data["ingredient" + i] !== "" && data["ingredient" + i] !== undefined && data["ingredient" + i] !== null) {
                 ingredient[i - 1] = data["ingredient" + i];
             }
+            // console.log(data["ingredient" + i])
 
             delete data["ingredient" + i];
         }
@@ -123,9 +126,10 @@ function addRecipe(req, res, headers) {
         }
 
         data.ingredients = ingredient;
+        console.log(data.ingredients)
 
         const new_recipe = new Recipe(data);
-        console.log(new_recipe);
+        // console.log(new_recipe);
         new_recipe.save(function (err) {
             if (err) {
                 console.log(err);
@@ -355,49 +359,141 @@ async function deleteRecipe(req, res, headers) {
     }
 }
 
-async function filter(req,res,headers){
-
+async function filter(req, res, headers) {
+    try {
+        let query = req.url.split("?")[1].split("&")
+        // console.log(query)
+        // ingredient_exists(["rosii"])
+        // ingredient_not_exists(["rosii"])
+        intersect(["ulei"],["oua"])
+    } catch (e) {
+        console.log(e)
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
+        res.end()
+    }
 }
 
-function picture(req,res,headers){
+async function intersect(include,exclude){
+    let arrA = ingredient_exists(include)
+    let arrB = ingredient_not_exists(exclude)
+    
+    let intersection = Object.values(arrA).filter(item1 => Object.values(arrB).some(item2 => item1._id === item2._id))
+    console.log(intersection)
+}
+
+async function ingredient_exists(ingredients) {
+    let recipes = await Recipe.find({}, 'ingredients _id')
+    let regex = [];
+    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient 
+        regex[j] = new RegExp(ingredients[j].toLowerCase(), "g")
+    }
+
+    let recipes_found = [];
+    let count=0;
+
+    for (let i = 0; i < recipes.length; i++) { //parcurgem fiecare reteta
+        recipes[i].ingredients.forEach(ingredient => { //parcurgem lista de ingrediente si verificam fiecare ingredient dat in parametru
+            let ingred_found=0;
+            for(let j=0;j<regex.length;j++){
+                // console.log(element.match(regex[j]))
+                let matches = ingredient.match(regex[j]) //match intre un ingredient din lista si unul dat ca parametru
+                if(matches !== null){
+                    // console.log(ingredient.match(regex[j]).length)
+                    //recipes_found[count++] = recipes[i]._id
+                    ingred_found += 1;
+                }
+                // if(element.match(regex[j]).length > 1)
+            }
+
+            if(ingred_found > 0){ //=== ingredients.length daca vrem sa luam toate ingredientele date la parametri
+                recipes_found[count++] = recipes[i];
+            }
+        });
+    }
+    console.log(recipes_found);
+    return recipes_found;
+}
+
+async function ingredient_not_exists(ingredients){
+    let recipes = await Recipe.find({}, 'ingredients _id')
+    let regex = [];
+    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient 
+        regex[j] = new RegExp(ingredients[j].toLowerCase(), "g")
+    }
+
+    let recipes_found = [];
+    let count=0;
+
+    for (let i = 0; i < recipes.length; i++) { //parcurgem fiecare reteta
+        let index_ingredients=0; //crestem contorul daca un ingredient nu se potriveste cu niciunul dintre cele de la parametri
+        recipes[i].ingredients.forEach(ingredient => { //parcurgem lista de ingrediente si verificam fiecare ingredient dat in parametru
+            let ingred_found=0;
+            for(let j=0;j<regex.length;j++){
+                // console.log(element.match(regex[j]))
+                let matches = ingredient.match(regex[j]) //match intre un ingredient din lista si unul dat ca parametru
+                if(matches === null){
+                    // console.log(ingredient.match(regex[j]).length)
+                    //recipes_found[count++] = recipes[i]._id
+                    ingred_found += 1;
+                }
+                // if(element.match(regex[j]).length > 1)
+            }
+
+            if(ingred_found === ingredients.length ){ //retinem reteta doar daca nu contine niciun ingredient din cele date ca parametri
+                //recipes_found[count++] = recipes[i];
+                index_ingredients += 1;
+            }
+        });
+
+        if(index_ingredients === recipes[i].ingredients.length){
+            recipes_found[count++] = recipes[i];
+        }
+    }
+    console.log(recipes_found);
+    return recipes_found;
+}
+
+function picture(req, res, headers) {
     let data = '';
 
-  req.on('data', chunk => {
-    data += chunk;
-  })
-  req.on('end', async () => {
-    try {
-    //   data = JSON.parse(data);
-      //aici lucram cu datele primite, le prelucram etc
-    console.log(data)
-    var ItemSchema = new Schema(
-        { img: 
-            { data: Buffer, contentType: String }
+    req.on('data', chunk => {
+        data += chunk;
+    })
+    req.on('end', async () => {
+        try {
+            //   data = JSON.parse(data);
+            //aici lucram cu datele primite, le prelucram etc
+            console.log(data)
+            var ItemSchema = new Schema(
+                {
+                    img:
+                        { data: Buffer, contentType: String }
+                }
+            );
+            var Item = mongoose.model('Picture', ItemSchema);
+
+            var newItem = new Item();
+            newItem.img.data = data;
+            newItem.img.contentType = 'image/png';
+            console.log(await newItem.save());
+
+            console.log(Item.find({}))
+
+
+            //trimitem raspunsul la server cu datele care trebuie
+            res.writeHead(200, headers);
+            res.write(JSON.stringify({ 'message': 'Ai adaugat!' }, null, 4))
+            res.end()
+
         }
-      );
-      var Item = mongoose.model('Picture',ItemSchema);
-
-      var newItem = new Item();
-        newItem.img.data = data;
-        newItem.img.contentType = 'image/png';
-        console.log(await newItem.save());
-
-        console.log(Item.find({}))
-
-
-      //trimitem raspunsul la server cu datele care trebuie
-      res.writeHead(200, headers);
-      res.write(JSON.stringify({ 'message': 'Ai adaugat!' }, null, 4))
-      res.end()
-
-    }
-    catch (err) {
-      console.log(err)
-      res.writeHead(500, headers);
-      res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-      res.end()
-    }
-  })
+        catch (err) {
+            console.log(err)
+            res.writeHead(500, headers);
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.end()
+        }
+    })
 }
 
-module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, picture }
+module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter }

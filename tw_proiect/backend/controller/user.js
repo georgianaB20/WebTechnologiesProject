@@ -304,9 +304,6 @@ function change(req, res, headers) {
         }
 
       }
-      else if (type_of_change === "picture") {
-
-      }
       else {
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'Not found!' }, null, 4))
