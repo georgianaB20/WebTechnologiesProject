@@ -19,6 +19,7 @@ xhttp.onreadystatechange = function () {
         element = document.getElementById("popularitate")
         element.innerHTML+=`<span class="txt">${recipe.comments.length}</span>`
         element = document.getElementById("ingrediente")
+        console.log(recipe.ingredients)
         recipe.ingredients.forEach(ingredient => {
             element.innerHTML+=
                 `<li>

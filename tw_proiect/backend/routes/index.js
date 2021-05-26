@@ -13,7 +13,7 @@ router.get('/recipe',recipeController.getRecipe)
 router.get('/favorites', favoriteController.getFavorites)
 router.get('/recipes/user',recipeController.getRecipesUser) //miky
 router.get('/recipes/filter',recipeController.filter);
-router.post('/picture',recipeController.picture)
+// router.post('/picture',recipeController.picture)
 
 router.post('/recipes',recipeController.addRecipe)
 router.post('/login',userController.login)

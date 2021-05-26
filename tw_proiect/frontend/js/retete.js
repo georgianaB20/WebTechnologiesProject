@@ -17,7 +17,7 @@ xhttp.onreadystatechange = function () {
 
             retete.innerHTML += `<a href="reteta.html?id=${element._id}">
                 <div class="card">
-                    <img src="../images/5.jpg" alt=${element.title} class="card-img">
+                    <img src='data:${element.picture_type};base64,${element.picture}' alt=${element.title} class="card-img">
                     <h2>${element.title}</h2>
                     <p class="descriere">
                         ${descr}
