@@ -38,10 +38,10 @@ const recipeSchema = new Schema(
           type: String,
           // ref: 'users'
       },
-      comments:{
-          type: Array,
-          default: null
-      },
+      comments: [{
+          type: Schema.Types.ObjectId,
+          ref: 'Comment'
+      }],
       picture_type:{
         type: String,
         default: null
