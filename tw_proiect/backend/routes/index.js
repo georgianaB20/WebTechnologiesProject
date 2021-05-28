@@ -11,7 +11,7 @@ let router = new Router()
 
 router.get('/recipes',recipeController.getMostPopular)
 router.get('/recipe',recipeController.getRecipe)
-router.get('/recipe', commentController.getComments)
+router.get('/comment', commentController.getComments)
 router.get('/favorites', favoriteController.getFavorites)
 router.get('/recipes/user',recipeController.getRecipesUser) //miky
 router.get('/recipes/filter',recipeController.filter);
@@ -30,7 +30,7 @@ router.put('/grant',userController.grant)
 router.put('/restrict',userController.restrict)
 
 router.delete('/recipe', recipeController.deleteRecipe)
-router.delete('/comment', commentController.deleteComment())
+router.delete('/comment', commentController.deleteComment)
 
 
 module.exports.index = router
