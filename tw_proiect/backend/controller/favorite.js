@@ -53,7 +53,13 @@ async function addFavorite(req, res, headers){
     let duplicate = 0;
 
     try {
-        if (user_by_id !== null && recipe_by_id !== null) {
+        if (user_by_id === null) {
+            res.writeHead(404, headers);
+            res.write(JSON.stringify({'message': 'Userul nu a fost gasit!'}, null, 4))
+            res.end()
+            return;
+        }
+        if (recipe_by_id !== null) {
             for (let i = 0; i < user_by_id.favorite.length; i++) {
                 if (recipe_id === user_by_id.favorite[i].toString()) {
                     duplicate = 1;
@@ -81,7 +87,7 @@ async function addFavorite(req, res, headers){
             }
         } else {
             res.writeHead(404, headers);
-            res.write(JSON.stringify({'message': 'Userul sau reteta nu a fost gasit!'}, null, 4))
+            res.write(JSON.stringify({'message': 'Reteta nu a fost gasita!'}, null, 4))
             res.end()
         }
     } catch (err) {
