@@ -2,14 +2,16 @@ const { Router } = require('../utils/Router')
 const userController = require('../controller/user')
 const recipeController = require('../controller/recipe')
 
-const favoriteController = require('../controller/favourites')
-const user = require('../models/user')
-const recipe = require('../models/recipe')
+const favoriteController = require('../controller/favorite')
+// const user = require('../models/user')
+// const recipe = require('../models/recipe')
+const commentController = require('../controller/comment')
 
-var router = new Router()
+let router = new Router()
 
 router.get('/recipes',recipeController.getMostPopular)
 router.get('/recipe',recipeController.getRecipe)
+router.get('/comment', commentController.getComments)
 router.get('/favorites', favoriteController.getFavorites)
 router.get('/recipes/user',recipeController.getRecipesUser) //miky
 router.get('/recipes/filter',recipeController.filter);
@@ -18,6 +20,7 @@ router.get('/recipes/filter',recipeController.filter);
 router.post('/recipes',recipeController.addRecipe)
 router.post('/login',userController.login)
 router.post('/register',userController.register)
+router.post('/comment', commentController.addComment)
 
 router.put('/change',userController.change)
 router.put('/recipe',recipeController.updateRecipe)
@@ -27,6 +30,7 @@ router.put('/grant',userController.grant)
 router.put('/restrict',userController.restrict)
 
 router.delete('/recipe', recipeController.deleteRecipe)
+router.delete('/comment', commentController.deleteComment)
 
 
 module.exports.index = router

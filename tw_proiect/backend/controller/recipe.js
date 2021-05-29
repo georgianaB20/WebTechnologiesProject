@@ -3,12 +3,12 @@ const Recipe = require('../models/recipe')
 const User = require('../models/user')
 const { db } = require('../utils/constants')
 let url = require('url');
-const user = require('../models/user');
-const recipe = require('../models/recipe');
+// const user = require('../models/user');
+// const recipe = require('../models/recipe');
 
-const { Schema, model } = require('mongoose');
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
-const { index } = require('../routes');
+const { Schema, /*model*/ } = require('mongoose');
+//const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
+//const { index } = require('../routes');
 
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -22,13 +22,10 @@ function compare(a, b) {
 
 async function getMostPopular(req, res, headers) {
     try {
-
-        //let recipe2 = await Recipe.find({}, 'title pasi_preparare ingredients');
-        let recipe2 = await Recipe.find({});
-
+        let recipe2 = await Recipe.find({}, 'title description ingredients comments');
         if (recipe2 !== null) {
             recipe2.sort(compare);
-            // console.log(recipe2[0].length)
+            console.log(recipe2[0].length)
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipe2, null, 4))
             res.end()
@@ -110,7 +107,7 @@ function addRecipe(req, res, headers) {
         //console.log(data);
 
         for (let i = 1; i <= no_ingredients; i++) {
-            if (data["ingredient" + i] !== "" && data["ingredient" + i] !== undefined && data["ingredient" + i] !== null) {
+            if (data["ingredient" + i] !== "") {
                 ingredient[i - 1] = data["ingredient" + i];
             }
             // console.log(data["ingredient" + i])
@@ -126,7 +123,6 @@ function addRecipe(req, res, headers) {
         }
 
         data.ingredients = ingredient;
-        console.log(data.ingredients)
 
         const new_recipe = new Recipe(data);
         // console.log(new_recipe);
@@ -161,27 +157,23 @@ async function getRecipesUser(req, res, headers) {//returns a json with all reci
                 res.writeHead(404, headers)
                 res.write(JSON.stringify({ "message": "Userul nu exista!" }, null, 4));
                 res.end();
-                return;
             }
             else
                 if (len === 0) {
                     res.writeHead(404, headers)
                     res.write(JSON.stringify({ "message": "Userul nu are retete" }, null, 4));
                     res.end();
-                    return;
                 }
                 else {
                     res.writeHead(200, headers)
                     res.write(JSON.stringify(recipes, null, 4));
                     res.end();
-                    return;
                 }
         }
         else {
             res.writeHead(400, headers);//bad request, nu se pot afisa retetele unui user decat cautate dupa username
             res.write(JSON.stringify({ "message": "Nu puteti cauta retetele unui user decat dupa username-ul acestuia!" }, null, 4));
             res.end();
-            return;
         }
     }
 
@@ -192,9 +184,6 @@ async function getRecipesUser(req, res, headers) {//returns a json with all reci
         res.end()
     }
 }
-
-
-
 
 function updateRecipe(req, res, headers) {
     let userid = req.url.split('?')[1].split('&')[0].split('=')[1]
@@ -213,7 +202,6 @@ function updateRecipe(req, res, headers) {
                 res.writeHead(404, headers);
                 res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
                 res.end()
-                return;
             }
             else {
                 let user = await User.findById(userid)//daca nu gaseste=null
@@ -304,7 +292,6 @@ async function deleteRecipe(req, res, headers) {
             res.writeHead(404, headers);
             res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
             res.end()
-            return;
         }
         else {
             let user = await User.findById(userid)//daca nu gaseste=null
@@ -325,7 +312,6 @@ async function deleteRecipe(req, res, headers) {
                 res.writeHead(422, headers);
                 res.write(JSON.stringify({ 'message': 'Nu puteti sterge aceasta reteta.' }, null, 4))
                 res.end()
-                return;
             }
             else {
                 Recipe.findByIdAndDelete(recipeid, function (err, docs) {
@@ -334,14 +320,12 @@ async function deleteRecipe(req, res, headers) {
                         res.writeHead(500, headers);
                         res.write(JSON.stringify({ 'message': 'Eroare de la baza de date' }, null, 4))
                         res.end()
-                        return;
                     }
                     else {
                         console.log("Deleted : ", docs);
                         res.writeHead(200, headers);
                         res.write(JSON.stringify({ 'message': 'Ati sters reteta' }, null, 4))
                         res.end()
-                        return;
                     }
                 });
             }
@@ -412,7 +396,7 @@ async function intersect(include, exclude) {
 async function ingredient_exists(ingredients) {
     let recipes = await Recipe.find({}, 'ingredients _id')
     let regex = [];
-    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient 
+    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient
         regex[j] = new RegExp(ingredients[j].toLowerCase(), "g")
     }
 
@@ -445,7 +429,7 @@ async function ingredient_exists(ingredients) {
 async function ingredient_not_exists(ingredients) {
     let recipes = await Recipe.find({}, 'ingredients _id')
     let regex = [];
-    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient 
+    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient
         regex[j] = new RegExp(ingredients[j].toLowerCase(), "g")
     }
 
