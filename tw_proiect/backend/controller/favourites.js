@@ -12,13 +12,13 @@ async function getFavorites(req, res, headers){
 
     const user_id = parsedUrl.searchParams.get('user_id');
 
-    //console.log(user_id);
+    console.log(user_id);
 
     try {
         let user_by_id = await User.findById(user_id);
         if (user_by_id !== null && 'favorite' in user_by_id) {
             await user_by_id.populate('favorite').execPopulate();
-            //console.log(user_by_id.favorite);
+            console.log(user_by_id.favorite);
 
             res.writeHead(200, headers);
             res.write(JSON.stringify(user_by_id.favorite, null, 4));
@@ -30,7 +30,7 @@ async function getFavorites(req, res, headers){
             res.end()
         }
     } catch (e) {
-        //console.log(e);
+        console.log(e);
         res.writeHead(500, headers);
         res.write(JSON.stringify({ 'message': 'Eroare la server!' }, null, 4))
         res.end()
@@ -45,8 +45,8 @@ async function addFavorite(req, res, headers){
     const user_id = parsedUrl.searchParams.get('user_id');
     const recipe_id = parsedUrl.searchParams.get('recipe_id');
 
-    // console.log("user id: " + user_id);
-    // console.log("recipe id: " + recipe_id);
+     console.log("user id: " + user_id);
+     console.log("recipe id: " + recipe_id);
 
     let user_by_id = await User.findById(user_id);
     let recipe_by_id = await Recipe.findById(recipe_id);
@@ -64,7 +64,7 @@ async function addFavorite(req, res, headers){
                 res.write(JSON.stringify({'message': 'Reteta este deja in favorite'}, null, 4));
                 res.end();
             }else{
-                //console.log(user_by_id.favorite)
+                console.log(user_by_id.favorite)
                 user_by_id.favorite.push(recipe_by_id._id);
                 await user_by_id.save(function (err) {
                     if (err) {
