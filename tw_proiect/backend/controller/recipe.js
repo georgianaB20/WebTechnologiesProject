@@ -361,11 +361,29 @@ async function deleteRecipe(req, res, headers) {
 
 async function filter(req, res, headers) {
     try {
-        let query = req.url.split("?")[1].split("&")
+        const baseURL = 'http://' + req.headers.host + '/';
+        const parsedUrl = new URL(req.url, baseURL);
+
+        const nivel_dificultate = parsedUrl.searchParams.get('nivel_dificultate');
+        const include = parsedUrl.searchParams.get('include');
+        const exclude = parsedUrl.searchParams.get('exclude');
+        const timp = parsedUrl.searchParams.get('timp');
+        const data = parsedUrl.searchParams.get('data');
+        const popularitate = parsedUrl.searchParams.get('popularitate');
         // console.log(query)
         // ingredient_exists(["rosii"])
         // ingredient_not_exists(["rosii"])
-        intersect(["ulei"],["oua"])
+        //include=ulei%2C+marar&exclude=oua%2C+branza
+        let includedElems = include.split(",")
+        for (let i = 0; i<includedElems.length; i++) {
+            includedElems[i]=includedElems[i].trim()
+        }
+        let excludedElems = exclude.split(",")
+        for (let i = 0; i<excludedElems.length; i++) {
+            excludedElems[i]=excludedElems[i].trim()
+        }
+        let recipes = intersect(includedElems, excludedElems)
+        console.log(includedElems, excludedElems)
     } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
@@ -375,10 +393,13 @@ async function filter(req, res, headers) {
 }
 
 async function intersect(include,exclude){
-    let arrA = ingredient_exists(include)
-    let arrB = ingredient_not_exists(exclude)
-    
-    let intersection = Object.values(arrA).filter(item1 => Object.values(arrB).some(item2 => item1._id === item2._id))
+    let arrA = await ingredient_exists(include)
+    let arrB = await ingredient_not_exists(exclude)
+    let count = 0
+    console.log(arrA[0], arrB[0])
+    let intersection = []
+    Object.values(arrA).filter(item1 => Object.values(arrB).some(item2 => {if(JSON.stringify(item1._id) === JSON.stringify(item2._id)) intersection[count++]=item1}))
+
     console.log(intersection)
 }
 
@@ -411,7 +432,7 @@ async function ingredient_exists(ingredients) {
             }
         });
     }
-    console.log(recipes_found);
+    // console.log(recipes_found);
     return recipes_found;
 }
 
@@ -450,7 +471,7 @@ async function ingredient_not_exists(ingredients){
             recipes_found[count++] = recipes[i];
         }
     }
-    console.log(recipes_found);
+    // console.log(recipes_found);
     return recipes_found;
 }
 
