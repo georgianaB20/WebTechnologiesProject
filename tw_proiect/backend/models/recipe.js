@@ -26,7 +26,7 @@ const recipeSchema = new Schema(
       },
       picture:{
           type: String,
-          default:null
+          default: null
       },
       username:{
           type: String,
@@ -35,11 +35,7 @@ const recipeSchema = new Schema(
       comments: [{
           type: Schema.Types.ObjectId,
           ref: 'Comment'
-      }],
-      picture_type:{
-        type: String,
-        default: null
-      }
+      }]
     },
     { timestamps: true }
   )
