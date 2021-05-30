@@ -308,7 +308,7 @@ async function deleteRecipe(req, res, headers) {
                 res.end()
                 return;
             }
-            if (!(user.username === recipe.username || (user.type === 'admin'))) {
+            if (!(user._id === recipe.user_id || (user.type === 'admin'))) {
                 res.writeHead(422, headers);
                 res.write(JSON.stringify({ 'message': 'Nu puteti sterge aceasta reteta.' }, null, 4))
                 res.end()
@@ -426,7 +426,7 @@ function search(req, res, headers) {
 
         for (let i = 0; i < search_terms.length; i++) {
             if (search_terms[i] !== undefined && search_terms[i].length > 0) {
-                let conj_regex = new RegExp(' si | sau | la | de | iar | dar | astfel | insa | ci | ca | sa | ori | fie ', "g")
+                let conj_regex = new RegExp(' si | sau | la | de | iar | dar | astfel | insa | ci | ca | sa | ori | fie | cu ', "g")
                 console.log((" " + search_terms[i] + " "))
                 if ((" " + search_terms[i] + " ").match(conj_regex) !== null) {
                     delete search_terms[i]
@@ -463,14 +463,6 @@ function search(req, res, headers) {
                     }]
                 }
             }
-            // // {
-            // //     $group: {
-            // //         _id: "$_id"
-            // //     }
-            // // },
-            // {
-            //     $unwind: "$recipes"
-            // }
 
         ], function(err, data) {
             for (let i = 0; i < data.length; i++)
@@ -485,10 +477,7 @@ function search(req, res, headers) {
                 res.end();
             }
         });
-        // console.log(recipes._pipeline[1])
-        // .find({ title: { $regex: regex_string } })
-        // let recipes
-        //console.log()
+
 
     } catch (e) {
         console.log(e)

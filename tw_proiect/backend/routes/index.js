@@ -15,6 +15,7 @@ router.get('/comment', commentController.getComments) //OK
 router.get('/favorites', favoriteController.getFavorites) //OK
 router.get('/recipes/user', recipeController.getRecipesUser) //OK
 router.get('/recipes/filter', recipeController.filter); //OK
+router.get('/search', recipeController.search)
 
 router.post('/recipes', recipeController.addRecipe) //OK
 router.post('/login', userController.login)
