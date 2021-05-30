@@ -345,11 +345,41 @@ async function deleteRecipe(req, res, headers) {
 
 async function filter(req, res, headers) {
     try {
-        // let query = req.url.split("?")[1].split("&")
-        // console.log(query)
-        // ingredient_exists(["rosii"])
-        // ingredient_not_exists(["rosii"])
-        intersect(["ulei"],["oua"])
+        const baseURL = 'http://' + req.headers.host + '/';
+        const parsedUrl = new URL(req.url, baseURL);
+
+        const diff_map = {
+            '^Easy$': parsedUrl.searchParams.get('diff_easy')==="1",
+            '^Medium$': parsedUrl.searchParams.get('diff_medium')==="1",
+            '^Hard$': parsedUrl.searchParams.get('diff_hard')==="1",
+            '^Master Chef$': parsedUrl.searchParams.get('diff_master')==="1"
+        }
+        let regex_diff=Object.keys(diff_map).reduce(function (acc, key) {
+            if (diff_map[key]==true)
+            {
+                if (acc!=="")
+                    acc+="|";
+            }
+            return acc;
+        });
+
+        var multiply = (parsedUrl.searchParams.get('time_min_unit')=="min")*1+
+                       (parsedUrl.searchParams.get('time_min_unit')=="hours")*60+
+                       (parsedUrl.searchParams.get('time_min_unit')=="days")*24*60
+
+        time_min = String.parseInt(parsedUrl.searchParams.get('time_min_value'))*multiply
+
+        multiply = (parsedUrl.searchParams.get('time_max_unit')=="min")*1+
+                   (parsedUrl.searchParams.get('time_max_unit')=="hours")*60+
+                   (parsedUrl.searchParams.get('time_max_unit')=="days")*24*60
+        
+        time_max = String.parseInt(parsedUrl.searchParams.get('time_max_value'))*multiply
+
+        let entries = await Recipe.find({difficulty: {$regex: regex_diff, $options:"i"}, time: { '$gte': time_min, '$lte': time_max}})
+
+        res.writeHead(200, headers);
+        res.write(JSON.stringify(apply_include_exclude(entries, parsedUrl.searchParams.get('include'), parsedUrl.searchParams.get('exclude'))));
+        res.end()
     } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
@@ -358,84 +388,27 @@ async function filter(req, res, headers) {
     }
 }
 
-async function intersect(include,exclude){
-    let arrA = ingredient_exists(include)
-    let arrB = ingredient_not_exists(exclude)
+function apply_include_exclude(recipes, includeString, excludeString) {
+    let includeList = includeString.split(",")
+    let excludeList = excludeString.split(",")
+    let finalList = recipes.reduce(function (arr, recipe) {
+        let numberOfIncludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient){
+            if (includeList.find(element => element===ingredient)!==undefined)
+                return currentNumber+1;
+            return currentNumber;
+        }, 0)
+        
+        let numberOfExcludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient){
+            if (excludeList.find(element => element===ingredient)!==undefined)
+                return currentNumber+1;
+            return currentNumber;
+        }, 0)
+        
+        if (numberOfExcludedIngredients===0 && numberOfIncludedIngredients===includeList.length)
+            arr.push(recipe);
 
-    let intersection = Object.values(arrA).filter(item1 => Object.values(arrB).some(item2 => item1._id === item2._id))
-    console.log(intersection)
-}
-
-async function ingredient_exists(ingredients) {
-    let recipes = await Recipe.find({}, 'ingredients _id')
-    let regex = [];
-    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient
-        regex[j] = new RegExp(ingredients[j].toLowerCase(), "g")
-    }
-
-    let recipes_found = [];
-    let count=0;
-
-    for (let i = 0; i < recipes.length; i++) { //parcurgem fiecare reteta
-        recipes[i].ingredients.forEach(ingredient => { //parcurgem lista de ingrediente si verificam fiecare ingredient dat in parametru
-            let ingred_found=0;
-            for(let j=0;j<regex.length;j++){
-                // console.log(element.match(regex[j]))
-                let matches = ingredient.match(regex[j]) //match intre un ingredient din lista si unul dat ca parametru
-                if(matches !== null){
-                    // console.log(ingredient.match(regex[j]).length)
-                    //recipes_found[count++] = recipes[i]._id
-                    ingred_found += 1;
-                }
-                // if(element.match(regex[j]).length > 1)
-            }
-
-            if(ingred_found > 0){ //=== ingredients.length daca vrem sa luam toate ingredientele date la parametri
-                recipes_found[count++] = recipes[i];
-            }
-        });
-    }
-    console.log(recipes_found);
-    return recipes_found;
-}
-
-async function ingredient_not_exists(ingredients){
-    let recipes = await Recipe.find({}, 'ingredients _id')
-    let regex = [];
-    for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient
-        regex[j] = new RegExp(ingredients[j].toLowerCase(), "g")
-    }
-
-    let recipes_found = [];
-    let count=0;
-
-    for (let i = 0; i < recipes.length; i++) { //parcurgem fiecare reteta
-        let index_ingredients=0; //crestem contorul daca un ingredient nu se potriveste cu niciunul dintre cele de la parametri
-        recipes[i].ingredients.forEach(ingredient => { //parcurgem lista de ingrediente si verificam fiecare ingredient dat in parametru
-            let ingred_found=0;
-            for(let j=0;j<regex.length;j++){
-                // console.log(element.match(regex[j]))
-                let matches = ingredient.match(regex[j]) //match intre un ingredient din lista si unul dat ca parametru
-                if(matches === null){
-                    // console.log(ingredient.match(regex[j]).length)
-                    //recipes_found[count++] = recipes[i]._id
-                    ingred_found += 1;
-                }
-                // if(element.match(regex[j]).length > 1)
-            }
-
-            if(ingred_found === ingredients.length ){ //retinem reteta doar daca nu contine niciun ingredient din cele date ca parametri
-                //recipes_found[count++] = recipes[i];
-                index_ingredients += 1;
-            }
-        });
-
-        if(index_ingredients === recipes[i].ingredients.length){
-            recipes_found[count++] = recipes[i];
-        }
-    }
-    console.log(recipes_found);
-    return recipes_found;
+        return arr;
+    }, [])
 }
 
 function picture(req, res, headers) {
