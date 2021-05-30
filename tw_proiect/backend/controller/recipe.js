@@ -402,7 +402,7 @@ async function filter(req, res, headers) {
                 recipes.sort(compare_asc)
         }
 
-        if ()
+
     } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
@@ -532,4 +532,89 @@ function picture(req, res, headers) {
     })
 }
 
-module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter }
+function search(req, res, headers) {
+    try {
+        const baseURL = 'http://' + req.headers.host + '/';
+        const parsedUrl = new URL(req.url, baseURL);
+
+        let search_terms = parsedUrl.searchParams.get('data');
+        console.log(search_terms);
+        let last_index = 0;
+        search_terms = search_terms.split(" ")
+
+        for (let i = 0; i < search_terms.length; i++) {
+            if (search_terms[i] !== undefined && search_terms[i].length > 0) {
+                let conj_regex = new RegExp(' si | sau | la | de | iar | dar | astfel | insa | ci | ca | sa | ori | fie ', "g")
+                console.log((" " + search_terms[i] + " "))
+                if ((" " + search_terms[i] + " ").match(conj_regex) !== null) {
+                    delete search_terms[i]
+                    i = i - 1
+                }
+            } else {
+                search_terms.splice(i, 1)
+                i = i - 1
+            }
+        }
+        console.log("de aici", search_terms)
+
+        // let regex = [];
+        let regex_string = ""
+        for (let j = 0; j < search_terms.length; j++) { //contruim regexurile pentru fiecare ingredient 
+            regex_string += search_terms[j].toLowerCase()
+            if (j != search_terms.length - 1)
+                regex_string += "|"
+        }
+
+        // let re
+        let recipes = Recipe.aggregate([{
+                $match: {
+                    title: { $regex: regex_string }
+                }
+            },
+            {
+                $unionWith: {
+                    coll: 'recipes',
+                    pipeline: [{
+                        $match: {
+                            description: { $regex: regex_string }
+                        }
+                    }]
+                }
+            }
+            // // {
+            // //     $group: {
+            // //         _id: "$_id"
+            // //     }
+            // // },
+            // {
+            //     $unwind: "$recipes"
+            // }
+
+        ], function(err, data) {
+            for (let i = 0; i < data.length; i++)
+                console.log(data[i].title)
+            if (data.length > 0) {
+                res.writeHead(200, headers)
+                res.write(JSON.stringify(data, null, 4));
+                res.end();
+            } else {
+                res.writeHead(404, headers)
+                res.write(JSON.stringify({ "message": "Nu s-a gasit nicio reteta" }, null, 4));
+                res.end();
+            }
+        });
+        // console.log(recipes._pipeline[1])
+        // .find({ title: { $regex: regex_string } })
+        // let recipes
+        //console.log()
+
+    } catch (e) {
+        console.log(e)
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
+        res.end()
+    }
+}
+
+
+module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }
