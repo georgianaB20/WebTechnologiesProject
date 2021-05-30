@@ -20,6 +20,12 @@ function compare(a, b) {
     return 0;
 }
 
+function compare_asc(a, b) {
+    if (a.comments.length > b.comments.length) return 1;
+    if (b.comments.length > a.comments.length) return -1;
+    return 0;
+}
+
 async function getMostPopular(req, res, headers) {
     try {
 
@@ -32,14 +38,12 @@ async function getMostPopular(req, res, headers) {
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipe2, null, 4))
             res.end()
-        }
-        else {
+        } else {
             res.writeHead(404, headers);
             res.write(JSON.stringify({ 'message': 'recipes not found' }, null, 4))
             res.end()
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'recipes not found' }, null, 4))
@@ -52,7 +56,7 @@ async function getRecipe(req, res, headers) {
     //console.log(req.url);
     let id = url.parse(req.url).query.split('&')[0] //luam id-ul pt a l folosi in query
     id = id.split('=')[1]
-    //console.log(id)
+        //console.log(id)
     try {
         let recipebyid = await Recipe.findById(id);
         // console.log(recipebyid)
@@ -60,14 +64,12 @@ async function getRecipe(req, res, headers) {
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipebyid, null, 4))
             res.end()
-        }
-        else {
+        } else {
             res.writeHead(404, headers);
             res.write(JSON.stringify({ 'message': 'Reteta nu a fost gasita!' }, null, 4))
             res.end()
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'Reteta nu a fost gasita!' }, null, 4))
@@ -130,14 +132,13 @@ function addRecipe(req, res, headers) {
 
         const new_recipe = new Recipe(data);
         // console.log(new_recipe);
-        new_recipe.save(function (err) {
+        new_recipe.save(function(err) {
             if (err) {
                 console.log(err);
                 res.writeHead(500, headers);
                 res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                 res.end()
-            }
-            else {
+            } else {
                 res.writeHead(200, headers);
                 res.write(JSON.stringify({ "message": "Reteta adaugata cu succes!" }, null, 4))
                 res.end()
@@ -147,12 +148,12 @@ function addRecipe(req, res, headers) {
 
 }
 
-async function getRecipesUser(req, res, headers) {//returns a json with all reciepes from a user, by username
+async function getRecipesUser(req, res, headers) { //returns a json with all reciepes from a user, by username
     try {
         if (req.url.split("?")[1].split('=')[0] == 'username') {
             let user = req.url.split("?")[1].split('=')[1]
             let userexists = await User.findOne({ username: user })
-            //let recipebyid = await Recipe.findById(id);
+                //let recipebyid = await Recipe.findById(id);
             console.log(user)
             let recipes = await Recipe.find({ username: user })
             var len = recipes.length
@@ -162,30 +163,25 @@ async function getRecipesUser(req, res, headers) {//returns a json with all reci
                 res.write(JSON.stringify({ "message": "Userul nu exista!" }, null, 4));
                 res.end();
                 return;
+            } else
+            if (len === 0) {
+                res.writeHead(404, headers)
+                res.write(JSON.stringify({ "message": "Userul nu are retete" }, null, 4));
+                res.end();
+                return;
+            } else {
+                res.writeHead(200, headers)
+                res.write(JSON.stringify(recipes, null, 4));
+                res.end();
+                return;
             }
-            else
-                if (len === 0) {
-                    res.writeHead(404, headers)
-                    res.write(JSON.stringify({ "message": "Userul nu are retete" }, null, 4));
-                    res.end();
-                    return;
-                }
-                else {
-                    res.writeHead(200, headers)
-                    res.write(JSON.stringify(recipes, null, 4));
-                    res.end();
-                    return;
-                }
-        }
-        else {
-            res.writeHead(400, headers);//bad request, nu se pot afisa retetele unui user decat cautate dupa username
+        } else {
+            res.writeHead(400, headers); //bad request, nu se pot afisa retetele unui user decat cautate dupa username
             res.write(JSON.stringify({ "message": "Nu puteti cauta retetele unui user decat dupa username-ul acestuia!" }, null, 4));
             res.end();
             return;
         }
-    }
-
-    catch (e) {
+    } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
@@ -204,7 +200,7 @@ function updateRecipe(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             data = JSON.parse(data);
             //aici lucram cu datele primite, le prelucram etc
@@ -214,9 +210,8 @@ function updateRecipe(req, res, headers) {
                 res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
                 res.end()
                 return;
-            }
-            else {
-                let user = await User.findById(userid)//daca nu gaseste=null
+            } else {
+                let user = await User.findById(userid) //daca nu gaseste=null
                 let recipe = await Recipe.findById(recipeid)
                 if (user === null) {
                     res.writeHead(404, headers);
@@ -269,13 +264,12 @@ function updateRecipe(req, res, headers) {
                 console.log(recipe)
 
                 let ok = await recipe.save()
-                //console.log(ok, user)
+                    //console.log(ok, user)
                 if (ok === recipe) {
                     res.writeHead(200, headers);
                     res.write(JSON.stringify({ 'message': 'Reteta actualizata!' }, null, 4))
                     res.end()
-                }
-                else {
+                } else {
                     //console.log()
                     res.writeHead(500, headers);
                     res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
@@ -283,8 +277,7 @@ function updateRecipe(req, res, headers) {
                 }
             }
 
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
             res.writeHead(500, headers);
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
@@ -305,9 +298,8 @@ async function deleteRecipe(req, res, headers) {
             res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
             res.end()
             return;
-        }
-        else {
-            let user = await User.findById(userid)//daca nu gaseste=null
+        } else {
+            let user = await User.findById(userid) //daca nu gaseste=null
             let recipe = await Recipe.findById(recipeid)
             if (user === null) {
                 res.writeHead(404, headers);
@@ -326,17 +318,15 @@ async function deleteRecipe(req, res, headers) {
                 res.write(JSON.stringify({ 'message': 'Nu puteti sterge aceasta reteta.' }, null, 4))
                 res.end()
                 return;
-            }
-            else {
-                Recipe.findByIdAndDelete(recipeid, function (err, docs) {
+            } else {
+                Recipe.findByIdAndDelete(recipeid, function(err, docs) {
                     if (err) {
                         console.log(err)
                         res.writeHead(500, headers);
                         res.write(JSON.stringify({ 'message': 'Eroare de la baza de date' }, null, 4))
                         res.end()
                         return;
-                    }
-                    else {
+                    } else {
                         console.log("Deleted : ", docs);
                         res.writeHead(200, headers);
                         res.write(JSON.stringify({ 'message': 'Ati sters reteta' }, null, 4))
@@ -350,14 +340,14 @@ async function deleteRecipe(req, res, headers) {
             //res.write(JSON.stringify({ 'message': 'Ai modificat!' }, null, 4))
             //res.end()
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err)
         res.writeHead(500, headers);
         res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
         res.end()
     }
 }
+
 
 async function filter(req, res, headers) {
     try {
@@ -374,16 +364,45 @@ async function filter(req, res, headers) {
         // ingredient_exists(["rosii"])
         // ingredient_not_exists(["rosii"])
         //include=ulei%2C+marar&exclude=oua%2C+branza
-        let includedElems = include.split(",")
-        for (let i = 0; i<includedElems.length; i++) {
-            includedElems[i]=includedElems[i].trim()
+        let includedElems = [];
+        let excludedElems = [];
+        if (include !== "-") {
+            includedElems = include.split(",")
+            for (let i = 0; i < includedElems.length; i++) {
+                includedElems[i] = includedElems[i].trim()
+            }
         }
-        let excludedElems = exclude.split(",")
-        for (let i = 0; i<excludedElems.length; i++) {
-            excludedElems[i]=excludedElems[i].trim()
+        if (exclude !== "-") {
+            let excludedElems = exclude.split(",")
+            for (let i = 0; i < excludedElems.length; i++) {
+                excludedElems[i] = excludedElems[i].trim()
+            }
         }
         let recipes = intersect(includedElems, excludedElems)
-        console.log(includedElems, excludedElems)
+            //console.log(includedElems, excludedElems)
+        if (recipes.length === 0) {
+            if (nivel_dificultate !== "-")
+                recipes = await Recipe.find({ difficulty: nivel_dificultate })
+            else {
+                recipes = await Recipe.find({})
+            }
+        } else {
+            if (nivel_dificultate !== "-") {
+                for (let i = 0; i < recipes.lenth; i++) {
+                    if (recipes[i].difficulty !== nivel_dificultate)
+                        delete recipes[i]
+                }
+            }
+        }
+
+        if (popularitate !== "-") { //ordonam dupa popularitate
+            if (popularitate === "descendent")
+                recipes.sort(compare)
+            else
+                recipes.sort(compare_asc)
+        }
+
+        if ()
     } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
@@ -392,13 +411,13 @@ async function filter(req, res, headers) {
     }
 }
 
-async function intersect(include,exclude){
+async function intersect(include, exclude) {
     let arrA = await ingredient_exists(include)
     let arrB = await ingredient_not_exists(exclude)
     let count = 0
     console.log(arrA[0], arrB[0])
     let intersection = []
-    Object.values(arrA).filter(item1 => Object.values(arrB).some(item2 => {if(JSON.stringify(item1._id) === JSON.stringify(item2._id)) intersection[count++]=item1}))
+    Object.values(arrA).filter(item1 => Object.values(arrB).some(item2 => { if (JSON.stringify(item1._id) === JSON.stringify(item2._id)) intersection[count++] = item1 }))
 
     console.log(intersection)
 }
@@ -411,15 +430,15 @@ async function ingredient_exists(ingredients) {
     }
 
     let recipes_found = [];
-    let count=0;
+    let count = 0;
 
     for (let i = 0; i < recipes.length; i++) { //parcurgem fiecare reteta
         recipes[i].ingredients.forEach(ingredient => { //parcurgem lista de ingrediente si verificam fiecare ingredient dat in parametru
-            let ingred_found=0;
-            for(let j=0;j<regex.length;j++){
+            let ingred_found = 0;
+            for (let j = 0; j < regex.length; j++) {
                 // console.log(element.match(regex[j]))
                 let matches = ingredient.match(regex[j]) //match intre un ingredient din lista si unul dat ca parametru
-                if(matches !== null){
+                if (matches !== null) {
                     // console.log(ingredient.match(regex[j]).length)
                     //recipes_found[count++] = recipes[i]._id
                     ingred_found += 1;
@@ -427,7 +446,7 @@ async function ingredient_exists(ingredients) {
                 // if(element.match(regex[j]).length > 1)
             }
 
-            if(ingred_found > 0){ //=== ingredients.length daca vrem sa luam toate ingredientele date la parametri
+            if (ingred_found > 0) { //=== ingredients.length daca vrem sa luam toate ingredientele date la parametri
                 recipes_found[count++] = recipes[i];
             }
         });
@@ -436,7 +455,7 @@ async function ingredient_exists(ingredients) {
     return recipes_found;
 }
 
-async function ingredient_not_exists(ingredients){
+async function ingredient_not_exists(ingredients) {
     let recipes = await Recipe.find({}, 'ingredients _id')
     let regex = [];
     for (let j = 0; j < ingredients.length; j++) { //contruim regexurile pentru fiecare ingredient 
@@ -444,16 +463,16 @@ async function ingredient_not_exists(ingredients){
     }
 
     let recipes_found = [];
-    let count=0;
+    let count = 0;
 
     for (let i = 0; i < recipes.length; i++) { //parcurgem fiecare reteta
-        let index_ingredients=0; //crestem contorul daca un ingredient nu se potriveste cu niciunul dintre cele de la parametri
+        let index_ingredients = 0; //crestem contorul daca un ingredient nu se potriveste cu niciunul dintre cele de la parametri
         recipes[i].ingredients.forEach(ingredient => { //parcurgem lista de ingrediente si verificam fiecare ingredient dat in parametru
-            let ingred_found=0;
-            for(let j=0;j<regex.length;j++){
+            let ingred_found = 0;
+            for (let j = 0; j < regex.length; j++) {
                 // console.log(element.match(regex[j]))
                 let matches = ingredient.match(regex[j]) //match intre un ingredient din lista si unul dat ca parametru
-                if(matches === null){
+                if (matches === null) {
                     // console.log(ingredient.match(regex[j]).length)
                     //recipes_found[count++] = recipes[i]._id
                     ingred_found += 1;
@@ -461,13 +480,13 @@ async function ingredient_not_exists(ingredients){
                 // if(element.match(regex[j]).length > 1)
             }
 
-            if(ingred_found === ingredients.length ){ //retinem reteta doar daca nu contine niciun ingredient din cele date ca parametri
+            if (ingred_found === ingredients.length) { //retinem reteta doar daca nu contine niciun ingredient din cele date ca parametri
                 //recipes_found[count++] = recipes[i];
                 index_ingredients += 1;
             }
         });
 
-        if(index_ingredients === recipes[i].ingredients.length){
+        if (index_ingredients === recipes[i].ingredients.length) {
             recipes_found[count++] = recipes[i];
         }
     }
@@ -481,17 +500,14 @@ function picture(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             //   data = JSON.parse(data);
             //aici lucram cu datele primite, le prelucram etc
             console.log(data)
-            var ItemSchema = new Schema(
-                {
-                    img:
-                        { data: Buffer, contentType: String }
-                }
-            );
+            var ItemSchema = new Schema({
+                img: { data: Buffer, contentType: String }
+            });
             var Item = mongoose.model('Picture', ItemSchema);
 
             var newItem = new Item();
@@ -507,8 +523,7 @@ function picture(req, res, headers) {
             res.write(JSON.stringify({ 'message': 'Ai adaugat!' }, null, 4))
             res.end()
 
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
             res.writeHead(500, headers);
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
