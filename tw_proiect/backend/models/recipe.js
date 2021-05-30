@@ -11,15 +11,9 @@ const recipeSchema = new Schema(
         type: Array,
         required: true
       },
-      time_value: {
+      time: {
         type: Number,
         required: true
-      },
-      time_unit:{
-        type: String,
-        enum: ['min','h','d'],
-        required: true,
-        default: 'min'
       },
       difficulty: {
         type: String,
