@@ -9,24 +9,23 @@ const commentController = require('../controller/comment')
 
 let router = new Router()
 
-router.get('/recipes',recipeController.getMostPopular)
-router.get('/recipe',recipeController.getRecipe)
-router.get('/comment', commentController.getComments)
-router.get('/favorites', favoriteController.getFavorites)
-router.get('/recipes/user',recipeController.getRecipesUser) //miky
-router.get('/recipes/filter',recipeController.filter);
-// router.post('/picture',recipeController.picture)
+router.get('/recipes',recipeController.getMostPopular) //OK
+router.get('/recipe',recipeController.getRecipe) //OK
+router.get('/comment', commentController.getComments) //OK
+router.get('/favorites', favoriteController.getFavorites) //OK
+router.get('/recipes/user',recipeController.getRecipesUser) //OK
+router.get('/recipes/filter',recipeController.filter); //OK
 
-router.post('/recipes',recipeController.addRecipe)
+router.post('/recipes',recipeController.addRecipe) //OK
 router.post('/login',userController.login)
 router.post('/register',userController.register)
 router.post('/comment', commentController.addComment)
 
 router.put('/change',userController.change)
 router.put('/recipe',recipeController.updateRecipe)
-router.put('/favorites/add', favoriteController.addFavorite)
-router.put('/favorites/remove', favoriteController.removeFavorite)
-router.put('/grant',userController.grant)
+router.put('/favorites/add', favoriteController.addFavorite) //OK
+router.put('/favorites/remove', favoriteController.removeFavorite)  //OK
+router.put('/grant',userController.grant)  
 router.put('/restrict',userController.restrict)
 
 router.delete('/recipe', recipeController.deleteRecipe)

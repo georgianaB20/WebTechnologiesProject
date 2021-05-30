@@ -49,9 +49,6 @@ async function addComment(req, res, headers) {
 
     // let recipe_by_id = await Recipe.findById(recipe_id);
 
-    console.log(recipe_id)
-    console.log(user_id)
-
     let data = '';
 
     req.on('data', chunk => {
@@ -60,8 +57,7 @@ async function addComment(req, res, headers) {
 
     req.on('end', async () => {
         data = JSON.parse(data);
-        console.log(data)
-
+    
         const new_comment = new Comment(data);
         new_comment.user_id = user_id;
 
