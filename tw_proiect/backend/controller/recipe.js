@@ -367,13 +367,17 @@ async function filter(req, res, headers) {
                        (parsedUrl.searchParams.get('time_min_unit')=="hours")*60+
                        (parsedUrl.searchParams.get('time_min_unit')=="days")*24*60
 
-        time_min = String.parseInt(parsedUrl.searchParams.get('time_min_value'))*multiply
+        if (multiply===0)
+            time_min = 0
+        else time_min = String.parseInt(parsedUrl.searchParams.get('time_min_value'))*multiply
 
         multiply = (parsedUrl.searchParams.get('time_max_unit')=="min")*1+
                    (parsedUrl.searchParams.get('time_max_unit')=="hours")*60+
                    (parsedUrl.searchParams.get('time_max_unit')=="days")*24*60
         
-        time_max = String.parseInt(parsedUrl.searchParams.get('time_max_value'))*multiply
+        if (multiply===0)
+            time_max = Recipe.find().sort({time: -1}).limit(1)
+        else time_max = String.parseInt(parsedUrl.searchParams.get('time_max_value'))*multiply
 
         let entries = await Recipe.find({difficulty: {$regex: regex_diff, $options:"i"}, time: { '$gte': time_min, '$lte': time_max}})
 
@@ -393,13 +397,13 @@ function apply_include_exclude(recipes, includeString, excludeString) {
     let excludeList = excludeString.split(",")
     let finalList = recipes.reduce(function (arr, recipe) {
         let numberOfIncludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient){
-            if (includeList.find(element => element===ingredient)!==undefined)
+            if (includeList.find(element => element.includes(ingredient))!==undefined)
                 return currentNumber+1;
             return currentNumber;
         }, 0)
         
         let numberOfExcludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient){
-            if (excludeList.find(element => element===ingredient)!==undefined)
+            if (excludeList.find(element => element.includes(ingredient)!==undefined))
                 return currentNumber+1;
             return currentNumber;
         }, 0)
@@ -409,48 +413,8 @@ function apply_include_exclude(recipes, includeString, excludeString) {
 
         return arr;
     }, [])
-}
 
-function picture(req, res, headers) {
-    let data = '';
-
-    req.on('data', chunk => {
-        data += chunk;
-    })
-    req.on('end', async () => {
-        try {
-            //   data = JSON.parse(data);
-            //aici lucram cu datele primite, le prelucram etc
-            console.log(data)
-            var ItemSchema = new Schema(
-                {
-                    img:
-                        { data: Buffer, contentType: String }
-                }
-            );
-            var Item = mongoose.model('Picture', ItemSchema);
-
-            var newItem = new Item();
-            newItem.img.data = data;
-            newItem.img.contentType = 'image/png';
-            console.log(await newItem.save());
-
-            console.log(Item.find({}))
-
-
-            //trimitem raspunsul la server cu datele care trebuie
-            res.writeHead(200, headers);
-            res.write(JSON.stringify({ 'message': 'Ai adaugat!' }, null, 4))
-            res.end()
-
-        }
-        catch (err) {
-            console.log(err)
-            res.writeHead(500, headers);
-            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-            res.end()
-        }
-    })
+    return finalList
 }
 
 module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter }
