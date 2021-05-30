@@ -11,15 +11,9 @@ const recipeSchema = new Schema(
         type: Array,
         required: true
       },
-      time_value: {
+      time: {
         type: Number,
         required: true
-      },
-      time_unit:{
-        type: String,
-        enum: ['min','h','d'],
-        required: true,
-        default: 'min'
       },
       difficulty: {
         type: String,
@@ -32,20 +26,16 @@ const recipeSchema = new Schema(
       },
       picture:{
           type: String,
-          default:null
+          default: null
       },
       username:{
           type: String,
           // ref: 'users'
       },
-      comments:{
-          type: Array,
-          default: null
-      },
-      picture_type:{
-        type: String,
-        default: null
-      }
+      comments: [{
+          type: Schema.Types.ObjectId,
+          ref: 'Comment'
+      }]
     },
     { timestamps: true }
   )
