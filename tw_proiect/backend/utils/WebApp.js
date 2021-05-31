@@ -1,9 +1,14 @@
-const http = require('http')
-const { port } = require('../utils/constants')
+const https = require('http2')
+const fs = require('fs')
+const constants = require('../utils/constants')
 class WebApp {
   constructor (port, router) {
     this.port = port
     this.router = router
+    this.options = {
+      key: fs.readFileSync(constants.keypath),
+      cert: fs.readFileSync(constants.certpath)
+    };
   }
 
   use () {
@@ -12,12 +17,11 @@ class WebApp {
 
   listen () {
     var app = this
-    var server = http.createServer(function (req, res) {
+    var server = https.createSecureServer(this.options, function (req, res) {
       app.router.route(req, res)
-      //res.end()
     })
-    server.listen(port)
-    console.log(`app running on PORT: ${port}`)
+    server.listen(constants.port)
+    console.log(`app running on PORT: ${constants.port}`)
   }
 }
 
