@@ -2,52 +2,56 @@
 <html lang="ro">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="stylesheet" href="../css/retetele_mele.css">
-	<link rel="stylesheet" href="../css/index.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../css/retetele_mele.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/filtre.css">
 
-	<link rel="icon" href="../images/favicon1.ico">
+    <link rel="icon" href="../images/favicon1.ico">
     <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/nav.css">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Retetele mele</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retetele mele</title>
 </head>
 
 <body>
-	<header>
-		<nav>
-			<ul class="nav">
-				<li>
-					<div class="search-box">
-						<input class="search-txt" type="text" name="cauta" placeholder="Caută" aria-label="">
-						<a class="search-button" href="#">
-							<i class="fas fa-search"></i>
-						</a>
-					</div>
-				</li>
-				<li><a href="retetele_mele.html"><i class="fas fa-utensils"></i></a></li>
-            	<li><a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a> </li>
-            	<li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
-            	<li><a href="login.html"><i class="far fa-user"></i></a></li>
-			</ul>
-		</nav>
-	</header>
+    <header>
+        <nav>
+            <ul class="nav">
+                <li>
+                    <div class="search-box">
+                        <input class="search-txt" type="text" name="cauta" placeholder="Caută" aria-label="">
+                        <a class="search-button" href="#">
+                            <i class="fas fa-search"></i>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="retete.html"><i class="fas fa-utensils"></i></a></li>
+                <li>
+                    <a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a>
+                </li>
+                <li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
+                <li><a href="login.html"><i class="far fa-user"></i></a></li>
+            </ul>
+        </nav>
+        <script src="../js/nav.js"></script>
+    </header>
 
-	
-	<form class="filters" >
-		<p>Afiseaza retetele dupa:</p>
-		
-		<div>
-		<div class="filter_item">
-		<label for="timp"> Timp preparare </label>
-		<input type="text" name="timp">
-		</div>
 
-		<div class="filter_item">
-		<label for="nivel_dificultate">Nivel de dificultate</label>
-        <select id="nivel_dificultate" name="nivel_dificultate">
+    <form class="filters">
+        <p>Afiseaza retetele dupa:</p>
+
+        <div>
+            <div class="filter_item">
+                <label for="timp"> Timp preparare </label>
+                <input type="text" name="timp">
+            </div>
+
+            <div class="filter_item">
+                <label for="nivel_dificultate">Nivel de dificultate</label>
+                <select id="nivel_dificultate" name="nivel_dificultate">
 			<option value="-"></option>
             <option value="incepator">Incepator</option>
             <option value="mediu">Mediu</option>
@@ -55,116 +59,121 @@
             <option value="foarte_bun">Foarte bun</option>
             <option value="master_chef">Master chef</option>
         </select>
-		</div>
+            </div>
 
-		<div class="filter_item">
-		<label for="include">Include ingrediente</label>
-		<input type="text" name="include">
-		</div>
+            <div class="filter_item">
+                <label for="include">Include ingrediente</label>
+                <input type="text" name="include">
+            </div>
 
-		<div class="filter_item">
-		<label for="exclude">Exclude ingrediente</label>
-		<input type="text" name="exclude">
-		</div>
+            <div class="filter_item">
+                <label for="exclude">Exclude ingrediente</label>
+                <input type="text" name="exclude">
+            </div>
 
-		<div class="filter_item">
-			<label for="data">Data</label>
-			<select name="data">
+            <div class="filter_item">
+                <label for="data">Data</label>
+                <select name="data">
 				<option value="-"></option>
 				<option value="ascendent">ascendent</option>
 				<option value="descendent">descendent</option>
 			</select>
-		</div>
+            </div>
 
-		<div class="filter_item">
-			<label for="popularitate">Popularitate</label>
-			<select name="popularitate">
+            <div class="filter_item">
+                <label for="popularitate">Popularitate</label>
+                <select name="popularitate">
 				<option value="-"></option>
 				<option value="ascendent">ascendent</option>
 				<option value="descendent">descendent</option>
 			</select>
-		</div>
-		</div>
-		
-		<a class="submit">Afiseaza</a>
-	</form>
+            </div>
+        </div>
 
-	<div class="adauga-reteta">
-		<button class="adauga">
+        <a class="submit">Afiseaza</a>
+    </form>
+
+    <div class="adauga-reteta">
+        <button class="adauga">
 			<a href="/adauga_reteta.html" class="ref">
 				<i class="fas fa-plus"></i>
 				<span class="btn">Adaugă o rețetă</span>
 			</a>
 		</button>
-	</div>
-	<div class="containerRetete">
-		<div class="reteta"><a href="index.html">
-			<img src="../images/1.jpg" alt="reteta1"></a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:28</p>
-			<a class="submit" >Editeaza</a>
-			<a class="submit" >Sterge</a>
-		</div>
+    </div>
+    <div class="containerRetete">
+        <div class="reteta">
+            <a href="index.html">
+                <img src="../images/1.jpg" alt="reteta1"></a>
+            <p>Titlul retetei</p>
+            <p>Popularitate:28</p>
+            <a class="submit">Editeaza</a>
+            <a class="submit">Sterge</a>
+        </div>
 
-		<div class="reteta"><a href="index.html">
-			<img src="../images/1.jpg" alt="reteta1"></a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:28</p>
-			<a class="submit" >Editeaza</a>
-			<a class="submit" >Sterge</a>
-		</div>
+        <div class="reteta">
+            <a href="index.html">
+                <img src="../images/1.jpg" alt="reteta1"></a>
+            <p>Titlul retetei</p>
+            <p>Popularitate:28</p>
+            <a class="submit">Editeaza</a>
+            <a class="submit">Sterge</a>
+        </div>
 
-		<div class="reteta"><a href="index.html">
-			<img src="../images/1.jpg" alt="reteta1"></a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:28</p>
-			<a class="submit" >Editeaza</a>
-			<a class="submit" >Sterge</a>
-		</div>
+        <div class="reteta">
+            <a href="index.html">
+                <img src="../images/1.jpg" alt="reteta1"></a>
+            <p>Titlul retetei</p>
+            <p>Popularitate:28</p>
+            <a class="submit">Editeaza</a>
+            <a class="submit">Sterge</a>
+        </div>
 
-		<div class="reteta"> <a href="index.html">
-			<img src="../images/1.jpg" alt="reteta1"> </a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:28</p>
-			<a class="submit" >Editeaza</a>
-			<a class="submit" >Sterge</a>
-		</div>
+        <div class="reteta">
+            <a href="index.html">
+                <img src="../images/1.jpg" alt="reteta1"> </a>
+            <p>Titlul retetei</p>
+            <p>Popularitate:28</p>
+            <a class="submit">Editeaza</a>
+            <a class="submit">Sterge</a>
+        </div>
 
-		<div class="reteta"> <a href="index.html">
-			<img src="../images/1.jpg" alt="reteta1"> </a>
-			<p>Titlul retetei</p>
-			<p>Popularitate:28</p>
-			<a class="submit" >Editeaza</a>
-			<a class="submit" >Sterge</a>
-		</div>
-	</div>
+        <div class="reteta">
+            <a href="index.html">
+                <img src="../images/1.jpg" alt="reteta1"> </a>
+            <p>Titlul retetei</p>
+            <p>Popularitate:28</p>
+            <a class="submit">Editeaza</a>
+            <a class="submit">Sterge</a>
+        </div>
+    </div>
 
 
-	<footer>
-		<p>Creators:</p>
-		<div class="creators">
-			<div class="creator">
-				<p>Boghiu Georgiana</p>
-				<a href="#" class="face">
-					<i class="fab fa-facebook-f"></i>
-				</a>
-			</div>
-			<div class="creator">
-				<p>Cernat Roxana</p>
-				<a href="#" class="face">
-					<i class="fab fa-facebook-f"></i>
-				</a>
-			</div>
-			<div class="creator">
-				<p>Formagiu Miky</p>
-				<a href="#" class="face">
-					<i class="fab fa-facebook-f"></i>
-				</a>
-			</div>
-		</div>
-		<p>Copyrights reserved.</p>
-		<a class="documentatie" href="documentatie.html" >About the project</a>
-	</footer>
+    <footer>
+        <p>Creators:</p>
+        <div class="creators">
+            <div class="creator">
+                <p>Boghiu Georgiana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Cernat Roxana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Formagiu Miky</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+        </div>
+        <p>Copyrights reserved.</p>
+        <a class="documentatie" href="documentatie.html">About the project</a>
+    </footer>
 </body>
 
 </html>

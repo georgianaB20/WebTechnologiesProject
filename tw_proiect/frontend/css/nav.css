@@ -3,7 +3,6 @@
     margin: 0;
 }
 
-
 body {
     font-family: Montserrat, sans-serif;
     margin: 0;
@@ -19,12 +18,11 @@ body {
     width: 7em;
 }
 
-
 header {
     position: sticky;
     top: 0;
     background-color: rgba(207, 180, 145, 0.9);
-    z-index:1;
+    z-index: 1;
 }
 
 .nav {
@@ -50,12 +48,12 @@ header {
     padding: 0;
 }
 
-.search-box:hover > .search-txt{
+.search-box:hover>.search-txt {
     width: 6em;
     padding-left: 0.4em;
 }
 
-.search-button{
+.search-button {
     float: none;
     width: 2em;
     height: 2em;
@@ -65,6 +63,13 @@ header {
     align-items: center;
     color: black;
     text-decoration: none;
+}
+
+.search-button2 {
+    background-color: inherit;
+    text-decoration: inherit;
+    color: inherit;
+    border: inherit;
 }
 
 .search-txt {
@@ -80,14 +85,14 @@ header {
     width: 0;
 }
 
-.search-box:focus-within > .search-txt {
+.search-box:focus-within>.search-txt {
     border: 1px solid black;
     border-radius: 3em;
     transition: 0.6s;
 }
 
-.nav a{
+.nav a {
     text-decoration: none;
-    color:inherit;
+    color: inherit;
     z-index: 1
 }

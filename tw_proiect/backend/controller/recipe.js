@@ -22,6 +22,12 @@ function compare(a, b) {
     return 0;
 }
 
+function compare_asc(a, b) {
+    if (a.comments.length > b.comments.length) return 1;
+    if (b.comments.length > a.comments.length) return -1;
+    return 0;
+}
+
 async function getMostPopular(req, res, headers) {
     try {
         let recipe2 = await Recipe.find({}, 'title description ingredients comments');
@@ -30,14 +36,12 @@ async function getMostPopular(req, res, headers) {
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipe2, null, 4))
             res.end()
-        }
-        else {
+        } else {
             res.writeHead(404, headers);
             res.write(JSON.stringify({ 'message': 'recipes not found' }, null, 4))
             res.end()
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'recipes not found' }, null, 4))
@@ -55,14 +59,12 @@ async function getRecipe(req, res, headers) {
             res.writeHead(200, headers);
             res.write(JSON.stringify(recipebyid, null, 4))
             res.end()
-        }
-        else {
+        } else {
             res.writeHead(404, headers);
             res.write(JSON.stringify({ 'message': 'Reteta nu a fost gasita!' }, null, 4))
             res.end()
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'Reteta nu a fost gasita!' }, null, 4))
@@ -102,7 +104,7 @@ function addRecipe(req, res, headers) {
 
         var buf = Buffer.from(data.picture, 'base64');
 
-        data.picture="";
+        data.picture = "";
 
         let no_ingredients = Object.keys(data).length - 6;
         let ingredient = [];
@@ -111,7 +113,7 @@ function addRecipe(req, res, headers) {
             if (data["ingredient" + i] !== "") {
                 ingredient[i - 1] = data["ingredient" + i];
             }
-        
+
             delete data["ingredient" + i];
         }
 
@@ -125,25 +127,22 @@ function addRecipe(req, res, headers) {
         data.ingredients = ingredient;
 
         const new_recipe = new Recipe(data);
-        new_recipe.save(async function (err) {
+        new_recipe.save(async function(err) {
             if (err) {
                 console.log(err);
                 res.writeHead(500, headers);
                 res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                 res.end()
-            }
-            else {
+            } else {
                 filename = new_recipe._id
-                fs.writeFile('./images/'+filename+'.'+data.picture_type,buf, function (err) {console.log(err);})
-                new_recipe.picture='./images/'+filename+'.'+data.picture_type
+                fs.writeFile('./images/' + filename + '.' + data.picture_type, buf, function(err) { console.log(err); })
+                new_recipe.picture = './images/' + filename + '.' + data.picture_type
                 let ok = await new_recipe.save()
-                if(ok===new_recipe)
-                {
+                if (ok === new_recipe) {
                     res.writeHead(200, headers);
                     res.write(JSON.stringify({ "message": "Reteta adaugata cu succes!" }, null, 4))
                     res.end()
-                }
-                else {
+                } else {
                     console.log(ok);
                     res.writeHead(500, headers);
                     res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
@@ -155,39 +154,34 @@ function addRecipe(req, res, headers) {
 
 }
 
-async function getRecipesUser(req, res, headers) {//returns a json with all reciepes from a user, by username
+async function getRecipesUser(req, res, headers) { //returns a json with all reciepes from a user, by username
     try {
         if (req.url.split("?")[1].split('=')[0] == 'username') {
             let user = req.url.split("?")[1].split('=')[1]
             let userexists = await User.findOne({ username: user })
-            //let recipebyid = await Recipe.findById(id);
+                //let recipebyid = await Recipe.findById(id);
             let recipes = await Recipe.find({ username: user })
             var len = recipes.length
             if (userexists === null) {
                 res.writeHead(404, headers)
                 res.write(JSON.stringify({ "message": "Userul nu exista!" }, null, 4));
                 res.end();
+            } else
+            if (len === 0) {
+                res.writeHead(404, headers)
+                res.write(JSON.stringify({ "message": "Userul nu are retete" }, null, 4));
+                res.end();
+            } else {
+                res.writeHead(200, headers)
+                res.write(JSON.stringify(recipes, null, 4));
+                res.end();
             }
-            else
-                if (len === 0) {
-                    res.writeHead(404, headers)
-                    res.write(JSON.stringify({ "message": "Userul nu are retete" }, null, 4));
-                    res.end();
-                }
-                else {
-                    res.writeHead(200, headers)
-                    res.write(JSON.stringify(recipes, null, 4));
-                    res.end();
-                }
-        }
-        else {
-            res.writeHead(400, headers);//bad request, nu se pot afisa retetele unui user decat cautate dupa username
+        } else {
+            res.writeHead(400, headers); //bad request, nu se pot afisa retetele unui user decat cautate dupa username
             res.write(JSON.stringify({ "message": "Nu puteti cauta retetele unui user decat dupa username-ul acestuia!" }, null, 4));
             res.end();
         }
-    }
-
-    catch (e) {
+    } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
@@ -203,7 +197,7 @@ function updateRecipe(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             data = JSON.parse(data);
             //aici lucram cu datele primite, le prelucram etc
@@ -212,9 +206,8 @@ function updateRecipe(req, res, headers) {
                 res.writeHead(404, headers);
                 res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
                 res.end()
-            }
-            else {
-                let user = await User.findById(userid)//daca nu gaseste=null
+            } else {
+                let user = await User.findById(userid) //daca nu gaseste=null
                 let recipe = await Recipe.findById(recipeid)
                 if (user === null) {
                     res.writeHead(404, headers);
@@ -267,13 +260,12 @@ function updateRecipe(req, res, headers) {
                 console.log(recipe)
 
                 let ok = await recipe.save()
-                //console.log(ok, user)
+                    //console.log(ok, user)
                 if (ok === recipe) {
                     res.writeHead(200, headers);
                     res.write(JSON.stringify({ 'message': 'Reteta actualizata!' }, null, 4))
                     res.end()
-                }
-                else {
+                } else {
                     //console.log()
                     res.writeHead(500, headers);
                     res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
@@ -281,8 +273,7 @@ function updateRecipe(req, res, headers) {
                 }
             }
 
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
             res.writeHead(500, headers);
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
@@ -302,9 +293,8 @@ async function deleteRecipe(req, res, headers) {
             res.writeHead(404, headers);
             res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
             res.end()
-        }
-        else {
-            let user = await User.findById(userid)//daca nu gaseste=null
+        } else {
+            let user = await User.findById(userid) //daca nu gaseste=null
             let recipe = await Recipe.findById(recipeid)
             if (user === null) {
                 res.writeHead(404, headers);
@@ -318,20 +308,18 @@ async function deleteRecipe(req, res, headers) {
                 res.end()
                 return;
             }
-            if (!(user.username === recipe.username || (user.type === 'admin'))) {
+            if (!(user._id === recipe.user_id || (user.type === 'admin'))) {
                 res.writeHead(422, headers);
                 res.write(JSON.stringify({ 'message': 'Nu puteti sterge aceasta reteta.' }, null, 4))
                 res.end()
-            }
-            else {
-                Recipe.findByIdAndDelete(recipeid, function (err, docs) {
+            } else {
+                Recipe.findByIdAndDelete(recipeid, function(err, docs) {
                     if (err) {
                         console.log(err)
                         res.writeHead(500, headers);
                         res.write(JSON.stringify({ 'message': 'Eroare de la baza de date' }, null, 4))
                         res.end()
-                    }
-                    else {
+                    } else {
                         console.log("Deleted : ", docs);
                         res.writeHead(200, headers);
                         res.write(JSON.stringify({ 'message': 'Ati sters reteta' }, null, 4))
@@ -344,8 +332,7 @@ async function deleteRecipe(req, res, headers) {
             //res.write(JSON.stringify({ 'message': 'Ai modificat!' }, null, 4))
             //res.end()
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err)
         res.writeHead(500, headers);
         res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
@@ -353,43 +340,43 @@ async function deleteRecipe(req, res, headers) {
     }
 }
 
+
 async function filter(req, res, headers) {
     try {
         const baseURL = 'http://' + req.headers.host + '/';
         const parsedUrl = new URL(req.url, baseURL);
 
         const diff_map = {
-            '^Easy$': parsedUrl.searchParams.get('diff_easy')==="1",
-            '^Medium$': parsedUrl.searchParams.get('diff_medium')==="1",
-            '^Hard$': parsedUrl.searchParams.get('diff_hard')==="1",
-            '^Master Chef$': parsedUrl.searchParams.get('diff_master')==="1"
+            '^Easy$': parsedUrl.searchParams.get('diff_easy') === "1",
+            '^Medium$': parsedUrl.searchParams.get('diff_medium') === "1",
+            '^Hard$': parsedUrl.searchParams.get('diff_hard') === "1",
+            '^Master Chef$': parsedUrl.searchParams.get('diff_master') === "1"
         }
-        let regex_diff=Object.keys(diff_map).reduce(function (acc, key) {
-            if (diff_map[key]==true)
-            {
-                if (acc!=="")
-                    acc+="|";
+        let regex_diff = Object.keys(diff_map).reduce(function(acc, key) {
+            if (diff_map[key] == true) {
+                if (acc !== "")
+                    acc += "|";
             }
             return acc;
         });
 
-        var multiply = (parsedUrl.searchParams.get('time_min_unit')=="min")*1+
-                       (parsedUrl.searchParams.get('time_min_unit')=="hours")*60+
-                       (parsedUrl.searchParams.get('time_min_unit')=="days")*24*60
+        var multiply = (parsedUrl.searchParams.get('time_min_unit') == "min") * 1 +
+            (parsedUrl.searchParams.get('time_min_unit') == "hours") * 60 +
+            (parsedUrl.searchParams.get('time_min_unit') == "days") * 24 * 60
 
-        if (multiply===0)
+        if (multiply === 0)
             time_min = 0
-        else time_min = String.parseInt(parsedUrl.searchParams.get('time_min_value'))*multiply
+        else time_min = String.parseInt(parsedUrl.searchParams.get('time_min_value')) * multiply
 
-        multiply = (parsedUrl.searchParams.get('time_max_unit')=="min")*1+
-                   (parsedUrl.searchParams.get('time_max_unit')=="hours")*60+
-                   (parsedUrl.searchParams.get('time_max_unit')=="days")*24*60
-        
-        if (multiply===0)
-            time_max = Recipe.find().sort({time: -1}).limit(1)
-        else time_max = String.parseInt(parsedUrl.searchParams.get('time_max_value'))*multiply
+        multiply = (parsedUrl.searchParams.get('time_max_unit') == "min") * 1 +
+            (parsedUrl.searchParams.get('time_max_unit') == "hours") * 60 +
+            (parsedUrl.searchParams.get('time_max_unit') == "days") * 24 * 60
 
-        let entries = await Recipe.find({difficulty: {$regex: regex_diff, $options:"i"}, time: { '$gte': time_min, '$lte': time_max}})
+        if (multiply === 0)
+            time_max = Recipe.find().sort({ time: -1 }).limit(1)
+        else time_max = String.parseInt(parsedUrl.searchParams.get('time_max_value')) * multiply
+
+        let entries = await Recipe.find({ difficulty: { $regex: regex_diff, $options: "i" }, time: { '$gte': time_min, '$lte': time_max } })
 
         res.writeHead(200, headers);
         res.write(JSON.stringify(apply_include_exclude(entries, parsedUrl.searchParams.get('include'), parsedUrl.searchParams.get('exclude'))));
@@ -405,20 +392,20 @@ async function filter(req, res, headers) {
 function apply_include_exclude(recipes, includeString, excludeString) {
     let includeList = includeString.split(",")
     let excludeList = excludeString.split(",")
-    let finalList = recipes.reduce(function (arr, recipe) {
-        let numberOfIncludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient){
-            if (includeList.find(element => element.includes(ingredient))!==undefined)
-                return currentNumber+1;
+    let finalList = recipes.reduce(function(arr, recipe) {
+        let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
+            if (includeList.find(element => element.includes(ingredient)) !== undefined)
+                return currentNumber + 1;
             return currentNumber;
         }, 0)
-        
-        let numberOfExcludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient){
-            if (excludeList.find(element => element.includes(ingredient)!==undefined))
-                return currentNumber+1;
+
+        let numberOfExcludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
+            if (excludeList.find(element => element.includes(ingredient) !== undefined))
+                return currentNumber + 1;
             return currentNumber;
         }, 0)
-        
-        if (numberOfExcludedIngredients===0 && numberOfIncludedIngredients===includeList.length)
+
+        if (numberOfExcludedIngredients === 0 && numberOfIncludedIngredients === includeList.length)
             arr.push(recipe);
 
         return arr;
@@ -427,4 +414,78 @@ function apply_include_exclude(recipes, includeString, excludeString) {
     return finalList
 }
 
-module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter }
+function search(req, res, headers) {
+    try {
+        const baseURL = 'http://' + req.headers.host + '/';
+        const parsedUrl = new URL(req.url, baseURL);
+
+        let search_terms = parsedUrl.searchParams.get('data');
+        console.log(search_terms);
+        let last_index = 0;
+        search_terms = search_terms.split(" ")
+
+        for (let i = 0; i < search_terms.length; i++) {
+            if (search_terms[i] !== undefined && search_terms[i].length > 0) {
+                let conj_regex = new RegExp(' si | sau | la | de | iar | dar | astfel | insa | ci | ca | sa | ori | fie | cu ', "g")
+                console.log((" " + search_terms[i] + " "))
+                if ((" " + search_terms[i] + " ").match(conj_regex) !== null) {
+                    delete search_terms[i]
+                    i = i - 1
+                }
+            } else {
+                search_terms.splice(i, 1)
+                i = i - 1
+            }
+        }
+        console.log("de aici", search_terms)
+
+        // let regex = [];
+        let regex_string = ""
+        for (let j = 0; j < search_terms.length; j++) { //contruim regexurile pentru fiecare ingredient 
+            regex_string += search_terms[j].toLowerCase()
+            if (j != search_terms.length - 1)
+                regex_string += "|"
+        }
+
+        // let re
+        let recipes = Recipe.aggregate([{
+                $match: {
+                    title: { $regex: regex_string }
+                }
+            },
+            {
+                $unionWith: {
+                    coll: 'recipes',
+                    pipeline: [{
+                        $match: {
+                            description: { $regex: regex_string }
+                        }
+                    }]
+                }
+            }
+
+        ], function(err, data) {
+            for (let i = 0; i < data.length; i++)
+                console.log(data[i].title)
+            if (data.length > 0) {
+                res.writeHead(200, headers)
+                res.write(JSON.stringify(data, null, 4));
+                res.end();
+            } else {
+                res.writeHead(404, headers)
+                res.write(JSON.stringify({ "message": "Nu s-a gasit nicio reteta" }, null, 4));
+                res.end();
+            }
+        });
+
+
+    } catch (e) {
+        console.log(e)
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
+        res.end()
+    }
+}
+
+
+module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }

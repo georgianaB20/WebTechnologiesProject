@@ -1,102 +1,25 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
-
-
-.containerRetete{
-	margin:5em 0;
-	display:flex;
-	justify-content:space-evenly;
-	flex-wrap:wrap;
+.containerRetete {
+    margin: 5em 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
-.reteta{
-	border-radius:2em;
-	border-color:cadetblue;
-	padding:2em;
-	margin:1em;
-	background-color:rgba(0, 99, 71, 0.3);
+.reteta {
+    border-radius: 2em;
+    border-color: cadetblue;
+    padding: 2em;
+    margin: 1em;
+    background-color: rgba(0, 99, 71, 0.3);
 }
 
-.reteta img{
-	width:19em;
-	height:25em;
+.reteta img {
+    width: 19em;
+    height: 25em;
 }
 
 .reteta p {
-	font-size: 1em;
-	margin-bottom: 0.5em;
-}
-
-.filters {
-	justify-self: center;
-	padding-top:1em;
-	display: grid;
-	grid-template-rows: auto auto auto auto;
-	grid-auto-columns: 27.5% 15% 15% 15% 27.5%;
-}
-
-.filters p , .filters a{
-	grid-column: 3 / span 1;
-	margin:0 auto;
-	padding:1em;
-}
-
-.filters div{
-	/* -ms-grid-column-align: center; */
-
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	align-items: center;
-	align-content: center;
-	grid-column: 2 / span 3;
-	flex-wrap: wrap;
-	padding-bottom: 0.5em;
-}
-
-.filters div div{
-	display: flex;
-	flex-direction: column;
-}
-
-.filter_item input, .filter_item select, .filter_item option{
-	width: 15em;
-	height: 2em;
-	font-family: Montserrat;
-	border-radius: 2em;
-	border-color: burlywood;
-}
-
-
-.submit {
-	cursor: pointer;
-	border-radius: 5em;
-	color: #fff;
-	background: linear-gradient(to right, #423f3b, #847e77);
-	border: 0;
-	padding: 5px 10px 10px;
-	font-family: Montserrat, sans-serif;
-	font-size: 13px;
-	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
-}
-.ref {
-	text-decoration: none;
-	color: inherit;
-}
-
-.adauga {
-	font-family: Montserrat, sans-serif;
-	outline: none;
-	border-color: #cfb491;
-	border-radius: 3em;
-	background-color: #cfb491;
-	text-decoration: none;
-	cursor: pointer;
-	transition: 0.3s;
-	margin-left: 7em;
-	font-size: 1.1em;
-}
-
-.adauga:hover {
-	transform: scale(1.1);
-	z-index:-1;
+    font-size: 1em;
+    margin-bottom: 0.5em;
 }
