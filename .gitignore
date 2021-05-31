@@ -4,3 +4,4 @@
 **/.env
 **/backend/images
 **/bower_components
+**/security
