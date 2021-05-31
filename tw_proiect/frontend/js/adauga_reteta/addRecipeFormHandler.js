@@ -21,31 +21,30 @@ async function postFormDataAsJSON({ url, formData }) {
 
     plainFormData.picture_type = plainFormData.picture.type
     var reader = new FileReader()
-    reader.onload = async function (e) {
+    reader.onload = async function(e) {
 
         plainFormData.picture = btoa(reader.result);
 
         const formDataJsonString = JSON.stringify(plainFormData);
 
         var req = new XMLHttpRequest()
-        
-        req.open("POST",url);
-        
-        req.setRequestHeader("Content-Type","application/json");
-        req.setRequestHeader("Accept","application/json");
-        req.setRequestHeader("Access-Control-Allow-Origin","*");
+
+        req.open("POST", url);
+
+        req.setRequestHeader("Content-Type", "application/json");
+        req.setRequestHeader("Accept", "application/json");
+        req.setRequestHeader("Access-Control-Allow-Origin", "*");
         req.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'))
-        
+
         req.onload = function() {
-            if (req.status===200) {
+            if (req.status === 200) {
+                console.log(JSON.parse(req.response)._id)
                 alert("Reteta adaugata cu succes. Apasati OK pt redirectare.")
-                window.location.href="./reteta.html?id="+JSON.parse(req.response).id
-            }
-            else {
-                if (req.status===403) {
+                window.location.replace("./reteta.html?id=" + JSON.parse(req.response)._id)
+            } else {
+                if (req.status === 403) {
                     alert("Nu puteti adauga retete. Contactati administratorul.")
-                }
-                else {
+                } else {
                     alert("Eroare interna! Incercati mai tarziu.")
                 }
             }

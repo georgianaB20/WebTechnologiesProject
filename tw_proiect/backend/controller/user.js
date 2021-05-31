@@ -24,7 +24,7 @@ function login(req, res, headers) {
     req.on('end', async() => {
         try {
             data = JSON.parse(data);
-            
+
             let user = await User.findOne({ "username": data.username }, '_id') //ca sa verificam daca userul exista
             let user2 = await User.findOne({ "username": data.username, "password": md5(data.password).toString(crypto.enc.Hex) }) //verificam daca parola este corecta
                 //console.log(user2)
@@ -37,9 +37,9 @@ function login(req, res, headers) {
                 res.write(JSON.stringify({ 'message': 'Parola gresita.' }, null, 4))
                 res.end()
             } else if (user2.access === "yes") {
-                user={'username': user2.username, 'user_id': user2._id}
+                user = { 'username': user2.username, 'user_id': user2._id }
                 res.writeHead(200, headers)
-                res.write(JSON.stringify({'Authorization': jwt.sign(user, constants.key)}))
+                res.write(JSON.stringify({ 'Authorization': jwt.sign(user, constants.key) }))
                 res.end()
             } else {
                 res.writeHead(403, headers);

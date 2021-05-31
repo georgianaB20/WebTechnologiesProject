@@ -80,70 +80,102 @@ json sample for testing addRecipe
 
 */
 
-function addRecipe(req, res, headers) {
+async function addRecipe(req, res, headers) {
     let auth = req.headers.authorization
 
-    decoded = jwt.verify(auth,key)
+    let decoded = jwt.verify(auth, key)
 
     //decoded.user_id to get the user_id
+    let user_id = decoded.user_id
 
-    let data = '';
+    //verificam daca userul poate posta retete
+    let user = await User.findById(user_id)
+    if (user === null) {
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ "message": "Userul nu exista" }, null, 4));
+        res.end();
+        // return;
+    } else if (user.can_post === "no") {
+        res.writeHead(403, headers);
+        res.write(JSON.stringify({ 'message': 'Userul este restrictionat!' }, null, 4))
+        res.end()
+    } else {
 
-    req.on('data', chunk => {
-        data += chunk;
-    })
-    req.on('end', () => {
-        data = JSON.parse(data);
+        let data = '';
 
-        var buf = Buffer.from(data.picture, 'base64');
+        req.on('data', chunk => {
+            data += chunk;
+        })
+        req.on('end', () => {
+            data = JSON.parse(data);
 
-        data.picture = "";
+            var buf = Buffer.from(data.picture, 'base64');
 
-        let no_ingredients = Object.keys(data).length - 6;
-        let ingredient = [];
+            data.picture = "";
 
-        for (let i = 1; i <= no_ingredients; i++) {
-            if (data["ingredient" + i] !== "") {
-                ingredient[i - 1] = data["ingredient" + i];
+            let no_ingredients = Object.keys(data).length - 6;
+            let ingredient = [];
+
+            for (let i = 1; i <= no_ingredients; i++) {
+                if (data["ingredient" + i] !== "" && data["ingredient" + i] !== null) {
+                    ingredient[i - 1] = data["ingredient" + i];
+                }
+
+                delete data["ingredient" + i];
             }
 
-            delete data["ingredient" + i];
-        }
+            if (ingredient.length === 0) {
+                res.writeHead(400, headers);
+                res.write(JSON.stringify({ "message": "Nu puteti adauga o reteta fara ingrediente" }, null, 4));
+                res.end();
+                return;
+            }
 
-        if (ingredient.length === 0) {
-            res.writeHead(400, headers);
-            res.write(JSON.stringify({ "message": "Nu puteti adauga o reteta fara ingrediente" }, null, 4));
-            res.end();
-            return;
-        }
+            data.ingredients = ingredient;
 
-        data.ingredients = ingredient;
+            // data.user_id = user_id;
+            if (data.time_unit === "min") {
+                data.time = parseInt(data.time_value)
+            } else if (data.time_unit === "h") {
+                data.time = parseInt(data.time_value) * 60
+            } else if (data.time_unit === "d") {
+                data.time = parseInt(data.time_value) * 24 * 60
+            }
+            delete data.time_value
+            delete data.time_unit
+            console.log(data);
+            let new_recipe = new Recipe(data);
 
-        const new_recipe = new Recipe(data);
-        new_recipe.save(async function(err) {
-            if (err) {
-                console.log(err);
-                res.writeHead(500, headers);
-                res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-                res.end()
-            } else {
-                filename = new_recipe._id
-                fs.writeFile('./images/' + filename + '.' + data.picture_type, buf, function(err) { console.log(err); })
-                new_recipe.picture = './images/' + filename + '.' + data.picture_type
-                let ok = await new_recipe.save()
-                if (ok === new_recipe) {
-                    res.writeHead(200, headers);
-                    res.write(JSON.stringify({ "message": "Reteta adaugata cu succes!" }, null, 4))
-                    res.end()
-                } else {
-                    console.log(ok);
+            // console.log(new_recipe)
+            new_recipe.save(async function(err) {
+                if (err) {
+                    console.log(err);
                     res.writeHead(500, headers);
                     res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                     res.end()
+                } else {
+                    // console.log(new_recipe)
+                    new_recipe.user_id = user_id
+                    filename = new_recipe._id
+                    fs.writeFile('./images/' + filename + '.' + (data.picture_type.split('/')[1]), buf, function(err) { console.log(err); })
+                    new_recipe.picture = './images/' + filename + '.' + (data.picture_type.split('/')[1])
+                    new_recipe.picture_type = data.picture_type
+                    let ok = await new_recipe.save()
+                    if (ok === new_recipe) {
+                        console.log(ok)
+                        res.writeHead(200, headers);
+                        res.write(JSON.stringify({ _id: ok._id }, null, 4))
+                        res.end()
+                    } else {
+                        console.log(ok);
+                        res.writeHead(500, headers);
+                        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                        res.end()
+                    }
                 }
-            }
-        });
-    })
+            });
+        })
+    }
 
 }
 
