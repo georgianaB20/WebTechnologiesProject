@@ -1,3 +1,4 @@
+// import CryptoJS from './bower_components/crypto-js';
 export async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -8,7 +9,7 @@ export async function handleFormSubmit(event) {
     try {
         const formData = new FormData(form);
 
-        await postFormDataAsJSON({url, formData});
+        await postFormDataAsJSON({ url, formData });
     } catch (error) {
         console.error(error);
     }
@@ -20,14 +21,14 @@ async function postFormDataAsJSON({ url, formData }) {
     const plainFormData = Object.fromEntries(formData.entries());
 
     // console.log(await plainFormData.picture.text())
-    if(plainFormData.picture !== undefined){
+    if (plainFormData.picture !== undefined) {
         // console.log(plainFormData.picture.type)
-        plainFormData.picture_type=plainFormData.picture.type
+        plainFormData.picture_type = plainFormData.picture.type
         var reader = new FileReader()
-        reader.onload = async function (e) {
-            
+        reader.onload = async function(e) {
+
             plainFormData.picture = btoa(reader.result);
-            
+
             const formDataJsonString = JSON.stringify(plainFormData);
 
             const fetchOptions = {
@@ -39,19 +40,18 @@ async function postFormDataAsJSON({ url, formData }) {
                 },
                 body: formDataJsonString,
             };
-        
+
             const response = await fetch(url, fetchOptions);
-        
-            if (!response.ok){
+
+            if (!response.ok) {
                 const errorMessage = await response.text();
                 throw new Error(errorMessage);
             }
-        
-            return response.json();            
+
+            return response.json();
         }
         reader.readAsBinaryString(plainFormData.picture)
-    }
-    else {
+    } else {
         console.log(plainFormData)
 
         const formDataJsonString = JSON.stringify(plainFormData);
@@ -70,7 +70,7 @@ async function postFormDataAsJSON({ url, formData }) {
 
         const response = await fetch(url, fetchOptions);
 
-        if (!response.ok){
+        if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(errorMessage);
         }

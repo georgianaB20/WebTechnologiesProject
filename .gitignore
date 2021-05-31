@@ -3,3 +3,4 @@
 **/.DS_Store
 **/.env
 **/backend/images
+**/bower_components
