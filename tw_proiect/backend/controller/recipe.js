@@ -22,12 +22,6 @@ function compare(a, b) {
     return 0;
 }
 
-function compare_asc(a, b) {
-    if (a.comments.length > b.comments.length) return 1;
-    if (b.comments.length > a.comments.length) return -1;
-    return 0;
-}
-
 async function getMostPopular(req, res, headers) {
     try {
         let recipe2 = await Recipe.find({}, 'title description ingredients comments');
@@ -72,7 +66,6 @@ async function getRecipe(req, res, headers) {
     }
 }
 
-
 /*
 json sample for testing addRecipe
 {
@@ -92,7 +85,6 @@ json sample for testing addRecipe
 }
 
 */
-
 function addRecipe(req, res, headers) {
     let data = '';
 
@@ -101,6 +93,21 @@ function addRecipe(req, res, headers) {
     })
     req.on('end', () => {
         data = JSON.parse(data);
+
+        //TODO: TREBUIE MODIFICAT DUPA CE FACEM LOGINUL FUNCTIONAL
+        data.user_id = "FICTIV"
+
+        var multiply = (data.time_unit== "min") * 1 +
+            (data.time_min_unit == "hours") * 60 +
+            (data.time_min_unit == "days") * 24 * 60
+
+        if (multiply === 0)
+            time = 0
+        else time = String.parseInt(data.time_value) * multiply
+
+        data.time=time
+        delete data.time_unit
+        delete data.time_value
 
         var buf = Buffer.from(data.picture, 'base64');
 
@@ -340,7 +347,6 @@ async function deleteRecipe(req, res, headers) {
     }
 }
 
-
 async function filter(req, res, headers) {
     try {
         const baseURL = 'http://' + req.headers.host + '/';
@@ -486,6 +492,5 @@ function search(req, res, headers) {
         res.end()
     }
 }
-
 
 module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }
