@@ -340,7 +340,6 @@ async function deleteRecipe(req, res, headers) {
     }
 }
 
-
 async function filter(req, res, headers) {
     try {
         const baseURL = 'http://' + req.headers.host + '/';
@@ -379,7 +378,7 @@ async function filter(req, res, headers) {
         let entries = await Recipe.find({ difficulty: { $regex: regex_diff, $options: "i" }, time: { '$gte': time_min, '$lte': time_max } })
 
         res.writeHead(200, headers);
-        res.write(JSON.stringify(apply_include_exclude(entries, parsedUrl.searchParams.get('include'), parsedUrl.searchParams.get('exclude'))));
+        res.write(JSON.stringify(apply_include_exclude_sort(entries, parsedUrl.searchParams.get('include'), parsedUrl.searchParams.get('exclude'), parsedUrl.searchParams.get('order_by'), parsedUrl.searchParams.get('order'))));
         res.end()
     } catch (e) {
         console.log(e)
@@ -389,10 +388,11 @@ async function filter(req, res, headers) {
     }
 }
 
-function apply_include_exclude(recipes, includeString, excludeString) {
+function apply_include_exclude_sort(recipes, includeString, excludeString, order_by, order) {
     let includeList = includeString.split(",")
     let excludeList = excludeString.split(",")
-    let finalList = recipes.reduce(function(arr, recipe) {
+    order=(order==="ASC")?-1:1
+    let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
         let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
             if (includeList.find(element => element.includes(ingredient)) !== undefined)
                 return currentNumber + 1;
@@ -406,10 +406,20 @@ function apply_include_exclude(recipes, includeString, excludeString) {
         }, 0)
 
         if (numberOfExcludedIngredients === 0 && numberOfIncludedIngredients === includeList.length)
-            arr.push(recipe);
+            arr.push({'recipe': recipe, 'extra_ingredients': recipe.ingredients.length-includeList.length});
 
         return arr;
     }, [])
+
+    let finalList = listAfterIncludeExclude.sort(function (el1, el2) {
+        if (el1.extra_ingredients<el2.extra_ingredients)
+            return -1;
+        if (el1.extra_ingredients>el2.extra_ingredients)
+            return 1;
+        if (el1.recipe[order_by]<el2.recipe[order_by])
+            return order;
+        return -order;
+    })
 
     return finalList
 }
