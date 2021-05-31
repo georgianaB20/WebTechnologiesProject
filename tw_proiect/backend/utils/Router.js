@@ -49,7 +49,7 @@ class Router {
     const headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'OPTIONS, POST, GET, PUT, DELETE',
-      'Access-Control-Allow-Headers': 'content-type, access-control-allow-origin',
+      'Access-Control-Allow-Headers': 'content-type, access-control-allow-origin, authorization',
       'Access-Control-Max-Age': 2592000, // 30 days
       /** add other headers as per requirement */
     };

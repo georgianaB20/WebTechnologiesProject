@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
 const User = require('../models/user')
-const { db } = require('../utils/constants')
+const constants = require('../utils/constants')
 const md5 = require('crypto-js/md5')
+const crypto = require('crypto-js')
 let url = require('url')
 mongoose.set('useFindAndModify', false);
+const jwt = require('jsonwebtoken')
 
 /*json sample for testing login
 
@@ -15,7 +17,6 @@ mongoose.set('useFindAndModify', false);
 */
 
 function login(req, res, headers) {
-    //console.log(mongoose.connection.readyState);
     let data = '';
     req.on('data', chunk => {
         data += chunk;
@@ -23,23 +24,25 @@ function login(req, res, headers) {
     req.on('end', async() => {
         try {
             data = JSON.parse(data);
+            
             let user = await User.findOne({ "username": data.username }, '_id') //ca sa verificam daca userul exista
-            let user2 = await User.findOne({ "username": data.username, "password": md5(data.password) }) //verificam daca parola este corecta
+            let user2 = await User.findOne({ "username": data.username, "password": md5(data.password).toString(crypto.enc.Hex) }) //verificam daca parola este corecta
                 //console.log(user2)
             if (user === null) {
-                res.writeHead(500, headers);
+                res.writeHead(401, headers);
                 res.write(JSON.stringify({ 'message': 'Userul nu exista' }, null, 4))
                 res.end()
             } else if (user2 === null) {
-                res.writeHead(500, headers);
-                res.write(JSON.stringify({ 'message': 'Username sau parola gresita.' }, null, 4))
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ 'message': 'Parola gresita.' }, null, 4))
                 res.end()
-            } else if (user2.acces === "yes") {
+            } else if (user2.access === "yes") {
+                user={'username': user2.username, 'user_id': user2._id}
                 res.writeHead(200, headers)
-                res.write(JSON.stringify(user2, null, 4))
+                res.write(JSON.stringify({'Authorization': jwt.sign(user, constants.key)}))
                 res.end()
             } else {
-                res.writeHead(401, headers);
+                res.writeHead(403, headers);
                 res.write(JSON.stringify({ 'message': 'Userul este restrictionat!' }, null, 4))
                 res.end()
             }
@@ -104,7 +107,7 @@ function register(req, res, headers) {
                 res.end();
             } else {
                 delete data.confirm_password;
-                data.password = md5(data.password)
+                data.password = md5(data.password).toString(crypto.enc.Hex)
 
                 const new_user = new User(data);
                 new_user.save(function(err) {
@@ -182,7 +185,7 @@ function change(req, res, headers) {
                     res.writeHead(401, headers);
                     res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest id!' }, null, 4))
                     res.end()
-                } else if (check_pass.password !== md5(data.password)) {
+                } else if (check_pass.password !== md5(data.password).toString(crypto.enc.Hex)) {
                     res.writeHead(401, headers);
                     res.write(JSON.stringify({ 'message': 'Parola incorecta!' }, null, 4))
                     res.end()
@@ -212,7 +215,7 @@ function change(req, res, headers) {
                     res.writeHead(401, headers);
                     res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest id!' }, null, 4))
                     res.end()
-                } else if (user.password !== md5(data.parola_veche)) {
+                } else if (user.password !== md5(data.parola_veche).toString(crypto.enc.Hex)) {
                     //parola incorecta
                     res.writeHead(401, headers);
                     res.write(JSON.stringify({ 'message': 'Parola incorecta!' }, null, 4))
@@ -224,7 +227,7 @@ function change(req, res, headers) {
                     res.end()
                 } else {
                     //totul ok , modificam datele in BD
-                    user.password = md5(data.parola_noua)
+                    user.password = md5(data.parola_noua).toString(crypto.enc.Hex)
                     let ok = await user.save()
                         //console.log(ok, user)
                     if (ok === user) {
@@ -250,7 +253,7 @@ function change(req, res, headers) {
                     res.writeHead(401, headers);
                     res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest id!' }, null, 4))
                     res.end()
-                } else if (user.password !== md5(data.parola)) {
+                } else if (user.password !== md5(data.parola).toString(crypto.enc.Hex)) {
                     //parola incorecta
                     res.writeHead(401, headers);
                     res.write(JSON.stringify({ 'message': 'Parola incorecta!' }, null, 4))
@@ -320,7 +323,7 @@ function grant(req, res, headers) {
             data = JSON.parse(data);
 
             let user = await User.findOne({ username: data.username, email: data.email })
-            let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin) })
+            let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin).toString(crypto.enc.Hex) })
                 // console.log(admin)
 
             if (user === null) {
@@ -417,7 +420,7 @@ function restrict(req, res, headers) {
             data = JSON.parse(data);
 
             let user = await User.findOne({ username: data.username, email: data.email })
-            let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin) })
+            let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin).toString(crypto.enc.Hex) })
                 // console.log(admin)
 
             if (user === null) {

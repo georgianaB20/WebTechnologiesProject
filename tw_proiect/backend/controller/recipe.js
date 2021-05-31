@@ -1,30 +1,17 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/recipe')
 const User = require('../models/user')
-const { db } = require('../utils/constants')
+const { db, key } = require('../utils/constants')
+const jwt = require('jsonwebtoken')
 let url = require('url');
-// const user = require('../models/user');
-// const recipe = require('../models/recipe');
-
-const { Schema, /*model*/ } = require('mongoose');
 const fs = require('fs');
-const { exception } = require('console');
-//const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require('constants');
-//const { index } = require('../routes');
 
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
-//console.log(mongoose.connection.readyState);
 
 function compare(a, b) {
     if (a.comments.length > b.comments.length) return -1;
     if (b.comments.length > a.comments.length) return 1;
-    return 0;
-}
-
-function compare_asc(a, b) {
-    if (a.comments.length > b.comments.length) return 1;
-    if (b.comments.length > a.comments.length) return -1;
     return 0;
 }
 
@@ -94,6 +81,12 @@ json sample for testing addRecipe
 */
 
 function addRecipe(req, res, headers) {
+    let auth = req.headers.authorization
+
+    decoded = jwt.verify(auth,key)
+
+    //decoded.user_id to get the user_id
+
     let data = '';
 
     req.on('data', chunk => {
