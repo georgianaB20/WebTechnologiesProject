@@ -115,12 +115,12 @@ h1 {
 
 .container-comentarii {
     margin-top: 5rem;
-    margin-left: 1em;
+    margin-left: 5em;
     font-size: 1em;
 }
 
 .comm-wraper {
-    display: flex;
+    display: inline;
     justify-content: left;
     flex-direction: row;
     align-items: center;
@@ -147,4 +147,36 @@ h1 {
         padding-left: 8rem;
     }
 
+}
+
+.collapsible {
+    background-color: #d2b897;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 50%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+
+  .active, .collapsible:hover {
+    background-color: #e1d1be;
+  }
+
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+  }
+
+  .comment {
+	background-color: #e8ded1;
+	width: auto;
+	height: auto;
+	margin: 7em auto;
+	border-radius: 1.5em;
+	box-shadow: 0 11px 35px 2px rgba(0, 0, 0, 0.14);
+    border: 15px solid #e8ded1;
 }
