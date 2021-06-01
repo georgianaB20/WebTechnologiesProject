@@ -19,7 +19,6 @@ var server = http.createServer(function(req, res) {
         data += chunk;
     })
     req.on('end', () => {
-        var data;
         if (req.method === 'GET')
             data = { 'name': decodeURIComponent(req.url.split('?')[1]) }
         else data = JSON.parse(data);
@@ -37,6 +36,9 @@ var server = http.createServer(function(req, res) {
             res.setHeader('Content-Type', 'text/plain');
             return res.end('Forbidden');
         }
+
+        console.log(file)
+        console.log(typeof file)
 
         if (req.method === 'GET') {
             var type = mime[path.extname(file).slice(1)] || 'text/plain';
@@ -64,7 +66,7 @@ var server = http.createServer(function(req, res) {
         }
 
         if (req.method === 'PUT' || req.method === 'POST') {
-            fs.writeFile(path, Buffer.from(data.base64, 'base64'), function(err) {
+            fs.writeFile(file, Buffer.from(data.base64, 'base64'), function(err) {
                 if (err) {
                     res.statusCode = 500;
                     res.end("Internal error!");

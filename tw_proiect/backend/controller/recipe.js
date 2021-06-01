@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken')
 let url = require('url');
 const fs = require('fs');
 
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
+
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -157,58 +159,44 @@ async function addRecipe(req, res, headers) {
                     new_recipe.user_id = user_id
                     filename = new_recipe._id
 
-                    let ok_img = await post_picture(new_recipe._id.toString(), base64)
-                    if (ok_img) {
-                        //fs.writeFile('./images/' + filename + '.' + (data.picture_type.split('/')[1]), buf, function(err) { console.log(err); })
-                        new_recipe.picture = '/images/' + filename + '.' + (data.picture_type.split('/')[1])
-                        new_recipe.picture_type = data.picture_type
-                        let ok = await new_recipe.save()
-                        if (ok === new_recipe) {
+                    let req = new XMLHttpRequest();
+                    let path = '/images/' + filename + '.' + (data.picture_type.split('/')[1])
+                    let body = { 'name': path, 'base64': base64 }
+
+                    req.open("POST", images_server_url);
+
+                    req.setRequestHeader("Content-Type", "application/json");
+                    req.setRequestHeader("Accept", "application/json");
+                    req.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+                    req.onload = async function() {
+                        if (req.status === 200) {
+                            new_recipe.picture = path
+                            new_recipe.picture_type = data.picture_type
+                            let ok = await new_recipe.save()
                             console.log(ok)
-                            res.writeHead(200, headers);
-                            res.write(JSON.stringify({ _id: ok._id }, null, 4))
-                            res.end()
-                        } else {
-                            console.log(ok);
+                            if (ok === new_recipe) {
+                                console.log(ok)
+                                res.writeHead(200, headers);
+                                res.write(JSON.stringify({ _id: ok._id }, null, 4))
+                                res.end()
+                            } else {
+                                console.log(ok);
+                                res.writeHead(500, headers);
+                                res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                                res.end()
+                            }
+                        } else if (req.status === 500) {
                             res.writeHead(500, headers);
                             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                             res.end()
                         }
-                    } else {
-                        // console.log(ok);
-                        res.writeHead(500, headers);
-                        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-                        res.end()
                     }
+                    req.send(JSON.stringify(body));
                 }
             });
         })
     }
-
-}
-
-async function post_picture(path, base64) {
-    let req = new XMLHttpRequest();
-
-    let body = { 'name': path, 'base64': base64 }
-
-    req.open("POST", images_server_url);
-
-    req.setRequestHeader("Content-Type", "application/json");
-    req.setRequestHeader("Accept", "application/json");
-    req.setRequestHeader("Access-Control-Allow-Origin", "*");
-
-    let ok
-    req.onload = function() {
-        if (req.status === 200) {
-            ok = true
-        } else if (req.status === 500) {
-            ok = false
-        }
-
-    }
-    req.send(body);
-    return ok
 }
 
 async function getRecipesUser(req, res, headers) { //returns a json with all reciepes from a user, by username
