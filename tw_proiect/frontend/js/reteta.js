@@ -9,6 +9,15 @@ xhttp.onreadystatechange = function() {
     //console.log(this.readyState);
     if (this.status == 200 && this.readyState == 4) {
         let recipe = JSON.parse(this.response)
+
+        if (recipe.time < 60) {
+            recipe.time = recipe.time.toString() + " min"
+        } else if (recipe.time < 24 * 60) {
+            recipe.time = recipe.time.toString() + " h"
+        } else {
+            recipe.time = recipe.time.toString() + " d"
+        }
+
         let element = document.getElementsByTagName("title")[0]
         element.innerHTML = `${recipe.title}`
         element = document.getElementById("recipe-info")
@@ -36,25 +45,24 @@ xhttp.onreadystatechange = function() {
         console.log(recipe)
 
         element = document.getElementById("imagine-reteta")
-            // console.log(recipe.picture.ContentType)
         element.innerHTML = `<img class="img" src='${images_server_url}?${recipe.picture}' alt="Poza a retetei 1">`
     }
 }
+
+xhttp.open("GET", "http://localhost:5000/recipe?id=" + id, true);
+xhttp.send();
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
 for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
 }
-
-xhttp.open("GET", "http://localhost:5000/recipe?id=" + id, true);
-xhttp.send();
