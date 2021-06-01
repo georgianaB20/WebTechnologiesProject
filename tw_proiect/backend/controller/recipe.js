@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/recipe')
 const User = require('../models/user')
-const { db, key } = require('../utils/constants')
+const { db, key, images_server_url } = require('../utils/constants')
 const jwt = require('jsonwebtoken')
 let url = require('url');
 const fs = require('fs');
@@ -109,9 +109,7 @@ async function addRecipe(req, res, headers) {
         req.on('end', () => {
             data = JSON.parse(data);
 
-            var buf = Buffer.from(data.picture, 'base64');
-
-            data.picture = "";
+            var base64 = data.picture
 
             let no_ingredients = Object.keys(data).length - 6;
             let ingredient = [];
@@ -143,6 +141,7 @@ async function addRecipe(req, res, headers) {
             }
             delete data.time_value
             delete data.time_unit
+            delete data.picture
             console.log(data);
             let new_recipe = new Recipe(data);
 
@@ -157,17 +156,26 @@ async function addRecipe(req, res, headers) {
                     // console.log(new_recipe)
                     new_recipe.user_id = user_id
                     filename = new_recipe._id
-                    fs.writeFile('./images/' + filename + '.' + (data.picture_type.split('/')[1]), buf, function(err) { console.log(err); })
-                    new_recipe.picture = './images/' + filename + '.' + (data.picture_type.split('/')[1])
-                    new_recipe.picture_type = data.picture_type
-                    let ok = await new_recipe.save()
-                    if (ok === new_recipe) {
-                        console.log(ok)
-                        res.writeHead(200, headers);
-                        res.write(JSON.stringify({ _id: ok._id }, null, 4))
-                        res.end()
+
+                    let ok_img = await post_picture(new_recipe._id.toString(), base64)
+                    if (ok_img) {
+                        //fs.writeFile('./images/' + filename + '.' + (data.picture_type.split('/')[1]), buf, function(err) { console.log(err); })
+                        new_recipe.picture = '/images/' + filename + '.' + (data.picture_type.split('/')[1])
+                        new_recipe.picture_type = data.picture_type
+                        let ok = await new_recipe.save()
+                        if (ok === new_recipe) {
+                            console.log(ok)
+                            res.writeHead(200, headers);
+                            res.write(JSON.stringify({ _id: ok._id }, null, 4))
+                            res.end()
+                        } else {
+                            console.log(ok);
+                            res.writeHead(500, headers);
+                            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                            res.end()
+                        }
                     } else {
-                        console.log(ok);
+                        // console.log(ok);
                         res.writeHead(500, headers);
                         res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                         res.end()
@@ -177,6 +185,30 @@ async function addRecipe(req, res, headers) {
         })
     }
 
+}
+
+async function post_picture(path, base64) {
+    let req = new XMLHttpRequest();
+
+    let body = { 'name': path, 'base64': base64 }
+
+    req.open("POST", images_server_url);
+
+    req.setRequestHeader("Content-Type", "application/json");
+    req.setRequestHeader("Accept", "application/json");
+    req.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+    let ok
+    req.onload = function() {
+        if (req.status === 200) {
+            ok = true
+        } else if (req.status === 500) {
+            ok = false
+        }
+
+    }
+    req.send(body);
+    return ok
 }
 
 async function getRecipesUser(req, res, headers) { //returns a json with all reciepes from a user, by username
@@ -416,7 +448,7 @@ async function filter(req, res, headers) {
 function apply_include_exclude_sort(recipes, includeString, excludeString, order_by, order) {
     let includeList = includeString.split(",")
     let excludeList = excludeString.split(",")
-    order=(order==="ASC")?-1:1
+    order = (order === "ASC") ? -1 : 1
     let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
         let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
             if (includeList.find(element => element.includes(ingredient)) !== undefined)
@@ -431,17 +463,17 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
         }, 0)
 
         if (numberOfExcludedIngredients === 0 && numberOfIncludedIngredients === includeList.length)
-            arr.push({'recipe': recipe, 'extra_ingredients': recipe.ingredients.length-includeList.length});
+            arr.push({ 'recipe': recipe, 'extra_ingredients': recipe.ingredients.length - includeList.length });
 
         return arr;
     }, [])
 
-    let finalList = listAfterIncludeExclude.sort(function (el1, el2) {
-        if (el1.extra_ingredients<el2.extra_ingredients)
+    let finalList = listAfterIncludeExclude.sort(function(el1, el2) {
+        if (el1.extra_ingredients < el2.extra_ingredients)
             return -1;
-        if (el1.extra_ingredients>el2.extra_ingredients)
+        if (el1.extra_ingredients > el2.extra_ingredients)
             return 1;
-        if (el1.recipe[order_by]<el2.recipe[order_by])
+        if (el1.recipe[order_by] < el2.recipe[order_by])
             return order;
         return -order;
     })
