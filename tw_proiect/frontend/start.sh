@@ -1,1 +1,1 @@
-live-server --mount=/:$PWD/views --https=$PWD/js/https_config.js
+live-server --mount=/:$PWD/views

@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/recipe')
 const User = require('../models/user')
-const { db, key } = require('../utils/constants')
+const { db, key, images_server_url } = require('../utils/constants')
 const jwt = require('jsonwebtoken')
 let url = require('url');
 const fs = require('fs');
+
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -82,11 +84,17 @@ json sample for testing addRecipe
 
 async function addRecipe(req, res, headers) {
     let auth = req.headers.authorization
-
-    let decoded = jwt.verify(auth, key)
-
-    //decoded.user_id to get the user_id
-    let user_id = decoded.user_id
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        res.writeHead(403, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
 
     //verificam daca userul poate posta retete
     let user = await User.findById(user_id)
@@ -109,9 +117,7 @@ async function addRecipe(req, res, headers) {
         req.on('end', () => {
             data = JSON.parse(data);
 
-            var buf = Buffer.from(data.picture, 'base64');
-
-            data.picture = "";
+            var base64 = data.picture
 
             let no_ingredients = Object.keys(data).length - 6;
             let ingredient = [];
@@ -143,6 +149,7 @@ async function addRecipe(req, res, headers) {
             }
             delete data.time_value
             delete data.time_unit
+            delete data.picture
             console.log(data);
             let new_recipe = new Recipe(data);
 
@@ -157,26 +164,45 @@ async function addRecipe(req, res, headers) {
                     // console.log(new_recipe)
                     new_recipe.user_id = user_id
                     filename = new_recipe._id
-                    fs.writeFile('./images/' + filename + '.' + (data.picture_type.split('/')[1]), buf, function(err) { console.log(err); })
-                    new_recipe.picture = './images/' + filename + '.' + (data.picture_type.split('/')[1])
-                    new_recipe.picture_type = data.picture_type
-                    let ok = await new_recipe.save()
-                    if (ok === new_recipe) {
-                        console.log(ok)
-                        res.writeHead(200, headers);
-                        res.write(JSON.stringify({ _id: ok._id }, null, 4))
-                        res.end()
-                    } else {
-                        console.log(ok);
-                        res.writeHead(500, headers);
-                        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-                        res.end()
+
+                    let req = new XMLHttpRequest();
+                    let path = '/images/' + filename + '.' + (data.picture_type.split('/')[1])
+                    let body = { 'name': path, 'base64': base64 }
+
+                    req.open("POST", images_server_url);
+
+                    req.setRequestHeader("Content-Type", "application/json");
+                    req.setRequestHeader("Accept", "application/json");
+                    req.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+                    req.onload = async function() {
+                        if (req.status === 200) {
+                            new_recipe.picture = path
+                            new_recipe.picture_type = data.picture_type
+                            let ok = await new_recipe.save()
+                            console.log(ok)
+                            if (ok === new_recipe) {
+                                console.log(ok)
+                                res.writeHead(200, headers);
+                                res.write(JSON.stringify({ _id: ok._id }, null, 4))
+                                res.end()
+                            } else {
+                                console.log(ok);
+                                res.writeHead(500, headers);
+                                res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                                res.end()
+                            }
+                        } else if (req.status === 500) {
+                            res.writeHead(500, headers);
+                            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                            res.end()
+                        }
                     }
+                    req.send(JSON.stringify(body));
                 }
             });
         })
     }
-
 }
 
 async function getRecipesUser(req, res, headers) { //returns a json with all reciepes from a user, by username
@@ -416,7 +442,7 @@ async function filter(req, res, headers) {
 function apply_include_exclude_sort(recipes, includeString, excludeString, order_by, order) {
     let includeList = includeString.split(",")
     let excludeList = excludeString.split(",")
-    order=(order==="ASC")?-1:1
+    order = (order === "ASC") ? -1 : 1
     let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
         let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
             if (includeList.find(element => element.includes(ingredient)) !== undefined)
@@ -431,17 +457,17 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
         }, 0)
 
         if (numberOfExcludedIngredients === 0 && numberOfIncludedIngredients === includeList.length)
-            arr.push({'recipe': recipe, 'extra_ingredients': recipe.ingredients.length-includeList.length});
+            arr.push({ 'recipe': recipe, 'extra_ingredients': recipe.ingredients.length - includeList.length });
 
         return arr;
     }, [])
 
-    let finalList = listAfterIncludeExclude.sort(function (el1, el2) {
-        if (el1.extra_ingredients<el2.extra_ingredients)
+    let finalList = listAfterIncludeExclude.sort(function(el1, el2) {
+        if (el1.extra_ingredients < el2.extra_ingredients)
             return -1;
-        if (el1.extra_ingredients>el2.extra_ingredients)
+        if (el1.extra_ingredients > el2.extra_ingredients)
             return 1;
-        if (el1.recipe[order_by]<el2.recipe[order_by])
+        if (el1.recipe[order_by] < el2.recipe[order_by])
             return order;
         return -order;
     })

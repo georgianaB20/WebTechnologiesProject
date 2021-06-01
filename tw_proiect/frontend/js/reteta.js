@@ -1,3 +1,5 @@
+import { images_server_url } from './utils/constants.js'
+
 const queryString = window.location.search;
 let id = queryString.split("=")[1]
     // console.log(queryString.split("=")[1]);
@@ -7,8 +9,7 @@ xhttp.onreadystatechange = function() {
     //console.log(this.readyState);
     if (this.status == 200 && this.readyState == 4) {
         let recipe = JSON.parse(this.response)
-        element = document.getElementsByTagName("title")[0]
-            // console.log(element)
+        let element = document.getElementsByTagName("title")[0]
         element.innerHTML = `${recipe.title}`
         element = document.getElementById("recipe-info")
         element.innerHTML = `<h1>${recipe.title}</h1>` + element.innerHTML
@@ -36,7 +37,7 @@ xhttp.onreadystatechange = function() {
 
         element = document.getElementById("imagine-reteta")
             // console.log(recipe.picture.ContentType)
-        element.innerHTML = `<img class="img" src='${recipe.picture}' alt="Poza a retetei 1">`
+        element.innerHTML = `<img class="img" src='${images_server_url}?${recipe.picture}' alt="Poza a retetei 1">`
     }
 }
 

@@ -1,0 +1,1 @@
+export const images_server_url = "http://localhost:7001"
