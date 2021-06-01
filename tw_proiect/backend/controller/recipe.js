@@ -84,11 +84,17 @@ json sample for testing addRecipe
 
 async function addRecipe(req, res, headers) {
     let auth = req.headers.authorization
-
-    let decoded = jwt.verify(auth, key)
-
-    //decoded.user_id to get the user_id
-    let user_id = decoded.user_id
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        res.writeHead(403, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
 
     //verificam daca userul poate posta retete
     let user = await User.findById(user_id)
