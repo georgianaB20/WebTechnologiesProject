@@ -1,27 +1,27 @@
 const queryString = window.location.search;
-let id=queryString.split("=")[1]
-// console.log(queryString.split("=")[1]);
+let id = queryString.split("=")[1]
+    // console.log(queryString.split("=")[1]);
 
 var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function () {
+xhttp.onreadystatechange = function() {
     //console.log(this.readyState);
     if (this.status == 200 && this.readyState == 4) {
         let recipe = JSON.parse(this.response)
         element = document.getElementsByTagName("title")[0]
-        // console.log(element)
+            // console.log(element)
         element.innerHTML = `${recipe.title}`
         element = document.getElementById("recipe-info")
-        element.innerHTML=`<h1>${recipe.title}</h1>`+element.innerHTML
+        element.innerHTML = `<h1>${recipe.title}</h1>` + element.innerHTML
         element = document.getElementById("time")
-        element.innerHTML+=`<span class="txt">${recipe.time_value} ${recipe.time_unit}</span>`
+        element.innerHTML += `<span class="txt">${recipe.time}</span>`
         element = document.getElementById("dificultate")
-        element.innerHTML+=`<span class="txt">${recipe.difficulty}</span>`
+        element.innerHTML += `<span class="txt">${recipe.difficulty}</span>`
         element = document.getElementById("popularitate")
-        element.innerHTML+=`<span class="txt">${recipe.comments.length}</span>`
+        element.innerHTML += `<span class="txt">${recipe.comments.length}</span>`
         element = document.getElementById("ingrediente")
         console.log(recipe.ingredients)
         recipe.ingredients.forEach(ingredient => {
-            element.innerHTML+=
+            element.innerHTML +=
                 `<li>
                     <div class="container-ingredient">
                         <div class="ingredient">
@@ -35,9 +35,9 @@ xhttp.onreadystatechange = function () {
         console.log(recipe)
 
         element = document.getElementById("imagine-reteta")
-        // console.log(recipe.picture.ContentType)
-        element.innerHTML = `<img class="img" src='data:${recipe.picture_type};base64,${recipe.picture}' alt="Poza a retetei 1">`
+            // console.log(recipe.picture.ContentType)
+        element.innerHTML = `<img class="img" src='${recipe.picture}' alt="Poza a retetei 1">`
     }
 }
-xhttp.open("GET", "http://localhost:5000/recipe?id="+id, true);
+xhttp.open("GET", "http://localhost:5000/recipe?id=" + id, true);
 xhttp.send();
