@@ -44,7 +44,7 @@
     </header>
 
 
-    <form class="filters" method="GET">
+    <form class="filters" method="GET" id="filter">
         <p>Afiseaza retetele dupa:</p>
 
         <div>
@@ -52,19 +52,19 @@
             <div class="filter_item" id="checks">
                 <p>Nivel de dificultate</p>
                 <div class="check">
-                    <input type="checkbox" id="Usor" name="usor" value="Usor">
+                    <input type="checkbox" id="Usor" name="diff_easy" value="1">
                     <label for="Usor">Usor</label>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="Mediu" name="mediu" value="Mediu">
+                    <input type="checkbox" id="Mediu" name="diff_medium" value="1">
                     <label for="Mediu">Mediu</label>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="Greu" name="greu" value="Greu">
+                    <input type="checkbox" id="Greu" name="diff_hard" value="1">
                     <label for="Greu">Greu</label>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="Master chef" name="master_chef" value="Master chef">
+                    <input type="checkbox" id="Master chef" name="diff_master" value="1">
                     <label for="Master chef">Master chef</label>
                 </div>
             </div>
@@ -104,7 +104,7 @@
 
             <div class="filter_item" id="sort">
                 <label for="criteriu">Sortare</label>
-                <select name="criteriu">
+                <select name="order_by">
 					<option value="-"></option>
 					<option value="popularitate">Popularitate</option>
 					<option value="data">Data</option>
@@ -125,7 +125,8 @@
 
         <a class="submit"><input type="submit" value="Afiseaza"></a>
     </form>
-
+    <script type="module" src='../js/filtrare.js'></script> 
+    
     <div class="adauga-reteta">
         <button class="adauga">
 			<a href="/adauga_reteta.html" class="ref">
