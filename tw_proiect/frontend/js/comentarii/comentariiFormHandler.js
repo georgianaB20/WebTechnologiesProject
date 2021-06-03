@@ -5,10 +5,14 @@ export async function handleFormSubmit(event) {
 
     const url = form.action;
 
+    console.log("AM AJUNS")
+
     try {
         const formData = new FormData(form);
 
-        await postFormDataAsJSON({ url, formData });
+        var res = await postFormDataAsJSON({ url, formData });
+
+        console.log(res)
     } catch (error) {
         console.error(error);
     }
@@ -17,15 +21,19 @@ export async function handleFormSubmit(event) {
 async function postFormDataAsJSON({ url, formData }) {
     const plainFormData = Object.fromEntries(formData.entries());
 
+    console.log(plainFormData)
+
     plainFormData.picture_type = plainFormData.picture.type
+
+    plainFormData.rid = window.location.search.split('=')[1]
+
     var reader = new FileReader()
     reader.onload = async function (e) {
-
-        plainFormData.picture = btoa(reader.result);
+        plainFormData.picture = btoa(reader.result)
 
         const formDataJsonString = JSON.stringify(plainFormData);
 
-        var req = new XMLHttpRequest()
+        const req = new XMLHttpRequest()
 
         req.open("POST", url);
 
@@ -34,21 +42,21 @@ async function postFormDataAsJSON({ url, formData }) {
         req.setRequestHeader("Access-Control-Allow-Origin", "*");
         req.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'))
 
+        var res;
+
         req.onload = function () {
-            if (req.status === 200) {
-                console.log(JSON.parse(req.response)._id)
-                alert("Reteta adaugata cu succes. Apasati OK pt redirectare.")
-                window.location.replace("./reteta.html?id=" + JSON.parse(req.response)._id)
-            } else {
-                if (req.status === 403) {
-                    alert("Nu puteti adauga retete. Contactati administratorul.")
-                } else {
-                    alert("Eroare interna! Incercati mai tarziu.")
-                }
+            if (req.status !== 200) {
+                res = JSON.parse(req.response)
+                alert(res.message);
+            }
+            else {
+                res = JSON.parse(req.response)
+                window.location.href = `./reteta.html?id=${plainFormData.rid}`
             }
         }
         req.send(formDataJsonString);
     }
     reader.readAsBinaryString(plainFormData.picture)
 
+    return res;
 }

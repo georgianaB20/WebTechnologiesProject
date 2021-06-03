@@ -1,5 +1,6 @@
+import { images_server_url } from './utils/constants.js'
+
 let retete = document.getElementsByClassName("card-wrapper")[0]
-    //console.log(retete[0].innerHTML)
 
 let data = window.location.search.split("=")[1];
 if (data !== undefined) {
@@ -16,10 +17,8 @@ if (data !== undefined) {
 
 function request_at(link) {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        //console.log(this.readyState);
+    xhttp.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
-            //console.log(this.response)
             let arr = JSON.parse(this.response)
             arr.forEach(element => {
                 console.log(element);
@@ -31,7 +30,7 @@ function request_at(link) {
 
                 retete.innerHTML += `<a href="reteta.html?id=${element._id}">
                     <div class="card">
-                        <img src='data:${element.picture_type};base64,${element.picture}' alt=${element.title} class="card-img">
+                        <img src='${images_server_url}?${element.picture}' alt=${element.title} class="card-img">
                         <h2>${element.title}</h2>
                         <p class="descriere">
                             ${descr}
