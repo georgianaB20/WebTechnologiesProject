@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Titlu</title>
-    <link rel="icon" href="../images/favicon1.ico">
-    <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/reteta.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/index.css">
-
+    <link rel="icon" href="../images/favicon1.ico">
+    <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
 </head>
 
 <body>
@@ -34,19 +35,15 @@
         </nav>
         <script src="../js/nav.js"></script>
     </header>
+
     <main>
         <section id="reteta">
             <div class="container-reteta">
 
-                <div class="imagine-reteta" id="imagine-reteta">
-                    <!-- <img class="img" src="images/retete/oats.jpg" alt="Poza a retetei 1"> -->
-                </div>
-
                 <div>
                     <div class="header">
-                        <div class="recipe-info" id="recipe-info">
 
-                            <div id="recipe_title"></div>
+                        <div class="recipe-info" id="recipe-info">
 
                             <div class="adauga-favorite" id="adauga_favorite">
                                 <i class="fas fa-heart"></i>
@@ -65,8 +62,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <script src="../js/reteta_favorite.js" type="module"></script> -->
-
 
                     <div class="reteta">
 
@@ -93,23 +88,25 @@
 
                     <div class="comentarii">
                         <button class="comentarii-btn">
-                            <a href="comentarii.html" class="ref" id="add_comment">
+                            <a href="comentarii.html" class="ref">
                                 <i class="far fa-comments"> </i>
                                 <span class="btn">Ai încercat rețeta?</span>
                             </a>
                         </button>
                     </div>
 
+
+
+
                 </div>
-
             </div>
-
         </section>
+
 
         <section id="comentarii">
             <div class="container-comentarii">
                 <h1 class="Comentarii">Comentarii</h1>
-                <div class="comm-wraper" id="comment_list">
+                <div class="comm-wraper">
                     <div class="comment">
                         <h3 class="nume">Michell Gonzalez</h3>
                         <p class="comment-text">Am comentat si eu daca e..</p>
@@ -122,9 +119,7 @@
                     </div>
                     <div class="comment">
                         <h3 class="nume">George Hora</h3>
-                        <p class="comment-text">comentariu mai lung bla bla bla blacomentariu mai lung bla bla bla
-                            blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung
-                            bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung
+                        <p class="comment-text">comentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung
                             bla bla bla bla</p>
                         <div class="comm">
                             <button type="button" class="collapsible">Vezi poza</button>
@@ -163,8 +158,8 @@
         <p>Copyrights reserved.</p>
         <a class="documentatie" href="documentatie.html">About the project</a>
     </footer>
-
+    <script src="../js/reteta_favorite.js"></script>
+    <script src="../js/reteta.js" type="module"></script>
 </body>
-<script src="../js/reteta.js" type="module"></script>
 
 </html>
