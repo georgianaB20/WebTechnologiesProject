@@ -19,7 +19,7 @@ function compare(a, b) {
 
 async function getMostPopular(req, res, headers) {
     try {
-        let recipe2 = await Recipe.find({}, 'title description ingredients comments');
+        let recipe2 = await Recipe.find({});
         if (recipe2 !== null) {
             recipe2.sort(compare);
             res.writeHead(200, headers);
