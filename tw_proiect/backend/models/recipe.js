@@ -34,9 +34,9 @@ const recipeSchema = new Schema({
     user_id: {
         type: Schema.Types.ObjectId
     },
-    comments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }]
+    comments: {
+        type: Array,
+        default: null
+    }
 }, { timestamps: true })
 module.exports = model('Recipe', recipeSchema)

@@ -12,7 +12,7 @@ var mime = {
     svg: 'image/svg+xml'
 };
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
     let data = '';
 
     req.on('data', chunk => {
@@ -43,11 +43,11 @@ var server = http.createServer(function(req, res) {
         if (req.method === 'GET') {
             var type = mime[path.extname(file).slice(1)] || 'text/plain';
             var s = fs.createReadStream(file);
-            s.on('open', function() {
+            s.on('open', function () {
                 res.setHeader('Content-Type', type);
                 s.pipe(res);
             });
-            s.on('error', function() {
+            s.on('error', function () {
                 res.setHeader('Content-Type', 'text/plain');
                 res.statusCode = 404;
                 res.end('Not found');
@@ -55,7 +55,7 @@ var server = http.createServer(function(req, res) {
         }
 
         if (req.method === 'DELETE') {
-            var s = fs.unlink(path, function(err) {
+            var s = fs.unlink(path, function (err) {
                 if (err) {
                     res.statusCode = 500;
                     res.end("Internal error!");
@@ -66,7 +66,7 @@ var server = http.createServer(function(req, res) {
         }
 
         if (req.method === 'PUT' || req.method === 'POST') {
-            fs.writeFile(file, Buffer.from(data.base64, 'base64'), function(err) {
+            fs.writeFile(file, Buffer.from(data.base64, 'base64'), function (err) {
                 if (err) {
                     res.statusCode = 500;
                     res.end("Internal error!");
@@ -78,6 +78,6 @@ var server = http.createServer(function(req, res) {
     });
 });
 
-server.listen(7001, function() {
+server.listen(7001, function () {
     console.log('Listening on http://localhost:7001/');
 });

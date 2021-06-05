@@ -4,9 +4,10 @@ const lodash = require('lodash')
 const Recipe = require('../models/recipe')
 const User = require('../models/user')
 const Comment = require('../models/comment')
-const { db } = require('../utils/constants');
+const { db, images_server_url, key } = require('../utils/constants');
 const { getRecipesUser } = require('./recipe');
-
+const jwt = require('jsonwebtoken')
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -41,43 +42,54 @@ async function getComments(req, res, headers) {
 }
 
 async function addComment(req, res, headers) {
-    // http://localhost:5000/comment?recipe_id=60ad6b4b11055631b080bdde&user_id=6099a85c85afd46d920f4fbd
+    let auth = req.headers.authorization
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+        //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        console.log(err)
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
 
-    const baseURL = 'http://' + req.headers.host + '/';
-    const parsedUrl = new URL(req.url, baseURL);
-    // let recipe_id = parsedUrl.searchParams.get('recipe_id');
-    // let user_id = parsedUrl.searchParams.get('user_id')
+    let user = await User.findById(user_id)
 
-    // let recipe_by_id = await Recipe.findById(recipe_id);
+    if (user === null) {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ 'message': 'Nu sunteti logat, nu puteti comenta la reteta!' }, null, 4))
+        res.end()
+    } else if (user.can_comment === 'no') {
+        res.writeHead(403, headers)
+        res.write(JSON.stringify({ 'message': 'Nu aveti drepturi suficiente pentru a putea comenta!' }))
+        res.end()
+    } else {
 
-    let data = '';
+        let data = '';
 
-    req.on('data', chunk => {
-        data += chunk;
-    })
+        req.on('data', chunk => {
+            data += chunk;
+        })
 
-    req.on('end', async() => {
-        try {
-            // data.picture = "";
+        req.on('end', async () => {
+            try {
+                data = JSON.parse(data);
+                let recipe_id = data.rid
+                let base64 = data.picture
 
-            data = JSON.parse(data);
-            let recipe_id = data.rid
-            let user_id = data.uid
+                let recipe = await Recipe.findById(recipe_id)
 
-            let recipe = await Recipe.findById(recipe_id)
-            let user = await User.findById(user_id)
+                if (recipe === null) {
+                    res.writeHead(404, headers);
+                    res.write(JSON.stringify({ 'message': 'Reteta nu exista!' }, null, 4))
+                    res.end()
+                }
 
-            if (user === null) {
-                res.writeHead(409, headers);
-                res.write(JSON.stringify({ 'message': 'Nu sunteti inregistrat, nu puteti comenta la reteta!' }, null, 4))
-                res.end()
-            } else if (recipe === null) {
-                res.writeHead(404, headers);
-                res.write(JSON.stringify({ 'message': 'Reteta nu exista!' }, null, 4))
-                res.end()
-            } else {
                 let user_commented = 0
-                    //adaugam comentariul la vectorul de comentarii de la reteta
+                //adaugam comentariul la vectorul de comentarii de la reteta
                 for (let i = 0; i < recipe.comments.length; i++) {
                     if (JSON.stringify(recipe.comments[i].user_id) === user_id) {
                         // userul a comentat deja la reteta asta
@@ -90,57 +102,57 @@ async function addComment(req, res, headers) {
                 }
                 if (user_commented === 0) {
                     //adaugam comentariul
-                    let buf = Buffer.from(data.picture, 'base64');
-                    let _id = new ObjectId().toString()
-                    filename = _id
-                    fs.writeFile('./images/' + filename + '.' + data.picture_type, buf, function(err) { console.log(err); })
-                    let comment = { "_id": _id, "user_id": user_id, "picture": './images/' + filename + '.' + data.picture_type }
+                    let _id = new mongoose.Types.ObjectId().toString()
+                    let filename = _id
+                    let path = '/images/' + filename + '.' + data.picture_type.split("/")[1]
+                    let comment = { "_id": _id, "user_id": user_id, "username": user.username, "picture": path, 'text': data.comentariu }
                     recipe.comments.push(comment)
 
-                    let saved = await recipe.save()
-                    if (saved === recipe) {
-                        //succes
-                        res.writeHead(200, headers);
-                        res.write(JSON.stringify({ "message": "Comentariu adaugat cu succes!" }, null, 4))
-                        res.end()
-                    } else {
-                        //eroare
-                        res.writeHead(500, headers);
-                        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-                        res.end()
+                    let req = new XMLHttpRequest()
+                    let body = { 'name': path, 'base64': base64 }
+                    req.open("POST", images_server_url);
+
+                    req.setRequestHeader("Content-Type", "application/json");
+                    req.setRequestHeader("Accept", "application/json");
+                    req.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+                    req.onload = async function () {
+                        if (req.status === 200) {
+                            await recipe.save(function (err, recipeWithNewComment) {
+                                if (err) {
+                                    console.log(err);
+                                    res.writeHead(500, headers);
+                                    res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                                    res.end()
+                                    return
+                                }
+                                console.log(recipeWithNewComment)
+
+                                console.log(recipe)
+                                console.log(recipeWithNewComment)
+
+                                if (recipeWithNewComment === recipe) {
+                                    res.writeHead(200, headers);
+                                    res.write(JSON.stringify({ "message": "Comentariu adaugat cu succes!" }, null, 4))
+                                    res.end()
+                                } else {
+                                    res.writeHead(500, headers);
+                                    res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+                                    res.end()
+                                }
+                            })
+                        }
                     }
+                    req.send(JSON.stringify(body))
                 }
+            } catch (e) {
+                console.log(e)
+                res.writeHead(404, headers);
+                res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
+                res.end()
             }
-        } catch (e) {
-            console.log(e)
-            res.writeHead(404, headers);
-            res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
-            res.end()
-        }
-
-        // const new_comment = new Comment(data);
-        // new_comment.user_id = user_id;
-
-        // new_comment.save(function(err) {
-        //     if (err) {
-        //         console.log(err);
-        //         res.writeHead(500, headers);
-        //         res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-        //         res.end()
-        //     } else {
-        //         res.writeHead(200, headers);
-        //         res.write(JSON.stringify({ "message": "Comentariu adaugat cu succes!" }, null, 4))
-        //         res.end()
-        //     }
-        // });
-
-        // console.log(recipe_by_id);
-        // console.log(new_comment._id)
-
-        // await Recipe.updateOne({ _id: mongoose.Types.ObjectId(recipe_id) }, {
-        //     $push: { comments: new_comment._id }
-        // })
-    })
+        })
+    }
 }
 
 async function deleteComment(req, res, headers) {
@@ -155,7 +167,7 @@ async function deleteComment(req, res, headers) {
         try {
             let user_by_id = await User.findById(user_id) //daca nu gaseste=null
             let recipe_by_id = await Recipe.findById(recipe_id)
-                // let comment_by_id = await Comment.findById(comment_id)
+            // let comment_by_id = await Comment.findById(comment_id)
 
             if (user_by_id === null) {
                 res.writeHead(404, headers);

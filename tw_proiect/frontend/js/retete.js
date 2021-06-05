@@ -54,12 +54,10 @@ else {
 function request_at(link) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        //console.log(this.readyState);
+
         if (this.status == 200 && this.readyState == 4) {
-            //console.log(this.response)
             let arr = JSON.parse(this.response)
             arr.forEach(element => {
-                console.log(element);
                 add_card(element, retete)
             });
         }
