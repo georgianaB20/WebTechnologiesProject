@@ -5,8 +5,6 @@ export async function handleFormSubmit(event) {
 
     const url = form.action;
 
-    console.log("AM AJUNS")
-
     try {
         const formData = new FormData(form);
 
