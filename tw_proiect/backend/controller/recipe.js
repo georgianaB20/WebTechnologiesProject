@@ -387,6 +387,7 @@ async function deleteRecipe(req, res, headers) {
     }
 }
 
+// http://localhost:5000/recipes/filter?diff_easy=1&diff_medium=
 async function filter(req, res, headers) {
     try {
         const baseURL = 'http://' + req.headers.host + '/';
