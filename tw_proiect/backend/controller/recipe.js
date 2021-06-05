@@ -394,9 +394,9 @@ async function filter(req, res, headers) {
         const parsedUrl = new URL(req.url, baseURL);
 
         const diff_map = {
-            '^Easy$': parsedUrl.searchParams.get('diff_easy') === "1",
-            '^Medium$': parsedUrl.searchParams.get('diff_medium') === "1",
-            '^Hard$': parsedUrl.searchParams.get('diff_hard') === "1",
+            '^Usor$': parsedUrl.searchParams.get('diff_easy') === "1",
+            '^Mediu$': parsedUrl.searchParams.get('diff_medium') === "1",
+            '^Greu$': parsedUrl.searchParams.get('diff_hard') === "1",
             '^Master Chef$': parsedUrl.searchParams.get('diff_master') === "1"
         }
         let regex_diff = Object.keys(diff_map).reduce(function (acc, key) {
@@ -406,6 +406,7 @@ async function filter(req, res, headers) {
             }
             return acc;
         });
+        //console.log(regex_diff)
 
         var multiply = (parsedUrl.searchParams.get('time_min_unit') == "min") * 1 +
             (parsedUrl.searchParams.get('time_min_unit') == "hours") * 60 +
@@ -415,18 +416,33 @@ async function filter(req, res, headers) {
             time_min = 0
         else time_min = String.parseInt(parsedUrl.searchParams.get('time_min_value')) * multiply
 
+
         multiply = (parsedUrl.searchParams.get('time_max_unit') == "min") * 1 +
             (parsedUrl.searchParams.get('time_max_unit') == "hours") * 60 +
             (parsedUrl.searchParams.get('time_max_unit') == "days") * 24 * 60
 
-        if (multiply === 0)
-            time_max = Recipe.find().sort({ time: -1 }).limit(1)
+        if (multiply === 0) {
+            recipe = await Recipe.find().sort({ time: -1 }).limit(1)
+            time_max = recipe[0].time
+        }
+
         else time_max = String.parseInt(parsedUrl.searchParams.get('time_max_value')) * multiply
 
         let entries = await Recipe.find({ difficulty: { $regex: regex_diff, $options: "i" }, time: { '$gte': time_min, '$lte': time_max } })
 
+        let include = parsedUrl.searchParams.get('include')
+        let exclude = parsedUrl.searchParams.get('exclude')
+        if (include === null) {
+            include = ""
+
+        }
+        if (exclude === null) {
+            exclude = ""
+
+        }
+
         res.writeHead(200, headers);
-        res.write(JSON.stringify(apply_include_exclude_sort(entries, parsedUrl.searchParams.get('include'), parsedUrl.searchParams.get('exclude'), parsedUrl.searchParams.get('order_by'), parsedUrl.searchParams.get('order'))));
+        res.write(JSON.stringify(apply_include_exclude_sort(entries, include, exclude, parsedUrl.searchParams.get('order_by'), parsedUrl.searchParams.get('order'))));
         res.end()
     } catch (e) {
         console.log(e)
@@ -438,21 +454,31 @@ async function filter(req, res, headers) {
 
 function apply_include_exclude_sort(recipes, includeString, excludeString, order_by, order) {
     let includeList = includeString.split(",")
+    if (includeString===""){
+        includeList=[]
+    }
     let excludeList = excludeString.split(",")
+    if (excludeString===""){
+        excludeList=[]
+    }
+    console.log(excludeList)
     order = (order === "ASC") ? -1 : 1
     let listAfterIncludeExclude = recipes.reduce(function (arr, recipe) {
         let numberOfIncludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient) {
-            if (includeList.find(element => element.includes(ingredient)) !== undefined)
+            if (includeList.find(element => element===ingredient))
                 return currentNumber + 1;
             return currentNumber;
         }, 0)
 
         let numberOfExcludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient) {
-            if (excludeList.find(element => element.includes(ingredient) !== undefined))
+            if (excludeList.find(element => element===ingredient))
                 return currentNumber + 1;
             return currentNumber;
         }, 0)
-
+        console.log(recipe._id)
+        console.log(numberOfExcludedIngredients)
+        console.log(numberOfIncludedIngredients)
+        console.log(includeList)
         if (numberOfExcludedIngredients === 0 && numberOfIncludedIngredients === includeList.length)
             arr.push({ 'recipe': recipe, 'extra_ingredients': recipe.ingredients.length - includeList.length });
 

@@ -1,5 +1,6 @@
 
 // import { filter } from './filtrare.js'
+
 let retete = document.getElementsByClassName("card-wrapper")[0]
 //console.log(retete[0].innerHTML)
 console.log(window.location.search)
@@ -17,6 +18,7 @@ if (data2 === "?search") {
 else if (data !== undefined) {
     //facem o functie filtrare.js pe care o voi apela aici, functia o sa parseze link ul, o sa trimita request ul la backend, si pune datele intr-un document, argumente: split dupa ?
     let request_link = "http://localhost:5000/recipes/filter?"
+    //recipes/filter?diff_easy=1&diff_medium=1&diff_hard=1&diff_master=1
     let query_par = data.split("&")
     //console.log(data)
     for (let i = 0; i < query_par.length; i++) {
@@ -35,7 +37,7 @@ else if (data !== undefined) {
             value = vret.substring(0, vret.length - 1)
         }
         request_link += name + "=" + value + "&"
-        //console.log(request_link)
+        console.log(request_link)
         //console.log(name, value)
     }
     //canepa%2C+ciuperci"
@@ -58,7 +60,7 @@ function request_at(link) {
         if (this.status == 200 && this.readyState == 4) {
             let arr = JSON.parse(this.response)
             arr.forEach(element => {
-                add_card(element, retete)
+                add_card(element.recipe, retete)
             });
         }
     }
