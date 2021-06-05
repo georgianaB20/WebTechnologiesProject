@@ -2,27 +2,28 @@ const mongoose = require('mongoose');
 const User = require('../models/user')
 const Recipe = require('../models/recipe')
 const { db } = require('../utils/constants')
+const jwt = require('jsonwebtoken')
+
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
-async function getFavorites(req, res, headers){
+async function getFavorites(req, res, headers) {
     // http://localhost:5000/favorites?user_id=6099a85c85afd46d920f4fbd
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
     const user_id = parsedUrl.searchParams.get('user_id');
 
-    
+
     try {
         let user_by_id = await User.findById(user_id);
         if (user_by_id !== null && 'favorite' in user_by_id) {
             await user_by_id.populate('favorite').execPopulate();
-    
+
             res.writeHead(200, headers);
             res.write(JSON.stringify(user_by_id.favorite, null, 4));
             res.end();
-        }
-        else {
+        } else {
             res.writeHead(404, headers);
             res.write(JSON.stringify({ 'message': 'Userul nu a fost gasit!' }, null, 4))
             res.end()
@@ -35,13 +36,26 @@ async function getFavorites(req, res, headers){
     }
 }
 
-async function addFavorite(req, res, headers){
-    //http://localhost:5000/favorites/add?user_id=6099a85c85afd46d920f4fbd&recipe_id=609a73bf5c4932a37ad78a7e
+async function addFavorite(req, res, headers) {
+    //http://localhost:5000/favorites/add?recipe_id=609a73bf5c4932a37ad78a7e
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
-    const user_id = parsedUrl.searchParams.get('user_id');
+    // const user_id = parsedUrl.searchParams.get('user_id');
     const recipe_id = parsedUrl.searchParams.get('recipe_id');
+
+    let auth = req.headers.authorization
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        res.writeHead(403, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
 
     // console.log("user id: " + user_id);
     // console.log("recipe id: " + recipe_id);
@@ -52,8 +66,8 @@ async function addFavorite(req, res, headers){
 
     try {
         if (user_by_id === null) {
-            res.writeHead(404, headers);
-            res.write(JSON.stringify({'message': 'Userul nu a fost gasit!'}, null, 4))
+            res.writeHead(403, headers);
+            res.write(JSON.stringify({ 'message': 'Userul nu a fost gasit!' }, null, 4))
             res.end()
             return;
         }
@@ -63,47 +77,60 @@ async function addFavorite(req, res, headers){
                     duplicate = 1;
                 }
             }
-            if (duplicate){
+            if (duplicate) {
                 res.writeHead(400, headers);
-                res.write(JSON.stringify({'message': 'Reteta este deja in favorite'}, null, 4));
+                res.write(JSON.stringify({ 'message': 'Reteta este deja in favorite' }, null, 4));
                 res.end();
-            }else{
+            } else {
                 user_by_id.favorite.push(recipe_by_id._id);
-                await user_by_id.save(function (err) {
+                await user_by_id.save(function(err) {
                     if (err) {
                         console.log(err);
                         res.writeHead(500, headers);
-                        res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
+                        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                         res.end()
                     } else {
                         res.writeHead(200, headers);
-                        res.write(JSON.stringify({"message": "Reteta adaugata cu succes la favorite!"}, null, 4))
+                        res.write(JSON.stringify({ "message": "Reteta adaugata cu succes la favorite!" }, null, 4))
                         res.end();
                     }
                 });
             }
         } else {
             res.writeHead(404, headers);
-            res.write(JSON.stringify({'message': 'Reteta nu a fost gasita!'}, null, 4))
+            res.write(JSON.stringify({ 'message': 'Reteta nu a fost gasita!' }, null, 4))
             res.end()
         }
     } catch (err) {
         console.log(err)
         res.writeHead(500, headers);
-        res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
+        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
         res.end()
     }
 }
 
 async function removeFavorite(req, res, headers) {
-    // http://localhost:5000/favorites/remove?user_id=6099a85c85afd46d920f4fbd&recipe_id=609a73bf5c4932a37ad78a7e
+    // http://localhost:5000/favorites/remove?recipe_id=609a73bf5c4932a37ad78a7e
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
 
-    const user_id = parsedUrl.searchParams.get('user_id');
+    // const user_id = parsedUrl.searchParams.get('user_id');
     const recipe_id_str = parsedUrl.searchParams.get('recipe_id');
     const recipe_id = mongoose.Types.ObjectId(recipe_id_str);
+
+    let auth = req.headers.authorization
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        res.writeHead(403, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
 
     let user_by_id = undefined;
 
@@ -113,7 +140,7 @@ async function removeFavorite(req, res, headers) {
 
         if (user_by_id === null) {
             res.writeHead(404, headers);
-            res.write(JSON.stringify({'message': 'Userul nu a fost gasit!'}, null, 4))
+            res.write(JSON.stringify({ 'message': 'Userul nu a fost gasit!' }, null, 4))
             res.end()
             return;
         }
@@ -124,19 +151,19 @@ async function removeFavorite(req, res, headers) {
             user_by_id.favorite.pull(recipe_id);
             await user_by_id.save();
             res.writeHead(200, headers);
-            res.write(JSON.stringify({"message": "Reteta a fost stearsa cu succes de la favorite!"}, null, 4))
+            res.write(JSON.stringify({ "message": "Reteta a fost stearsa cu succes de la favorite!" }, null, 4))
             res.end();
         } else {
             res.writeHead(404, headers);
-            res.write(JSON.stringify({'message': 'Reteta nu exista in favorite!'}, null, 4))
+            res.write(JSON.stringify({ 'message': 'Reteta nu exista in favorite!' }, null, 4))
             res.end()
         }
     } catch (e) {
         console.log(e)
         res.writeHead(500, headers);
-        res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
+        res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
         res.end()
     }
 }
 
-module.exports = {getFavorites, addFavorite, removeFavorite}
+module.exports = { getFavorites, addFavorite, removeFavorite }

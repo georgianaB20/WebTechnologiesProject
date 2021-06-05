@@ -69,12 +69,3 @@ for (i = 0; i < coll.length; i++) {
         }
     });
 }
-
-
-var fav_button = document.getElementById("adauga_favorite")
-fav_button.addEventListener("click", addToFavorites)
-
-function addToFavorites(event) {
-    event.preventDefault()
-    console.log("AM AJUNS")
-}
