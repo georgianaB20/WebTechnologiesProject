@@ -39,4 +39,5 @@ const recipeSchema = new Schema({
         ref: 'Comment'
     }]
 }, { timestamps: true })
+recipeSchema.index({title: 'text'});
 module.exports = model('Recipe', recipeSchema)

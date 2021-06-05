@@ -1,17 +1,16 @@
-var search = document.getElementsByClassName("search-button")[0];
-search.addEventListener("click", searchFct);
-
 function searchFct(event) {
-    if (document.getElementsByClassName("search-txt")[0].value.length > 0) {
-        console.log(document.getElementsByClassName("search-txt")[0].value)
-
-        let query = document.getElementsByClassName("search-txt")[0].value
-        let search_btn = document.getElementsByClassName("search-button")[0].setAttribute("href", "retete.html?search=" + query)
+    const searchText = document.getElementsByClassName("search-txt")[0].value;
+    if (searchText.length > 0) {
+        console.log(searchText);
+        const query = encodeURIComponent(searchText);
+        document.getElementsByClassName("search-button")[0].setAttribute("href", "retete.html?search=" + query);
     } else {
         event.preventDefault();
     }
 }
 
+const search = document.getElementsByClassName("search-button")[0];
+search.onclick = searchFct;
 // let link = window.location.search.split("=")[1]; //luam cuvintele dupa care sa efectuam cautarea
 // console.log(link)
 // if (link !== undefined) {

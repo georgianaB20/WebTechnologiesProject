@@ -49,7 +49,7 @@ xhttp.onreadystatechange = function () {
                     <div class="filtre">
                         <div class="time bg">
                             <i class="far fa-clock"></i>
-                            <span class="txt">${element.time_value} ${element.time_unit}</span>
+                            <span class="txt">${element.time}m</span>
                         </div>
                         <div class="dificultate bg">
                             <i class="fab fa-gripfire"></i>

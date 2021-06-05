@@ -17,9 +17,19 @@ function compare(a, b) {
     return 0;
 }
 
-async function getMostPopular(req, res, headers) {
+async function getRecipes(req, res, headers) {
+    // http://localhost:5000/recipes?q=supa%20rosii
+
+    const baseURL = 'http://' + req.headers.host + '/';
+    const parsedUrl = new URL(req.url, baseURL);
+    const query = parsedUrl.searchParams.get('q');
+
     try {
-        let recipe2 = await Recipe.find({}, 'title description ingredients comments');
+        const filter = {};
+        if (query) {
+            filter.$text = { $search: query }
+        }
+        let recipe2 = await Recipe.find(filter, 'title description ingredients comments difficulty time');
         if (recipe2 !== null) {
             recipe2.sort(compare);
             res.writeHead(200, headers);
@@ -549,4 +559,4 @@ function search(req, res, headers) {
 }
 
 
-module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }
+module.exports = { getMostPopular: getRecipes, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }
