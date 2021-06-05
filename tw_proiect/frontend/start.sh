@@ -1,0 +1,1 @@
+live-server --mount=/:$PWD/views

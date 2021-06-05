@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/reteta.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="icon" href="../images/favicon1.ico">
+    <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul class="nav">
+                <li>
+                    <div class="search-box">
+                        <input class="search-txt" type="text" name="cauta" placeholder="Caută" aria-label="">
+                        <a class="search-button" href="#">
+                            <i class="fas fa-search"></i>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="retete.html"><i class="fas fa-utensils"></i></a></li>
+                <li>
+                    <a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a>
+                </li>
+                <li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
+                <li><a href="login.html"><i class="far fa-user"></i></a></li>
+            </ul>
+        </nav>
+        <script src="../js/nav.js"></script>
+    </header>
+
+    <main>
+        <section id="reteta">
+            <div class="container-reteta">
+
+                <div>
+                    <div class="header">
+
+                        <div class="recipe-info" id="recipe-info">
+
+                            <div class="adauga-favorite" id="adauga_favorite">
+                                <i class="fas fa-heart"></i>
+                            </div>
+
+                        </div>
+                        <div class="filtre">
+                            <div class="time" id="time">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="dificultate" id="dificultate">
+                                <i class="fab fa-gripfire"></i>
+                            </div>
+                            <div class="popularitate" id="popularitate">
+                                <i class="far fa-thumbs-up"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reteta">
+
+                        <div class="ingrediente">
+                            <h2>Ingrediente</h2>
+
+                            <ul class="ingrediente" id="ingrediente">
+
+                                <!-- <li>
+                                    <div class="container-ingredient">
+                                        <span class="gramaj">50g</span>
+                                        <div class="ingredient">
+                                            <span class="numele-ingheientului">căpsuni înghețate</span>
+                                        </div>
+                                    </div>
+                                </li> -->
+                            </ul>
+                        </div>
+
+                        <div class="instructiuni" id="instructiuni">
+                            <h2>Instrucțiuni</h2>
+                        </div>
+                    </div>
+
+                    <div class="comentarii">
+                        <button class="comentarii-btn">
+                            <a href="comentarii.html" class="ref">
+                                <i class="far fa-comments"> </i>
+                                <span class="btn">Ai încercat rețeta?</span>
+                            </a>
+                        </button>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </section>
+
+
+        <section id="comentarii">
+            <div class="container-comentarii">
+                <h1 class="Comentarii">Comentarii</h1>
+                <div class="comm-wraper">
+                    <div class="comment">
+                        <h3 class="nume">Michell Gonzalez</h3>
+                        <p class="comment-text">Am comentat si eu daca e..</p>
+                        <div class="comm">
+                            <button type="button" class="collapsible">Vezi poza</button>
+                            <div class="content">
+                                <img class="coment-img" src="images/1.jpg" alt="poza din cometariu">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <h3 class="nume">George Hora</h3>
+                        <p class="comment-text">comentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung
+                            bla bla bla bla</p>
+                        <div class="comm">
+                            <button type="button" class="collapsible">Vezi poza</button>
+                            <div class="content">
+                                <img class="coment-img" src="images/1.jpg" alt="poza din cometariu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Creators:</p>
+        <div class="creators">
+            <div class="creator">
+                <p>Boghiu Georgiana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Cernat Roxana</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+            <div class="creator">
+                <p>Formagiu Miky</p>
+                <a href="#" class="face">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </div>
+        </div>
+        <p>Copyrights reserved.</p>
+        <a class="documentatie" href="documentatie.html">About the project</a>
+    </footer>
+    <script src="../js/reteta_favorite.js"></script>
+    <script src="../js/reteta.js" type="module"></script>
+</body>
+
+</html>

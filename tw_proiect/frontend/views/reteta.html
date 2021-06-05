@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/reteta.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/index.css">
+
 </head>
 
 <body>
@@ -44,9 +45,13 @@
                 <div>
                     <div class="header">
                         <div class="recipe-info" id="recipe-info">
-                            <div class="adauga-favorite">
+
+                            <div id="recipe_title"></div>
+
+                            <div class="adauga-favorite" id="adauga_favorite">
                                 <i class="fas fa-heart"></i>
                             </div>
+
                         </div>
                         <div class="filtre">
                             <div class="time" id="time">
@@ -60,6 +65,8 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <script src="../js/reteta_favorite.js" type="module"></script> -->
+
 
                     <div class="reteta">
 
@@ -86,31 +93,51 @@
 
                     <div class="comentarii">
                         <button class="comentarii-btn">
-                                <a href="comentarii.html" class="ref">
-                                    <i class="far fa-comments"> </i>
-                                    <span class="btn">Ai încercat rețeta?</span>
-                                </a>
-                            </button>
+                            <a href="comentarii.html" class="ref" id="add_comment">
+                                <i class="far fa-comments"> </i>
+                                <span class="btn">Ai încercat rețeta?</span>
+                            </a>
+                        </button>
                     </div>
 
                 </div>
+
             </div>
+
         </section>
 
         <section id="comentarii">
             <div class="container-comentarii">
-                <h2 class="Comentarii">Comentarii</h2>
-                <div class="comm-wraper">
-                    <h3 class="nume">Michell Gonzalez</h3>
-
-                    <div class="comm">
-                        <!--                                <p class="comentariu-txt">Cea mai tare reteta ever</p>-->
-                        <img class="coment-img" src="images/1.jpg" alt="poza din cometariu">
+                <h1 class="Comentarii">Comentarii</h1>
+                <div class="comm-wraper" id="comment_list">
+                    <div class="comment">
+                        <h3 class="nume">Michell Gonzalez</h3>
+                        <p class="comment-text">Am comentat si eu daca e..</p>
+                        <div class="comm">
+                            <button type="button" class="collapsible">Vezi poza</button>
+                            <div class="content">
+                                <img class="coment-img" src="images/1.jpg" alt="poza din cometariu">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <h3 class="nume">George Hora</h3>
+                        <p class="comment-text">comentariu mai lung bla bla bla blacomentariu mai lung bla bla bla
+                            blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung
+                            bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung
+                            bla bla bla bla</p>
+                        <div class="comm">
+                            <button type="button" class="collapsible">Vezi poza</button>
+                            <div class="content">
+                                <img class="coment-img" src="images/1.jpg" alt="poza din cometariu">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+
     <footer>
         <p>Creators:</p>
         <div class="creators">
@@ -138,6 +165,6 @@
     </footer>
 
 </body>
-<script src="../js/reteta.js"></script>
+<script src="../js/reteta.js" type="module"></script>
 
 </html>

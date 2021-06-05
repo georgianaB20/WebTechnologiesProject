@@ -1,24 +1,29 @@
+const https = require('http2')
 const http = require('http')
-const { port } = require('../utils/constants')
+const fs = require('fs')
+const constants = require('../utils/constants')
 class WebApp {
-  constructor (port, router) {
-    this.port = port
-    this.router = router
-  }
+    constructor(port, router) {
+        this.port = port
+        this.router = router
+        this.options = {
+            key: fs.readFileSync(constants.keypath),
+            cert: fs.readFileSync(constants.certpath)
+        };
+    }
 
-  use () {
+    use() {
 
-  }
+    }
 
-  listen () {
-    var app = this
-    var server = http.createServer(function (req, res) {
-      app.router.route(req, res)
-      //res.end()
-    })
-    server.listen(port)
-    console.log(`app running on PORT: ${port}`)
-  }
+    listen() {
+        var app = this
+        var server = http.createServer(function(req, res) {
+            app.router.route(req, res)
+        })
+        server.listen(constants.port)
+        console.log(`app running on PORT: ${constants.port}`)
+    }
 }
 
 module.exports = { WebApp }
