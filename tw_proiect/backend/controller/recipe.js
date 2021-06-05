@@ -61,7 +61,6 @@ async function getRecipe(req, res, headers) {
     }
 }
 
-
 /*
 json sample for testing addRecipe
 {
@@ -109,13 +108,15 @@ async function addRecipe(req, res, headers) {
         res.end()
     } else {
 
-        let data = '';
+        let data = ''
 
         req.on('data', chunk => {
             data += chunk;
         })
         req.on('end', () => {
             data = JSON.parse(data);
+
+            data.user_id = user_id
 
             var base64 = data.picture
 
@@ -139,7 +140,6 @@ async function addRecipe(req, res, headers) {
 
             data.ingredients = ingredient;
 
-            // data.user_id = user_id;
             if (data.time_unit === "min") {
                 data.time = parseInt(data.time_value)
             } else if (data.time_unit === "h") {
@@ -150,7 +150,6 @@ async function addRecipe(req, res, headers) {
             delete data.time_value
             delete data.time_unit
             delete data.picture
-            console.log(data);
             let new_recipe = new Recipe(data);
 
             // console.log(new_recipe)
@@ -387,7 +386,6 @@ async function deleteRecipe(req, res, headers) {
     }
 }
 
-// http://localhost:5000/recipes/filter?diff_easy=1&diff_medium=
 async function filter(req, res, headers) {
     try {
         const baseURL = 'http://' + req.headers.host + '/';
@@ -544,6 +542,5 @@ function search(req, res, headers) {
         res.end()
     }
 }
-
 
 module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }
