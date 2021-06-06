@@ -1,12 +1,11 @@
-var search = document.getElementsByClassName("search-button")[0];
+const search = document.getElementsByClassName("search-button")[0];
 search.addEventListener("click", searchFct);
-
 function searchFct(event) {
     if (document.getElementsByClassName("search-txt")[0].value.length > 0) {
         console.log(document.getElementsByClassName("search-txt")[0].value)
 
         let query = document.getElementsByClassName("search-txt")[0].value
-        let search_btn = document.getElementsByClassName("search-button")[0].setAttribute("href", "retete.html?search=" + query)
+        document.getElementsByClassName("search-button")[0].setAttribute("href", "retete.html?search=" + query)
     } else {
         event.preventDefault();
     }

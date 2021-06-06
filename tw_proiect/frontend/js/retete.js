@@ -4,14 +4,12 @@ let retete = document.getElementsByClassName("card-wrapper")[0]
 //console.log(retete[0].innerHTML)
 console.log(window.location.search)
 let data = window.location.search.split("?")[1];
-let data2 = window.location.search.split("=")[0];
+let [data2, data3] = window.location.search.split("=");
 import { add_card } from './recipe_card.js'
-
 
 // event.preventDefault();
 if (data2 === "?search") {
-    console.log("search: " + data2)
-    let request_link = "http://localhost:5000/search?data=" + data
+    let request_link = "http://localhost:5000/search?data=" + data3
     request_at(request_link)
 }
 else if (data !== undefined) {

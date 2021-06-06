@@ -476,7 +476,6 @@ function search(req, res, headers) {
         const parsedUrl = new URL(req.url, baseURL);
 
         let search_terms = parsedUrl.searchParams.get('data');
-        console.log(search_terms);
         let last_index = 0;
         search_terms = search_terms.split(" ")
 

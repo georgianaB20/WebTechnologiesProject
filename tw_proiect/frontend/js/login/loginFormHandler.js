@@ -41,7 +41,7 @@ async function postFormDataAsJSON({ url, formData }) {
         else {
             res = JSON.parse(req.response)
             localStorage.setItem("AuthorizationToken",res.Authorization)
-            window.location.href="./retete.html"
+            window.location.href="./index.html"
         }
     }
     req.send(formDataJsonString);

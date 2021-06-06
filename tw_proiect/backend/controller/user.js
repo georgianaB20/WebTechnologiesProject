@@ -539,6 +539,51 @@ function change(req, res, headers) {
 
 
 */
+async function getUser(req, res, headers){
+    console.log(req.headers)
+    if('authorization' in req.headers) {
+        const auth = req.headers.authorization
+        console.log(auth)
+        const j = auth.split('.')
+        console.log(j)
+        if (j.length < 3) {
+            console.log('not a valid jwt')
+            res.writeHead(400, headers);
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.end()
+        } else {
+            let user_id
+            try {
+                const decoded = jwt.verify(auth, constants.key)
+                user_id = decoded.user_id;
+            } catch (err) {
+                console.log(err)
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+                res.end();
+                return;
+            }
+
+            let user = await User.findById(user_id)
+
+            if (user === null) {
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ 'message': 'Utilizatorul nu exista!' }, null, 4))
+                res.end()
+            } else {
+                const user_type = user.type;
+                res.writeHead(200, headers);
+                res.write(JSON.stringify({ user }, null, 4))
+                res.end()
+                console.log(user_type);
+
+            }
+        }
+
+    }
+    // const parsedUrl = new URL(req.url, baseURL);
+
+}
 
 
-module.exports = { login, register, change, grant, restrict }
+module.exports = { login, register, change, grant, restrict, getUser }
