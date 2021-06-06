@@ -412,10 +412,10 @@ async function filter(req, res, headers) {
         var multiply = (parsedUrl.searchParams.get('time_min_unit') == "min") * 1 +
             (parsedUrl.searchParams.get('time_min_unit') == "hours") * 60 +
             (parsedUrl.searchParams.get('time_min_unit') == "days") * 24 * 60
-
+        console.log(parseInt("44"))
         if (multiply === 0)
             time_min = 0
-        else time_min = String.parseInt(parsedUrl.searchParams.get('time_min_value')) * multiply
+        else time_min = parseInt(parsedUrl.searchParams.get('time_min_value')) * multiply
 
 
         multiply = (parsedUrl.searchParams.get('time_max_unit') == "min") * 1 +
@@ -427,7 +427,7 @@ async function filter(req, res, headers) {
             time_max = recipe[0].time
         }
 
-        else time_max = String.parseInt(parsedUrl.searchParams.get('time_max_value')) * multiply
+        else time_max = parseInt(parsedUrl.searchParams.get('time_max_value')) * multiply
 
         let entries = await Recipe.find({ difficulty: { $regex: regex_diff, $options: "i" }, time: { '$gte': time_min, '$lte': time_max } })
 

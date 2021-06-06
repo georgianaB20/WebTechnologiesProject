@@ -37,7 +37,7 @@ else if (data !== undefined) {
             value = vret.substring(0, vret.length - 1)
         }
         request_link += name + "=" + value + "&"
-        console.log(request_link)
+        //console.log(request_link)
         //console.log(name, value)
     }
     //canepa%2C+ciuperci"
