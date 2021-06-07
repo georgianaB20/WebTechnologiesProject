@@ -11,9 +11,23 @@ export function add_card(recipe, HTML_element) {
     if (recipe.time < 60) {
         recipe.time = recipe.time.toString() + " min"
     } else if (recipe.time < 24 * 60) {
-        recipe.time = recipe.time.toString() + " h"
+        let t = recipe.time
+        recipe.time = parseInt((recipe.time / 60).toString()).toString() + " h"
+        if (t % 60 > 0)
+            recipe.time += " " + (t % 60).toString() + " min"
     } else {
-        recipe.time = recipe.time.toString() + " d"
+        let t = recipe.time
+        recipe.time = parseInt((recipe.time / (24 * 60)).toString()).toString() + " d"
+        if (t % (24 * 60) > 0) {
+            t = t % (24 * 60)
+            if (t > 60) {
+                recipe.time += " " + parseInt((t / 60).toString()).toString() + " h"
+                t = t % 60
+            }
+            if (t < 60) {
+                recipe.time += " " + t.toString() + " min"
+            }
+        }
     }
 
     HTML_element.innerHTML += `<a href="reteta.html?id=${recipe._id}">

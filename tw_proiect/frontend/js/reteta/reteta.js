@@ -29,9 +29,7 @@ xhttp.onreadystatechange = function() {
                 if (t < 60) {
                     recipe.time += " " + t.toString() + " min"
                 }
-
             }
-
         }
 
         let element = document.getElementsByTagName("title")[0]
