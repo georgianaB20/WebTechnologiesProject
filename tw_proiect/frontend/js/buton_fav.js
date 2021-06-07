@@ -1,7 +1,6 @@
 import { addToFavorites, deleteFromFavorites } from './adauga_sterge_fav.js'
 
 let fav = document.getElementById("adauga_favorite")
-console.log(fav)
 
 if (fav.childNodes[0].className === "far fa-heart")
     fav.addEventListener("click", function1);
@@ -10,7 +9,6 @@ else if (fav.childNodes[0].className === "fas fa-heart")
 
 
 function function1(event) {
-    console.log("fct1")
     fav.removeEventListener("click", function1)
     fav.removeChild(fav.childNodes[0])
     let heart = document.createElement("i")
@@ -20,7 +18,6 @@ function function1(event) {
 }
 
 function function2(event) {
-    console.log("fct2")
     fav.removeEventListener("click", function2)
     fav.removeChild(fav.childNodes[0])
     let heart = document.createElement("i")

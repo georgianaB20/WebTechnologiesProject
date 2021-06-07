@@ -4,7 +4,6 @@ document.getElementById("sterge_ingredient").addEventListener("click", sterge_in
 
 
 function adauga_ingredient(event) {
-    //console.log("adauga ingredient");
     event.preventDefault();
     var ingrediente = document.getElementById('ingrediente');
     var label_nou = document.createElement('label');
@@ -21,13 +20,11 @@ function adauga_ingredient(event) {
 
     ingrediente.appendChild(label_nou);
     ingrediente.appendChild(input_nou);
-    //console.log("all gut");
 
 }
 
 
 function sterge_ingredient(event) {
-    //console.log("sterge ingredient");
     event.preventDefault();
     var ingrediente = document.getElementById('ingrediente');
     var inputs = ingrediente.getElementsByTagName('input');
@@ -40,5 +37,3 @@ function sterge_ingredient(event) {
         //ingrediente.removeChild(breaks[index]);
     }
 }
-
-

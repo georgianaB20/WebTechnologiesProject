@@ -1,5 +1,3 @@
-// import { filter } from './filtrare.js'
-
 let retete = document.getElementsByClassName("card-wrapper")[0]
     //console.log(retete[0].innerHTML)
 console.log(window.location.search)
@@ -43,62 +41,20 @@ if (data !== undefined) {
 
 function request_at(link) {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() { <<
-        << << < HEAD
-        //console.log(this.readyState);
-        if (this.status == 200 && this.readyState == 4) {
-            //console.log(this.response)
-            let arr = JSON.parse(this.response)
-            arr.forEach(element => {
-                console.log(element);
-                let descr = "";
-                if (element.description.length > 100)
-                    descr = element.description.substring(0, 100) + "..."
-                else
-                    descr = element.description + "..."
-
-                retete.innerHTML += `<a href="reteta.html?id=${element._id}">
-                    <div class="card">
-                        <img src='data:${element.picture_type};base64,${element.picture}' alt=${element.title} class="card-img">
-                        <h2>${element.title}</h2>
-                        <p class="descriere">
-                            ${descr}
-                        </p>
-                        <div class="filtre">
-                            <div class="time bg">
-                                <i class="far fa-clock"></i>
-                                <span class="txt">${element.time}</span>
-                            </div>
-                            <div class="dificultate bg">
-                                <i class="fab fa-gripfire"></i>
-                                <span class="txt">${element.difficulty}</span>
-                            </div>
-                            <div class="popularitate bg">
-                                <i class="far fa-comments"></i>
-                                <span class="txt">${element.comments.length}</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>`
-            }); ===
-            === =
-
-            if (this.readyState == 4) {
-                if (this.status == 200) {
-                    let arr = JSON.parse(this.response)
-                    arr.forEach(element => {
-                        add_card(element.recipe, retete)
-                    });
-                } else {
-                    console.log(this.response)
-                    let resp = JSON.parse(this.response)
-                    console.log(resp.message)
-                    alert(resp.message)
-                    window.location.href = "./retete.html"
-                } >>>
-                >>> > master
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                let arr = JSON.parse(this.response)
+                arr.forEach(element => {
+                    add_card(element.recipe, retete)
+                });
+            } else {
+                let resp = JSON.parse(this.response)
+                alert(resp.message)
+                window.location.href = "./retete.html"
             }
         }
-        xhttp.open("GET", link, true);
-        xhttp.send();
     }
+    xhttp.open("GET", link, true);
+    xhttp.send();
+}
