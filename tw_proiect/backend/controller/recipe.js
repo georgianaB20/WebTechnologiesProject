@@ -124,7 +124,7 @@ async function addRecipe(req, res, headers) {
             let ingredient = [];
 
             for (let i = 1; i <= no_ingredients; i++) {
-                if (data["ingredient" + i] !== "" && data["ingredient" + i] !== null) {
+                if (data["ingredient" + i] !== "" && data["ingredient" + i] !== null && data["ingredient" + i] !== undefined) {
                     ingredient[i - 1] = data["ingredient" + i];
                 }
 
