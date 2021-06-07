@@ -46,10 +46,12 @@ function request_at(link) {
             if (this.status == 200) {
                 let arr = JSON.parse(this.response)
                 arr.forEach(element => {
-                    add_card(element.recipe, retete)
+                    if (element.recipe)
+                        add_card(element.recipe, retete)
+                    else
+                        add_card(element, retete)
                 });
-            }
-            else {
+            } else {
                 console.log(this.response)
                 let resp = JSON.parse(this.response)
                 console.log(resp.message)
