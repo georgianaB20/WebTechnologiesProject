@@ -82,8 +82,17 @@ aside{
 }
 
 .admin {
+    outline: none;
+    border-color: #cfb491;
+    border-radius: 3em;
+    background-color: #cfb491;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 7em;
+    font-size: 1.1em;
+    width: 10em;
     margin-top: 1em;
-    align-items: center;
 }
 
 
