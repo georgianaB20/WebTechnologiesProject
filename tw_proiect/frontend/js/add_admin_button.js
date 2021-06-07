@@ -1,5 +1,3 @@
-console.log('loaded')
-
 window.onload = function () {
     const xhttp = new XMLHttpRequest()
 
@@ -19,9 +17,10 @@ window.onload = function () {
          }
          else {
              let res = JSON.parse(xhttp.response)
-             console.log('hjhfkjfjvjvn')
 
-             if(res.user.type === 'admin') {
+             // console.log(res.user_type)
+
+             if(res.user_type === 'admin') {
                  let admin_button = document.createElement("admin_button");
                  admin_button.innerHTML += `<a href="../views/admins_page.html">
                      <button type="button" class="admin">Pagina de admin</button>

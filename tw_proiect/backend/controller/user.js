@@ -539,7 +539,7 @@ async function getUser(req, res, headers) {
     console.log(req.headers)
     if ('authorization' in req.headers) {
         const auth = req.headers.authorization
-        console.log(auth)
+        // console.log(auth)
         const j = auth.split('.')
         console.log(j)
         if (j.length < 3) {
@@ -556,7 +556,7 @@ async function getUser(req, res, headers) {
                 console.log(err)
                 res.writeHead(401, headers);
                 res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
-                res.end();
+                    res.end();
                 return;
             }
 
@@ -568,11 +568,11 @@ async function getUser(req, res, headers) {
                 res.end()
             } else {
                 const user_type = user.type;
-                console.log(user)
+                // console.log(user)
                 res.writeHead(200, headers);
-                res.write(JSON.stringify({ user }, null, 4))
+                res.write(JSON.stringify({ user_type }, null, 4))
                 res.end()
-                console.log(user_type);
+                // console.log(user_type);
 
             }
         }
