@@ -497,20 +497,27 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
 
     let difficulties = ['Usor','Mediu','Greu','Master Chef']
 
-    let finalList = listAfterIncludeExclude.sort(function (el1, el2) {
-        if (el1.extra_ingredients < el2.extra_ingredients)
-            return -1;
-        if (el1.extra_ingredients > el2.extra_ingredients)
-            return 1;
+    let finalList = listAfterIncludeExclude
+    finalList.sort(function (el1, el2) {
+        console.log(order_by)
+        if (order_by === "") {
+            if (el1.extra_ingredients < el2.extra_ingredients)
+                return -1;
+            if (el1.extra_ingredients > el2.extra_ingredients)
+                return 1;
+            return 0;
+        }
         if (order_by === "popularity") {
             if (el1.recipe.comments.length < el2.recipe.comments.length)
-                return order;
-            return -order;
+                return -order;
+            return order;
         }
         if (order_by === "difficulty") {
-            if (difficulties.indexOf(el1.recipe.difficulty) < difficulties.indexOf(el1.recipe.difficulty))
-                return order
-            return -order
+            console.log(el1.recipe.difficulty)
+            console.log(el2.recipe.difficulty)
+            console.log(difficulties.indexOf(el1.recipe.difficulty))
+            console.log(difficulties.indexOf(el2.recipe.difficulty))
+            return (difficulties.indexOf(el1.recipe.difficulty) - difficulties.indexOf(el2.recipe.difficulty)) * (-order)
         }
         if (el1.recipe[order_by] < el2.recipe[order_by])
             return order;
