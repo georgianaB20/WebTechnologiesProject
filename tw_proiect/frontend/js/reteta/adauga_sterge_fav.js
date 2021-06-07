@@ -1,4 +1,6 @@
 var fav_button = document.getElementById("adauga_favorite")
+console.log(fav_button)
+
 let id = window.location.search.split("=")[1]
 
 
@@ -14,6 +16,7 @@ window.onload = function() {
                     let heart = document.createElement("i")
                     heart.className = "fas fa-heart"
                     fav_button.appendChild(heart)
+                    console.log("am ajuns 0")
                     found = 1
                     break
                 }
@@ -22,18 +25,24 @@ window.onload = function() {
                 let heart = document.createElement("i")
                 heart.className = "far fa-heart"
                 fav_button.appendChild(heart)
+                console.log("am ajuns 1")
+
             }
         } else {
             let heart = document.createElement("i")
             heart.className = "far fa-heart"
             fav_button.appendChild(heart)
+            console.log("am ajuns 2")
         }
 
         if (fav_button.childNodes[0].className === "far fa-heart") {
             fav_button.addEventListener('click', addToFavorites)
+            console.log("am ajuns 3")
+
         } else
         if (fav_button.childNodes[0].className === "fas fa-heart") {
             fav_button.addEventListener('click', deleteFromFavorites)
+            console.log("am ajuns 4")
         }
 
     } else {
@@ -70,6 +79,7 @@ window.onload = function() {
         xhttp.send();
 
     }
+    console.log(fav_button.childNodes)
 }
 
 
