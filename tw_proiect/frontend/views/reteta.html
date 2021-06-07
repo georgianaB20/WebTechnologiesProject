@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/reteta.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/index.css">
+
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                     <a href="./"><img id="logo-img" src="../images/logo.png" alt="Pagina acasa"></a>
                 </li>
                 <li><a href="favorite.html"><i class="far fa-heart"></i></a></li>
-                <li><a href="login.html"><i class="far fa-user"></i></a></li>
+                <li id="switcher"><a href="login.html"><i class="far fa-user"></i></a></li>
             </ul>
         </nav>
         <script src="../js/nav.js"></script>
@@ -44,9 +45,11 @@
                 <div>
                     <div class="header">
                         <div class="recipe-info" id="recipe-info">
-                            <div class="adauga-favorite">
-                                <i class="fas fa-heart"></i>
-                            </div>
+
+                            <div id="recipe_title"></div>
+
+                            <div class="adauga-favorite" id="adauga_favorite"></div>
+
                         </div>
                         <div class="filtre">
                             <div class="time" id="time">
@@ -60,6 +63,8 @@
                             </div>
                         </div>
                     </div>
+                    <script src="../js/reteta/adauga_sterge_fav.js" type="module"></script>
+
 
                     <div class="reteta">
 
@@ -86,7 +91,7 @@
 
                     <div class="comentarii">
                         <button class="comentarii-btn">
-                            <a href="comentarii.html" class="ref">
+                            <a href="comentarii.html" class="ref" id="add_comment">
                                 <i class="far fa-comments"> </i>
                                 <span class="btn">Ai încercat rețeta?</span>
                             </a>
@@ -94,13 +99,15 @@
                     </div>
 
                 </div>
+
             </div>
+
         </section>
 
         <section id="comentarii">
             <div class="container-comentarii">
                 <h1 class="Comentarii">Comentarii</h1>
-                <div class="comm-wraper">
+                <div class="comm-wraper" id="comment_list">
                     <div class="comment">
                         <h3 class="nume">Michell Gonzalez</h3>
                         <p class="comment-text">Am comentat si eu daca e..</p>
@@ -113,7 +120,8 @@
                     </div>
                     <div class="comment">
                         <h3 class="nume">George Hora</h3>
-                        <p class="comment-text">comentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla bla</p>
+                        <p class="comment-text">comentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung bla bla bla blacomentariu mai lung
+                            bla bla bla bla</p>
                         <div class="comm">
                             <button type="button" class="collapsible">Vezi poza</button>
                             <div class="content">
@@ -125,6 +133,7 @@
             </div>
         </section>
     </main>
+
     <footer>
         <p>Creators:</p>
         <div class="creators">
@@ -152,6 +161,6 @@
     </footer>
 
 </body>
-<script src="../js/reteta.js" type="module"></script>
+<script src="../js/reteta/reteta.js" type="module"></script>
 
 </html>

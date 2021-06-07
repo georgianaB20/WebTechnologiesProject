@@ -15,13 +15,11 @@ export async function handleFormSubmit(event) {
 }
 
 async function postFormDataAsJSON({ url, formData }) {
-    console.log(formData.entries())
-
     const plainFormData = Object.fromEntries(formData.entries());
 
     plainFormData.picture_type = plainFormData.picture.type
     var reader = new FileReader()
-    reader.onload = async function(e) {
+    reader.onload = async function (e) {
 
         plainFormData.picture = btoa(reader.result);
 
@@ -36,7 +34,7 @@ async function postFormDataAsJSON({ url, formData }) {
         req.setRequestHeader("Access-Control-Allow-Origin", "*");
         req.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'))
 
-        req.onload = function() {
+        req.onload = function () {
             if (req.status === 200) {
                 console.log(JSON.parse(req.response)._id)
                 alert("Reteta adaugata cu succes. Apasati OK pt redirectare.")
