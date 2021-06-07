@@ -41,5 +41,25 @@ if (localStorage.getItem("AuthorizationToken") !== null) {
 function deleteRecipe(delete_button) {
     console.log("DELETE")
     let id = delete_button.path[0].id.split("_")[1]
-    console.log(id)
+    let link = "http://localhost:5000/recipe?recipe_id=" + id
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        //console.log(this.readyState);
+        if (this.status == 200 && this.readyState == 4) {
+            // console.log(this.response)
+            // let arr = JSON.parse(this.response)
+            // arr.forEach(element => {
+            //     // console.log(element);
+            //     // favorite_card(element, card_wrapper)
+            // });
+            console.log(JSON.parse(this.response).message)
+        }
+    }
+    xhttp.open("DELETE", link, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'))
+    xhttp.send();
 }

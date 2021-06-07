@@ -207,7 +207,7 @@ async function getRecipesUser(req, res, headers) { //returns a json with all rec
         decoded = jwt.verify(auth, key)
             //decoded.user_id to get the user_id
         user_id = decoded.user_id
-        console.log(user_id === null, user_id === undefined)
+            // console.log(user_id === null, user_id === undefined)
     } catch (err) {
         res.writeHead(401, headers);
         res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
@@ -357,6 +357,7 @@ async function deleteRecipe(req, res, headers) {
         // let userid = req.url.split('?')[1].split('&')[0].split('=')[1]
         let recipeid = req.url.split('?')[1].split('=')[1]
 
+
         //data = JSON.parse(data);
         //aici lucram cu datele primite, le prelucram etc
         if (userid === undefined || recipeid === undefined) {
@@ -366,6 +367,7 @@ async function deleteRecipe(req, res, headers) {
         } else {
             let user = await User.findById(userid) //daca nu gaseste=null
             let recipe = await Recipe.findById(recipeid)
+            console.log(!(user._id.toString() === recipe.user_id || (user.type === 'admin')))
             if (user === null) {
                 res.writeHead(404, headers);
                 res.write(JSON.stringify({ 'message': 'Userul nu exista' }, null, 4))
@@ -378,7 +380,7 @@ async function deleteRecipe(req, res, headers) {
                 res.end()
                 return;
             }
-            if (!(user._id === recipe.user_id || (user.type === 'admin'))) {
+            if (!(user._id.toString() !== recipe.user_id || (user.type !== 'admin'))) {
                 res.writeHead(422, headers);
                 res.write(JSON.stringify({ 'message': 'Nu puteti sterge aceasta reteta.' }, null, 4))
                 res.end()
@@ -390,7 +392,7 @@ async function deleteRecipe(req, res, headers) {
                         res.write(JSON.stringify({ 'message': 'Eroare interna' }, null, 4))
                         res.end()
                     } else {
-                        console.log("Deleted : ", docs);
+                        // console.log("Deleted : ", docs);
                         res.writeHead(200, headers);
                         res.write(JSON.stringify({ 'message': 'Ati sters reteta' }, null, 4))
                         res.end()
