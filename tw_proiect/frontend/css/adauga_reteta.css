@@ -1,100 +1,105 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
-
-form{
+form {
     justify-content: center;
-    border-style:solid;
-    border-color:transparent;
     margin-bottom: 10em;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     background-color: transparent;
     border-radius: 1em;
-    display:block;
-    width:fit-content;
-    padding:1em;
+    display: block;
+    width: 100%;
+    padding: 1em;
     font-size: 1em;
     box-sizing: content-box;
-    overflow:scroll;
-    overflow-x:hidden;
-    overflow-y:hidden;
-    /* background-color: #e8ded1; */
-    background-color: #E8DED1;
-    z-index:-1;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #e8ded1;
+    z-index: -1;
 }
 
-form label{
-    position:relative;
-    float:left;
-    z-index:0;
+form label {
+    z-index: 0;
+    padding-right: 1em;
 }
 
-#preparare{
-    max-width:20em;
-    max-height:10em;
+#preparare {
+    max-width: 20em;
+    max-height: 10em;
 }
 
-input[type="number"]{
-    width:fit-content;
+input {
+    padding: 5px 10px;
+    width: max-content;
+}
+
+input[type="number"] {
+    width: fit-content;
     /*margin-right:2em;*/
 }
 
-input[type="file"]{
-    width:fit-content;
-    border-style:solid;
+input[type="file"] {
+    width: fit-content;
+    border-style: solid;
     border-width: 2px;
 }
 
-select{
-    border-style:solid;
+select {
+    border-style: solid;
     border-width: 2px;
     margin-left: 0;
-    width:max-content;
+    width: max-content;
 }
 
-input,select,select *,textarea{
-    border-style:solid;
-    border-color:rgb(131, 122, 28);
-    border-radius:1em;
-    background-color:transparent;
+input,
+select,
+select *,
+textarea,
+option {
+    border-style: solid;
+    border-color: rgb(131, 122, 28);
+    border-radius: 1em;
+    background-color: transparent;
     outline: none;
-	font-family: Montserrat, sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
-input:focus,select:focus,textarea:focus,option:focus {
-    border-style:solid;
-    border-color:rgb(150, 143, 64);
-    border-radius:1em;
+input:focus,
+select:focus,
+textarea:focus,
+option:focus {
+    border-style: solid;
+    border-color: rgb(150, 143, 64);
+    border-radius: 1em;
     outline: none;
 }
 
-form div{
-    text-align:center;
-    margin:1em;
+form div {
+    text-align: center;
+    margin: 1em;
 }
 
-
-#ingrediente{
+#ingrediente {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#ingrediente input{
+#ingrediente input {
     width: 20em;
     align-self: center;
     outline: none;
-    margin:2px;
+    margin: 2px;
 }
 
-form button{
+form button {
     box-sizing: border-box;
-    background-color:darkkhaki;
-    padding:0.2em;
+    background-color: darkkhaki;
+    padding: 0.2em;
     border-style: solid;
     border-width: 0.15em;
     border-color: rgba(72, 126, 61, 0.959);
     border-radius: 1em;
     color: rgb(71, 67, 23);
-    font-family: Montserrat,sans-serif;
-    text-align:justify;
+    font-family: Montserrat, sans-serif;
+    text-align: justify;
 }

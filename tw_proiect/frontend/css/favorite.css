@@ -13,40 +13,80 @@ section {
     padding: 2rem 0;
 }
 
+
 /*.heading {*/
+
+
 /*    text-transform: uppercase;*/
+
+
 /*    font-size: 1.5rem;*/
+
+
 /*    letter-spacing: 1px;*/
+
+
 /*    margin-right: -3px;*/
+
+
 /*    margin-bottom: 5rem;*/
+
+
 /*    text-align: center;*/
+
+
 /*    color: #333;*/
+
+
 /*    position: relative;*/
+
+
 /*}*/
+
 
 /*.heading::after {*/
-/*    content: "";*/
-/*    width: 10rem;*/
-/*    height: .8rem;*/
-/*    background-color: #cfb491;*/
-/*    position: absolute;*/
-/*    bottom: -2rem;*/
-/*    left: 50%;*/
-/*    transform: translateX(-50%);*/
-/*    border-radius: 2rem;*/
-/*}*/
 
+
+/*    content: "";*/
+
+
+/*    width: 10rem;*/
+
+
+/*    height: .8rem;*/
+
+
+/*    background-color: #cfb491;*/
+
+
+/*    position: absolute;*/
+
+
+/*    bottom: -2rem;*/
+
+
+/*    left: 50%;*/
+
+
+/*    transform: translateX(-50%);*/
+
+
+/*    border-radius: 2rem;*/
+
+
+/*}*/
 
 .card-wrapper {
     display: flex;
     align-items: center;
     align-content: center;
     flex-direction: column;
+    width: 100%;
 }
 
-.card-wrapper a:link{
+.card-wrapper a:link {
     text-decoration: none;
-    color:black;
+    color: black;
 }
 
 .card {
@@ -57,7 +97,7 @@ section {
     align-items: center;
     justify-content: center;
     margin: 2rem 0;
-    box-shadow: .5rem .5rem 3rem rgba(0,0,0,0.2);
+    box-shadow: .5rem .5rem 3rem rgba(0, 0, 0, 0.2);
     padding-top: 0.8rem;
     border-radius: 1em;
 }
@@ -79,8 +119,6 @@ section {
     margin: 0.5rem 0;
 }
 
-
-
 .descriere {
     font-size: 1rem;
     margin: 0.5rem 0;
@@ -99,22 +137,21 @@ section {
 
 .btn:hover {
     transform: translateY(-2px);
-    box-shadow: .5rem .5rem 2rem rgba(0,0,0, 0.2);
+    box-shadow: .5rem .5rem 2rem rgba(0, 0, 0, 0.2);
 }
 
-.btn:active{
+.btn:active {
     transform: translateY(0);
     box-shadow: none;
 }
 
-@media screen and (min-width: 700px){
+@media screen and (min-width: 700px) {
     .card-wrapper {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
     }
-
     .card {
         margin: 2rem;
     }
