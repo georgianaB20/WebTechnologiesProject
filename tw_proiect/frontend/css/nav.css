@@ -98,7 +98,9 @@ header {
     z-index: 1;
 }
 
-#logout {
+#logout,
+#my_recipes,
+.layout_div {
     float: right;
     padding: 0.5em;
     font-family: Montserrat, sans-serif;
@@ -106,7 +108,14 @@ header {
     z-index: 1;
 }
 
-#logout button {
+.layout_div {
+    float: left;
+    padding-left: 1em;
+}
+
+#logout button,
+#my_recipes button,
+.layout_div button {
     background-color: rgb(207, 180, 145);
     border: none;
     color: black;
@@ -119,7 +128,9 @@ header {
     z-index: 1;
 }
 
-#logout a {
+#logout a,
+#my_recipes a,
+.layout_div a {
     text-decoration: none;
     color: inherit;
 }

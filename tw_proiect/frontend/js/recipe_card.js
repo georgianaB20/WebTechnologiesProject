@@ -76,3 +76,15 @@ export function favorite_card(recipe, HTML_element) {
     </a>`
 
 }
+
+export function retetele_mele_card(recipe, HTML_element) {
+    HTML_element.innerHTML += `<div class="reteta">
+            <a href="/reteta.html?id=${recipe._id}">
+                <img src="${images_server_url}?${recipe.picture}" alt="${recipe.title}"></a>
+            <p>${recipe.title}</p>
+            <p>Popularitate:${recipe.comments.length}</p>
+            <a class="submit" id="delete_${recipe._id}">Sterge</a>
+        </div>`
+
+    // <a class="submit" id="${recipe._id}">Editeaza</a>
+}
