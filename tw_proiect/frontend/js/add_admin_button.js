@@ -1,3 +1,5 @@
+console.log('loaded')
+
 window.onload = function () {
     const xhttp = new XMLHttpRequest()
 
@@ -17,7 +19,22 @@ window.onload = function () {
          }
          else {
              let res = JSON.parse(xhttp.response)
-             console.log(xhttp)
+             console.log('hjhfkjfjvjvn')
+
+             // if(res.user.type === 'admin') {
+                 let admin_button = document.createElement("admin_button");
+                 admin_button.innerHTML += `<a href="../views/admins_page.html">
+                     <button type="button">Pagina de admin</button>
+                 </a>`
+                 //
+                 // admin_button.onclick = function () {
+                 //     window.location.href='../views/admins_page.html'
+                 // }
+                 document.getElementById("formulare_configurare").appendChild(admin_button);
+
+             // }
+
+
          }
      }
      xhttp.send();

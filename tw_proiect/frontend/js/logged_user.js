@@ -13,7 +13,7 @@ function check_if_logged(event) {
     if (logg) {
         window.location.href = './contul_meu.html'
     }  else  {
-        window.location.href='/login.html'
+        window.location.href='./login.html'
     }
 }
 
