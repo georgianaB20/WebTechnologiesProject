@@ -572,6 +572,7 @@ async function getUser(req, res, headers){
                 res.end()
             } else {
                 const user_type = user.type;
+                console.log(user)
                 res.writeHead(200, headers);
                 res.write(JSON.stringify({ user }, null, 4))
                 res.end()
@@ -580,6 +581,8 @@ async function getUser(req, res, headers){
             }
         }
 
+    } else {
+        console.log("nu am camp de autorizare")
     }
     // const parsedUrl = new URL(req.url, baseURL);
 
