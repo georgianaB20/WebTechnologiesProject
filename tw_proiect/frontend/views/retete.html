@@ -82,22 +82,22 @@
             <div class="filter_item" id="timp">
                 <label for="timp">Timp</label>
                 <span>
-                    <input type="number" name="min_value">
-                    <select name="min_unit">
-                        <option value="-"></option>
+                    <input type="number" name="time_min_value" min="0">
+                    <select name="time_min_unit">
+                        <option value=""></option>
                         <option value="min">minute</option>
-                        <option value="h">ore</option>
-                        <option value="d">zile</option>
+                        <option value="hours">ore</option>
+                        <option value="days">zile</option>
                     </select>
                 </span>
                 <p> - </p>
                 <span>
-                    <input type="number" name="max_value">
-                    <select name="max_unit">
-                        <option value="-"></option>
+                    <input type="number" name="time_max_value" min="0">
+                    <select name="time_max_unit">
+                        <option value=""></option>
                         <option value="min">minute</option>
-                        <option value="h">ore</option>
-                        <option value="d">zile</option>
+                        <option value="hours">ore</option>
+                        <option value="days">zile</option>
                     </select>
                 </span>
             </div>
@@ -106,28 +106,28 @@
                 <label for="criteriu">Sortare</label>
 
                 <select name="order_by">
-					<option value="-"></option>
-					<option value="popularitate">Popularitate</option>
-					<option value="data">Data</option>
-					<option value="timp_preparare">Timp de preparare</option>
-					<option value="nivel_dificultate">Nivel dificultate</option>
-				</select>
+                    <option value=""></option>
+                    <option value="popularity">Popularitate</option>
+                    <option value="createdAt">Data</option>
+                    <option value="time">Timp de preparare</option>
+                    <option value="difficulty">Nivel dificultate</option>
+                </select>
             </div>
 
             <div class="filter_item" id="ordine">
                 <label for="ordine">Ordine</label>
-                <select name="ordine">
-                    <option value="-"></option>
-                    <option value="ascendent">ascendent</option>
-                    <option value="descendent">descendent</option>
+                <select name="order">
+                    <option value=""></option>
+                    <option value="ASC">ascendent</option>
+                    <option value="DESC">descendent</option>
                 </select>
             </div>
         </div>
 
         <a class="submit"><input type="submit" value="Afiseaza"></a>
     </form>
-    <script type="module" src='../js/filtrare.js'></script> 
-    
+    <script type="module" src='../js/filtrare.js'></script>
+
     <div class="adauga-reteta">
         <button class="adauga">
             <a href="/adauga_reteta.html" class="ref">

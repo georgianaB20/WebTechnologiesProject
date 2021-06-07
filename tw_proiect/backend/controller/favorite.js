@@ -50,18 +50,15 @@ async function getFavorites(req, res, headers) {
 
 async function addFavorite(req, res, headers) {
     //http://localhost:5000/favorites/add?recipe_id=609a73bf5c4932a37ad78a7e
-    // console.log("am ajuns")
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 
-    // const user_id = parsedUrl.searchParams.get('user_id');
     const recipe_id = parsedUrl.searchParams.get('recipe_id');
 
     let auth = req.headers.authorization
     let decoded, user_id
     try {
         decoded = jwt.verify(auth, key)
-            //decoded.user_id to get the user_id
         user_id = decoded.user_id
     } catch (err) {
         res.writeHead(403, headers);
@@ -70,9 +67,7 @@ async function addFavorite(req, res, headers) {
         return;
     }
 
-    // console.log("user id: " + user_id);
-    // console.log("recipe id: " + recipe_id);
-
+    
     let user_by_id = await User.findById(user_id);
     let recipe_by_id = await Recipe.findById(recipe_id);
     let duplicate = 0;
