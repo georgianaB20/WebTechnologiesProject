@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "crypto-js": "^4.0.0",
+    "encrypt-storage": "^1.2.21",
     "lodash": "^4.17.21",
     "uniq": "^1.0.1"
   }

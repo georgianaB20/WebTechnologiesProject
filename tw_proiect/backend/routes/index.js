@@ -16,7 +16,8 @@ router.get('/favorites', favoriteController.getFavorites) //OK
 router.get('/recipes/user', recipeController.getRecipesUser) //OK
 router.get('/recipes/filter', recipeController.filter); //OK
 router.get('/search', recipeController.search)
-router.get('/get_user',userController.getUser)
+router.get('/get_user', userController.getUser)
+router.get('/check_favorite', userController.check_favorite)
 
 router.post('/recipes', recipeController.addRecipe) //OK
 router.post('/login', userController.login)
