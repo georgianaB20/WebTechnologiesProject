@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/user')
 const Recipe = require('../models/recipe')
-const { db } = require('../utils/constants')
+const { db, key } = require('../utils/constants')
 const jwt = require('jsonwebtoken')
 
 
@@ -9,10 +9,22 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function getFavorites(req, res, headers) {
     // http://localhost:5000/favorites?user_id=6099a85c85afd46d920f4fbd
-    const baseURL = 'http://' + req.headers.host + '/';
-    const parsedUrl = new URL(req.url, baseURL);
+    // const baseURL = 'http://' + req.headers.host + '/';
+    // const parsedUrl = new URL(req.url, baseURL);
 
-    const user_id = parsedUrl.searchParams.get('user_id');
+    // const user_id = parsedUrl.searchParams.get('user_id');
+    let auth = req.headers.authorization
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        res.writeHead(403, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
 
 
     try {
@@ -38,6 +50,7 @@ async function getFavorites(req, res, headers) {
 
 async function addFavorite(req, res, headers) {
     //http://localhost:5000/favorites/add?recipe_id=609a73bf5c4932a37ad78a7e
+    // console.log("am ajuns")
     const baseURL = 'http://' + req.headers.host + '/';
     const parsedUrl = new URL(req.url, baseURL);
 

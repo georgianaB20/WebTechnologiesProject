@@ -1,7 +1,7 @@
 import { images_server_url } from './utils/constants.js'
 
 export function add_card(recipe, HTML_element) {
-    console.log(recipe)
+    // console.log(recipe)
     let descr = "";
     if (recipe.description.length > 100)
         descr = recipe.description.substring(0, 100) + "...";
@@ -39,4 +39,26 @@ export function add_card(recipe, HTML_element) {
                     </div>
                 </div>
             </a>`
+}
+
+export function favorite_card(recipe, HTML_element) {
+    let descr = "";
+    if (recipe.description.length > 100)
+        descr = recipe.description.substring(0, 100) + "...";
+    else
+        descr = recipe.description + "...";
+
+    HTML_element.innerHTML += `
+    <a href="reteta.html?id=${recipe._id}">
+        <div class="card">
+            <img src="${images_server_url}?${recipe.picture}" alt="${recipe.title}" class="card-img">
+            <h2>${recipe.title}</h2>
+            <p class="descriere">${descr}</p>
+            <button class="btn">
+                <i class="fas fa-heart"></i>
+            </button>
+
+        </div>
+    </a>`
+
 }

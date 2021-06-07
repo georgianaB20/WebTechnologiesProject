@@ -23,7 +23,7 @@ function request_at(link) {
             //console.log(this.response)
             let arr = JSON.parse(this.response)
             arr.forEach(element => {
-                console.log(element);
+                // console.log(element);
                 add_card(element, retete)
             });
         }

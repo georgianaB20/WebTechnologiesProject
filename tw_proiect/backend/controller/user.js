@@ -502,7 +502,56 @@ function restrict(req, res, headers) {
     })
 }
 
+async function check_favorite(req, res, headers) {
+    let auth = req.headers.authorization
+        // console.log(constants.key)
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, constants.key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+            // console.log(user_id)
+    } catch (err) {
+        res.writeHead(403, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
 
+    let user = await User.findById(user_id, 'favorite')
+        // console.log(user.favorite.length)
+    if (user === null || user === undefined) {
+        res.writeHead(404, headers);
+        res.write(JSON.stringify({ "message": "Userul nu exista" }, null, 4));
+        res.end();
+    } else if (user.favorite.length === 0) {
+        res.writeHead(200, headers);
+        res.write(JSON.stringify({ "message": "NO" }, null, 4));
+        res.end();
+    } else {
+        const baseURL = 'http://' + req.headers.host + '/';
+        const parsedUrl = new URL(req.url, baseURL);
+
+        const rid = parsedUrl.searchParams.get('recipe_id');
+        let found = 0
+        for (let i = 0; i < user.favorite.length; i++) {
+            if (user.favorite[i].toString() === rid) {
+                found = 1;
+                break;
+            }
+        }
+        if (found === 0) { //nu am gasit reteta la favorite
+            res.writeHead(200, headers);
+            res.write(JSON.stringify({ "message": "NO" }, null, 4));
+            res.end();
+        } else {
+            res.writeHead(200, headers);
+            res.write(JSON.stringify({ "message": "YES" }, null, 4));
+            res.end();
+        }
+    }
+
+}
 
 /// exemplu de functie pt PUT / POST / DELETE
 /*
@@ -541,4 +590,4 @@ function change(req, res, headers) {
 */
 
 
-module.exports = { login, register, change, grant, restrict }
+module.exports = { login, register, change, grant, restrict, check_favorite }
