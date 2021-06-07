@@ -21,18 +21,15 @@ window.onload = function () {
              let res = JSON.parse(xhttp.response)
              console.log('hjhfkjfjvjvn')
 
-             // if(res.user.type === 'admin') {
+             if(res.user.type === 'admin') {
                  let admin_button = document.createElement("admin_button");
                  admin_button.innerHTML += `<a href="../views/admins_page.html">
-                     <button type="button">Pagina de admin</button>
+                     <button type="button" class="admin">Pagina de admin</button>
                  </a>`
-                 //
-                 // admin_button.onclick = function () {
-                 //     window.location.href='../views/admins_page.html'
-                 // }
+
                  document.getElementById("formulare_configurare").appendChild(admin_button);
 
-             // }
+             }
 
 
          }

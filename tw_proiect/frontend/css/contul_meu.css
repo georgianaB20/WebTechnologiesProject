@@ -9,7 +9,6 @@ main {
 }
 
 aside{
-    padding-right:5em;
     background-color: transparent;
     border-radius: 1em;
     display:block;
@@ -82,6 +81,10 @@ aside{
     border-color: rgba(56, 34, 0, 0.39);
 }
 
+.admin {
+    margin-top: 1em;
+    align-items: center;
+}
 
 
 
