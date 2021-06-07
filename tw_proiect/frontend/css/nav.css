@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 * {
     padding: 0;
     margin: 0;
@@ -21,7 +22,6 @@ body {
 header {
     position: sticky;
     top: 0;
-    background-color: rgba(207, 180, 145, 0.9);
     z-index: 1;
 }
 
@@ -32,6 +32,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1;
+    background-color: rgba(207, 180, 145, 0.9);
 }
 
 .nav li {
@@ -94,5 +95,42 @@ header {
 .nav a {
     text-decoration: none;
     color: inherit;
-    z-index: 1
+    z-index: 1;
+}
+
+#logout,
+#my_recipes,
+.layout_div {
+    float: right;
+    padding: 0.5em;
+    font-family: Montserrat, sans-serif;
+    text-decoration: none;
+    z-index: 1;
+}
+
+.layout_div {
+    float: left;
+    padding-left: 1em;
+}
+
+#logout button,
+#my_recipes button,
+.layout_div button {
+    background-color: rgb(207, 180, 145);
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 1em;
+    z-index: 1;
+}
+
+#logout a,
+#my_recipes a,
+.layout_div a {
+    text-decoration: none;
+    color: inherit;
 }

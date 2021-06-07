@@ -37,115 +37,21 @@
             </ul>
         </nav>
         <script src="../js/nav.js"></script>
+        <div id="logout"></div>
+        <script src="../js/logout.js" type="module"></script>
     </header>
 
 
-    <form class="filters">
-        <p>Afiseaza retetele dupa:</p>
-
-        <div>
-            <div class="filter_item">
-                <label for="timp"> Timp preparare </label>
-                <input type="text" name="timp">
-            </div>
-
-            <div class="filter_item">
-                <label for="nivel_dificultate">Nivel de dificultate</label>
-                <select id="nivel_dificultate" name="nivel_dificultate">
-			<option value="-"></option>
-            <option value="incepator">Incepator</option>
-            <option value="mediu">Mediu</option>
-            <option value="bun">Bun</option>
-            <option value="foarte_bun">Foarte bun</option>
-            <option value="master_chef">Master chef</option>
-        </select>
-            </div>
-
-            <div class="filter_item">
-                <label for="include">Include ingrediente</label>
-                <input type="text" name="include">
-            </div>
-
-            <div class="filter_item">
-                <label for="exclude">Exclude ingrediente</label>
-                <input type="text" name="exclude">
-            </div>
-
-            <div class="filter_item">
-                <label for="data">Data</label>
-                <select name="data">
-				<option value="-"></option>
-				<option value="ascendent">ascendent</option>
-				<option value="descendent">descendent</option>
-			</select>
-            </div>
-
-            <div class="filter_item">
-                <label for="popularitate">Popularitate</label>
-                <select name="popularitate">
-				<option value="-"></option>
-				<option value="ascendent">ascendent</option>
-				<option value="descendent">descendent</option>
-			</select>
-            </div>
-        </div>
-
-        <a class="submit">Afiseaza</a>
-    </form>
-
-    <div class="adauga-reteta">
-        <button class="adauga">
-			<a href="/adauga_reteta.html" class="ref">
+    <div class="layout_div">
+        <button>
+			<a href="/adauga_reteta.html">
 				<i class="fas fa-plus"></i>
-				<span class="btn">Adaugă o rețetă</span>
+				<span>Adaugă o rețetă</span>
 			</a>
 		</button>
     </div>
     <div class="containerRetete">
-        <div class="reteta">
-            <a href="index.html">
-                <img src="../images/1.jpg" alt="reteta1"></a>
-            <p>Titlul retetei</p>
-            <p>Popularitate:28</p>
-            <a class="submit">Editeaza</a>
-            <a class="submit">Sterge</a>
-        </div>
 
-        <div class="reteta">
-            <a href="index.html">
-                <img src="../images/1.jpg" alt="reteta1"></a>
-            <p>Titlul retetei</p>
-            <p>Popularitate:28</p>
-            <a class="submit">Editeaza</a>
-            <a class="submit">Sterge</a>
-        </div>
-
-        <div class="reteta">
-            <a href="index.html">
-                <img src="../images/1.jpg" alt="reteta1"></a>
-            <p>Titlul retetei</p>
-            <p>Popularitate:28</p>
-            <a class="submit">Editeaza</a>
-            <a class="submit">Sterge</a>
-        </div>
-
-        <div class="reteta">
-            <a href="index.html">
-                <img src="../images/1.jpg" alt="reteta1"> </a>
-            <p>Titlul retetei</p>
-            <p>Popularitate:28</p>
-            <a class="submit">Editeaza</a>
-            <a class="submit">Sterge</a>
-        </div>
-
-        <div class="reteta">
-            <a href="index.html">
-                <img src="../images/1.jpg" alt="reteta1"> </a>
-            <p>Titlul retetei</p>
-            <p>Popularitate:28</p>
-            <a class="submit">Editeaza</a>
-            <a class="submit">Sterge</a>
-        </div>
     </div>
 
 
@@ -175,5 +81,6 @@
         <a class="documentatie" href="documentatie.html">About the project</a>
     </footer>
 </body>
+<script src="../js/retetele_mele/retetele_mele.js" type="module"></script>
 
 </html>

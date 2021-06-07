@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     flex: 100%;
+    width: 100%;
     /* grid-auto-rows: 6; */
     /* grid-template-columns: 27.5% 15% 15% 15% 27.5%; */
 }
@@ -13,6 +14,8 @@
     /* grid-column: 2 / span 2; */
     margin: 0 auto;
     padding: 1em;
+    grid-row: 1;
+    grid-column: 2/span2;
 }
 
 #include {
