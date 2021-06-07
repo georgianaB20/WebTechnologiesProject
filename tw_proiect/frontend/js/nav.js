@@ -29,3 +29,8 @@ function searchFct(event) {
 //     xhttp.send();
 
 // }
+
+if (localStorage.getItem("AuthorizationToken") !== null) {
+    let contul_meu_button = document.getElementById("switcher")
+    contul_meu_button.innerHTML = `<a href="contul_meu.html"><i class="far fa-user"></i></a>`
+}
