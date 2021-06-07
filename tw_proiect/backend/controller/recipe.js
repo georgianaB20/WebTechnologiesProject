@@ -152,7 +152,6 @@ async function addRecipe(req, res, headers) {
             delete data.picture
             let new_recipe = new Recipe(data);
 
-            // console.log(new_recipe)
             new_recipe.save(async function (err) {
                 if (err) {
                     console.log(err);
@@ -247,7 +246,6 @@ function updateRecipe(req, res, headers) {
         try {
             data = JSON.parse(data);
             //aici lucram cu datele primite, le prelucram etc
-            console.log(data)
             if (userid === undefined || recipeid === undefined) {
                 res.writeHead(404, headers);
                 res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
@@ -303,16 +301,13 @@ function updateRecipe(req, res, headers) {
                 if (ingredient.length !== 0) {
                     recipe.ingredients = ingredient
                 }
-                console.log(recipe)
-
+                
                 let ok = await recipe.save()
-                //console.log(ok, user)
                 if (ok === recipe) {
                     res.writeHead(200, headers);
                     res.write(JSON.stringify({ 'message': 'Reteta actualizata!' }, null, 4))
                     res.end()
                 } else {
-                    //console.log()
                     res.writeHead(500, headers);
                     res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
                     res.end()
@@ -366,7 +361,6 @@ async function deleteRecipe(req, res, headers) {
                         res.write(JSON.stringify({ 'message': 'Eroare de la baza de date' }, null, 4))
                         res.end()
                     } else {
-                        console.log("Deleted : ", docs);
                         res.writeHead(200, headers);
                         res.write(JSON.stringify({ 'message': 'Ati sters reteta' }, null, 4))
                         res.end()
@@ -391,6 +385,40 @@ async function filter(req, res, headers) {
         const baseURL = 'http://' + req.headers.host + '/';
         const parsedUrl = new URL(req.url, baseURL);
 
+        let include = parsedUrl.searchParams.get('include')
+        let exclude = parsedUrl.searchParams.get('exclude')
+        let order_by = parsedUrl.searchParams.get('order_by')
+        let order = parsedUrl.searchParams.get('order')
+        
+        if (include === null)
+            include = ""
+        if (exclude === null)
+            exclude = ""
+        if (order_by === null)
+            order_by = ""
+        if (order === null)
+            order = ""
+
+        var include_exclude_flag = false, sort_flag = false
+        if (include !== "" || exclude !== "")
+            include_exclude_flag = true
+        if (parsedUrl.searchParams.get('order_by') !== "" && parsedUrl.searchParams.get('order') !== "")
+            sort_flag = true
+
+        if (include_exclude_flag && sort_flag){
+            res.writeHead(400, headers)
+            res.write(JSON.stringify({"message": "Nu puteti selecta si criterii de includare si criterii de sortare. Va rugam selectati doar una din categoriile de criterii."}))
+            res.end()
+            return
+        }
+
+        if (sort_flag === false && (parsedUrl.searchParams.get('order_by') === "" || parsedUrl.searchParams.get('order') === "")) {
+            res.writeHead(400, headers)
+            res.write(JSON.stringify({"message": "Pentru sortare e nevoie sa selectati atat ordinea, cat si criteriul de sortare."}))
+            res.end()
+            return
+        }
+
         const diff_map = {
             '^Usor$': parsedUrl.searchParams.get('diff_easy') === "1",
             '^Mediu$': parsedUrl.searchParams.get('diff_medium') === "1",
@@ -410,7 +438,6 @@ async function filter(req, res, headers) {
         var multiply = (parsedUrl.searchParams.get('time_min_unit') == "min") * 1 +
             (parsedUrl.searchParams.get('time_min_unit') == "hours") * 60 +
             (parsedUrl.searchParams.get('time_min_unit') == "days") * 24 * 60
-        console.log(parseInt("44"))
         if (multiply === 0)
             time_min = 0
         else time_min = parseInt(parsedUrl.searchParams.get('time_min_value')) * multiply
@@ -428,17 +455,6 @@ async function filter(req, res, headers) {
         else time_max = parseInt(parsedUrl.searchParams.get('time_max_value')) * multiply
 
         let entries = await Recipe.find({ difficulty: { $regex: regex_diff, $options: "i" }, time: { '$gte': time_min, '$lte': time_max } })
-
-        let include = parsedUrl.searchParams.get('include')
-        let exclude = parsedUrl.searchParams.get('exclude')
-        if (include === null) {
-            include = ""
-
-        }
-        if (exclude === null) {
-            exclude = ""
-
-        }
 
         res.writeHead(200, headers);
         res.write(JSON.stringify(apply_include_exclude_sort(entries, include, exclude, parsedUrl.searchParams.get('order_by'), parsedUrl.searchParams.get('order'))));
@@ -460,35 +476,42 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
     if (excludeString === "") {
         excludeList = []
     }
-    //console.log(excludeList)
     order = (order === "ASC") ? -1 : 1
     let listAfterIncludeExclude = recipes.reduce(function (arr, recipe) {
         let numberOfIncludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient) {
-            if (includeList.find(element => element === ingredient))
+            if (includeList.find(element => ingredient.includes(element)) !== undefined)
                 return currentNumber + 1;
             return currentNumber;
         }, 0)
 
         let numberOfExcludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient) {
-            if (excludeList.find(element => element === ingredient))
+            if (excludeList.find(element => ingredient.includes(element)) !== undefined)
                 return currentNumber + 1;
             return currentNumber;
         }, 0)
-        // console.log(recipe._id)
-        // console.log(numberOfExcludedIngredients)
-        // console.log(numberOfIncludedIngredients)
-        // console.log(includeList)
         if (numberOfExcludedIngredients === 0 && numberOfIncludedIngredients === includeList.length)
             arr.push({ 'recipe': recipe, 'extra_ingredients': recipe.ingredients.length - includeList.length });
 
         return arr;
     }, [])
 
+    let difficulties = ['Usor','Mediu','Greu','Master Chef']
+
     let finalList = listAfterIncludeExclude.sort(function (el1, el2) {
         if (el1.extra_ingredients < el2.extra_ingredients)
             return -1;
         if (el1.extra_ingredients > el2.extra_ingredients)
             return 1;
+        if (order_by === "popularity") {
+            if (el1.recipe.comments.length < el2.recipe.comments.length)
+                return order;
+            return -order;
+        }
+        if (order_by === "difficulty") {
+            if (difficulties.indexOf(el1.recipe.difficulty) < difficulties.indexOf(el1.recipe.difficulty))
+                return order
+            return -order
+        }
         if (el1.recipe[order_by] < el2.recipe[order_by])
             return order;
         return -order;
@@ -503,14 +526,12 @@ function search(req, res, headers) {
         const parsedUrl = new URL(req.url, baseURL);
 
         let search_terms = parsedUrl.searchParams.get('data');
-        console.log(search_terms);
         let last_index = 0;
         search_terms = search_terms.split(" ")
 
         for (let i = 0; i < search_terms.length; i++) {
             if (search_terms[i] !== undefined && search_terms[i].length > 0) {
                 let conj_regex = new RegExp(' si | sau | la | de | iar | dar | astfel | insa | ci | ca | sa | ori | fie | cu ', "g")
-                console.log((" " + search_terms[i] + " "))
                 if ((" " + search_terms[i] + " ").match(conj_regex) !== null) {
                     delete search_terms[i]
                     i = i - 1
@@ -520,9 +541,7 @@ function search(req, res, headers) {
                 i = i - 1
             }
         }
-        console.log("de aici", search_terms)
-
-        // let regex = [];
+        
         let regex_string = ""
         for (let j = 0; j < search_terms.length; j++) { //contruim regexurile pentru fiecare ingredient 
             regex_string += search_terms[j].toLowerCase()
@@ -530,7 +549,6 @@ function search(req, res, headers) {
                 regex_string += "|"
         }
 
-        // let re
         let recipes = Recipe.aggregate([{
             $match: {
                 title: { $regex: regex_string }
@@ -548,8 +566,6 @@ function search(req, res, headers) {
         }
 
         ], function (err, data) {
-            for (let i = 0; i < data.length; i++)
-                console.log(data[i].title)
             if (data.length > 0) {
                 res.writeHead(200, headers)
                 res.write(JSON.stringify(data, null, 4));

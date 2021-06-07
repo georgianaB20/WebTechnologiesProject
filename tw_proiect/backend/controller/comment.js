@@ -23,7 +23,6 @@ async function getComments(req, res, headers) {
         if (recipe_by_id !== null) {
             if ('comments' in recipe_by_id) {
                 await recipe_by_id.populate('comments').execPopulate();
-                // console.log(recipe_by_id.comments);
                 res.writeHead(200, headers);
                 res.write(JSON.stringify(recipe_by_id.comments, null, 4))
                 res.end()
@@ -126,11 +125,7 @@ async function addComment(req, res, headers) {
                                     res.end()
                                     return
                                 }
-                                console.log(recipeWithNewComment)
-
-                                console.log(recipe)
-                                console.log(recipeWithNewComment)
-
+                                
                                 if (recipeWithNewComment === recipe) {
                                     res.writeHead(200, headers);
                                     res.write(JSON.stringify({ "message": "Comentariu adaugat cu succes!" }, null, 4))
@@ -181,32 +176,12 @@ async function deleteComment(req, res, headers) {
                 res.end()
             }
 
-            // console.log(comment_by_id.user_id);
-            // console.log(user_by_id._id);
-            //
-            // console.log(typeof(comment_by_id.user_id))
-            // console.log(typeof user_by_id._id)
-            //
-            // console.log(lodash.isEqual(comment_by_id.user_id, user_by_id._id))
             let comment = null;
             for (let i = 0; i < recipe_by_id.comments.length; i++) {
                 if (lodash.isEqual(recipe_by_id.comments[i].user_id, user_by_id._id))
                     comment = recipe_by_id.comments[i]
             }
 
-            // if (lodash.isEqual(comment_by_id.user_id, user_by_id._id)) {
-            //     try {
-            //         let recipe_by_id = await Recipe.findById(recipe_id);
-
-            //         if (recipe_by_id === null) {
-            //             res.writeHead(404, headers);
-            //             res.write(JSON.stringify({ 'message': 'Userul nu a fost gasit!' }, null, 4))
-            //             res.end()
-            //             return;
-            //         }
-
-            //         const idx = recipe_by_id.comments.some(el => el.equals(comment_by_id._id))
-            //if(idx){
             if (comment !== null) {
                 //userul este cel care a postat comentariul sau un admin/moderator
                 if (!(user_id === JSON.stringify(comment.user_id) || (user.type === 'admin' || user.type === 'moderator'))) {
@@ -216,7 +191,6 @@ async function deleteComment(req, res, headers) {
                 } else {
                     recipe_by_id.comments.pull(comment);
                     await recipe_by_id.save();
-                    console.log('comentariu sters din reteta')
                 }
             } else {
                 res.writeHead(404, headers);
@@ -229,25 +203,6 @@ async function deleteComment(req, res, headers) {
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
             res.end()
         }
-
-        //     Comment.findByIdAndDelete(comment_by_id._id, function(err, docs) {
-        //         if (err) {
-        //             console.log(err)
-        //             res.writeHead(500, headers);
-        //             res.write(JSON.stringify({ 'message': 'Eroare de la baza de date' }, null, 4))
-        //             res.end()
-        //         } else {
-        //             console.log("Deleted : ", docs);
-        //             res.writeHead(200, headers);
-        //             res.write(JSON.stringify({ 'message': 'Ati sters comentariul' }, null, 4))
-        //             res.end()
-        //         }
-        //     });
-        // } else {
-        //     res.writeHead(401, headers);
-        //     res.write(JSON.stringify({ 'message': 'Comentariul nu a fost adaugat de acest utilizator' }, null, 4))
-        //     res.end()
-        // }
     } else {
         res.writeHead(404, headers);
         res.write(JSON.stringify({ 'message': 'URL invalid.' }, null, 4))
