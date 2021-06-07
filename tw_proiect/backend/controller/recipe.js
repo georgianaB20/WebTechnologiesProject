@@ -499,7 +499,6 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
 
     let finalList = listAfterIncludeExclude
     finalList.sort(function (el1, el2) {
-        console.log(order_by)
         if (order_by === "") {
             if (el1.extra_ingredients < el2.extra_ingredients)
                 return -1;
@@ -513,10 +512,6 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
             return order;
         }
         if (order_by === "difficulty") {
-            console.log(el1.recipe.difficulty)
-            console.log(el2.recipe.difficulty)
-            console.log(difficulties.indexOf(el1.recipe.difficulty))
-            console.log(difficulties.indexOf(el2.recipe.difficulty))
             return (difficulties.indexOf(el1.recipe.difficulty) - difficulties.indexOf(el2.recipe.difficulty)) * (-order)
         }
         if (el1.recipe[order_by] < el2.recipe[order_by])
