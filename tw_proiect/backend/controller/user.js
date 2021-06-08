@@ -324,13 +324,9 @@ function grant(req, res, headers) {
                 res.end();
                 return;
             }
-            console.log(data)
 
             let user = await User.findOne({ username: data.username, email: data.email_user })
             let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin).toString(crypto.enc.Hex) })
-
-            console.log(user)
-            console.log(admin)
 
             if (user === null) {
                 res.writeHead(401, headers);
@@ -412,6 +408,7 @@ function grant(req, res, headers) {
 
 
 function restrict(req, res, headers) {
+    console.log("sunt in restrict")
     let type_of_restrict = req.url.split('?')[1].split('=')[1];
     let data = '';
 
@@ -421,21 +418,37 @@ function restrict(req, res, headers) {
     req.on('end', async() => {
         try {
             data = JSON.parse(data);
+            let auth = req.headers.authorization
 
-            let user = await User.findOne({ username: data.username, email: data.email })
-            let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin).toString(crypto.enc.Hex) })
+            let decoded, user_id
+            try {
+                decoded = jwt.verify(auth, constants.key)
+                //decoded.user_id to get the user_id
+                data.id = decoded.user_id
+            } catch (err) {
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({"message": "Nu sunteti logat"}, null, 4));
+                res.end();
+                return;
+            }
+
+            let user = await User.findOne({username: data.username, email: data.email_user})
+            let admin = await User.findOne({
+                _id: data.id,
+                password: md5(data.parola_admin).toString(crypto.enc.Hex)
+            })
 
             if (user === null) {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest username si email!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Nu exista un user cu acest username si email!'}, null, 4))
                 res.end()
             } else if (admin === null) {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({ 'message': 'Nu exista un admin sau moderator cu acest id!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Nu exista un admin sau moderator cu acest id!'}, null, 4))
                 res.end()
             } else if ((type_of_restrict === "comments" || type_of_restrict === "post") && admin.type === "normal") {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({ 'message': 'Nu aveti rolul potrivit!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Nu aveti rolul potrivit!'}, null, 4))
                 res.end()
             } else if (type_of_restrict === "comments") {
                 user.can_comment = "no";
@@ -443,11 +456,11 @@ function restrict(req, res, headers) {
 
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Dreptul de a comenta a fost restrictionat!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Dreptul de a comenta a fost restrictionat!'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
 
@@ -456,11 +469,11 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Dreptul de a posta retete a fost restrictionat!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Dreptul de a posta retete a fost restrictionat!'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
             } else if (type_of_restrict === "access") {
@@ -468,11 +481,11 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Accesul userului a fost restrictionat !' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Accesul userului a fost restrictionat !'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
 
@@ -482,22 +495,22 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Userul nu mai este moderator!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Userul nu mai este moderator!'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
             } else {
                 res.writeHead(404, headers);
-                res.write(JSON.stringify({ 'message': 'Not found!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Not found!'}, null, 4))
                 res.end()
             }
         } catch (err) {
             console.log(error)
             res.writeHead(500, headers);
-            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
             res.end()
         }
     })
