@@ -2,7 +2,6 @@
 
 let retete = document.getElementsByClassName("card-wrapper")[0]
     //console.log(retete[0].innerHTML)
-console.log(window.location.search)
     // let data = window.location.search.split("?")[1];
 let data2 = window.location.search.split("=")[0];
 import { add_card } from './recipe_card.js'
@@ -11,7 +10,6 @@ import { add_card } from './recipe_card.js'
 let data = window.location.search.split("=")[1]; //"data de pe search"
 if (data2 === "?search") { //OK
     // event.preventDefault();
-    console.log("search: " + data)
     let request_link = "http://localhost:5000/recipes?q=" + data
     request_at(request_link)
 } else if (data !== undefined) {
@@ -47,7 +45,6 @@ function request_at(link) {
         if (this.readyState == 4) {
             if (this.status == 200) {
                 let arr = JSON.parse(this.response)
-                console.log(arr)
                 arr.forEach(element => {
                     if (element.recipe !== undefined)
                         add_card(element.recipe, retete)

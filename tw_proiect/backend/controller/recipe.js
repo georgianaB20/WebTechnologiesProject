@@ -26,8 +26,9 @@ async function getRecipes(req, res, headers) {
 
     try {
         const filter = {};
+        // console.log(query)
         if (query) {
-            filter.$text = { $search: query }
+            filter.$text = { $search: query };
         }
         let recipe2 = await Recipe.find(filter, 'title description ingredients comments difficulty time');
         if (recipe2 !== null) {

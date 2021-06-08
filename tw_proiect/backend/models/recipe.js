@@ -39,5 +39,5 @@ const recipeSchema = new Schema({
         default: null
     }
 }, { timestamps: true })
-recipeSchema.index({title: 'text'});
+recipeSchema.index({title: 'text', ingredients: 'text', description: 'text'});
 module.exports = model('Recipe', recipeSchema)
