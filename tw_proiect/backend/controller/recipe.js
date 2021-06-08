@@ -454,12 +454,12 @@ async function filter(req, res, headers) {
 
         if (include_exclude_flag && sort_flag) {
             res.writeHead(400, headers)
-            res.write(JSON.stringify({ "message": "Nu puteti selecta si criterii de includare si criterii de sortare. Va rugam selectati doar una din categoriile de criterii." }))
+            res.write(JSON.stringify({ "message": "Nu puteti selecta si criterii de includere/excludere si criterii de sortare. Va rugam selectati doar una din categoriile de criterii." }))
             res.end()
             return
         }
 
-        if (sort_flag === false && (parsedUrl.searchParams.get('order_by') === "" || parsedUrl.searchParams.get('order') === "")) {
+        if (sort_flag === false && (parsedUrl.searchParams.get('order_by') === "" || parsedUrl.searchParams.get('order') === "") && !(parsedUrl.searchParams.get('order_by') === "" && parsedUrl.searchParams.get('order') === "")) {
             res.writeHead(400, headers)
             res.write(JSON.stringify({ "message": "Pentru sortare e nevoie sa selectati atat ordinea, cat si criteriul de sortare." }))
             res.end()
