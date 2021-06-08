@@ -438,6 +438,9 @@ function restrict(req, res, headers) {
                 password: md5(data.parola_admin).toString(crypto.enc.Hex)
             })
 
+            console.log(user)
+            console.log(admin)
+
             if (user === null) {
                 res.writeHead(401, headers);
                 res.write(JSON.stringify({'message': 'Nu exista un user cu acest username si email!'}, null, 4))
