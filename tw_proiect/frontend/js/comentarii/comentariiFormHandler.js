@@ -1,3 +1,4 @@
+import { sendAlert } from '../utils/error_handling.js'
 export async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -44,7 +45,12 @@ async function postFormDataAsJSON({ url, formData }) {
         req.onload = function () {
             if (req.status !== 200) {
                 res = JSON.parse(req.response)
-                alert(res.message);
+                if (req.status === 403 || req.status === 404 || req.status === 500) {
+                    sendAlert(JSON.stringify(res.message), JSON.stringify(req.status))
+                }
+                else {
+                    alert(res.message);
+                }
             }
             else {
                 res = JSON.parse(req.response)
@@ -54,6 +60,7 @@ async function postFormDataAsJSON({ url, formData }) {
         req.send(formDataJsonString);
     }
     reader.readAsBinaryString(plainFormData.picture)
-
     return res;
+
 }
+

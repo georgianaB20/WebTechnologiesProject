@@ -1,15 +1,14 @@
-// import { filter } from './filtrare.js'
+import {sendAlert} from './utils/error_handling.js'
 
 let retete = document.getElementsByClassName("card-wrapper")[0]
-    //console.log(retete[0].innerHTML)
-console.log(window.location.search)
+
 let data = window.location.search.split("?")[1];
+
 let [data2, data3] = window.location.search.split("=");
 import { add_card } from './recipe_card.js'
 
-// event.preventDefault();
 if (data2 === "?search") {
-    let request_link = "http://localhost:5000/search?data=" + data3
+    let request_link = "http://localhost:5000/recipes?q=" + data3
     request_at(request_link)
 } else if (data !== undefined) {
     let request_link = "http://localhost:5000/recipes/filter?"
@@ -30,18 +29,13 @@ if (data2 === "?search") {
         request_link += name + "=" + value + "&"
     }
     request_at(request_link)
-
 } else {
     let request_link = "http://localhost:5000/recipes"
     request_at(request_link)
 }
-
-
-
 function request_at(link) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-
         if (this.readyState == 4) {
             if (this.status == 200) {
                 let arr = JSON.parse(this.response)
@@ -52,9 +46,12 @@ function request_at(link) {
                         add_card(element, retete)
                 });
             } else {
-                console.log(this.response)
                 let resp = JSON.parse(this.response)
-                console.log(resp.message)
+                if (this.status === 401 || this.status === 403 || this.status === 404 || this.status === 500) {//la 401 este nume sau parola gresita
+                    let message = ""
+                    sendAlert(message, JSON.stringify(this.status))
+                }
+                //let resp = JSON.parse(this.response)
                 alert(resp.message)
                 window.location.href = "./retete.html"
             }
