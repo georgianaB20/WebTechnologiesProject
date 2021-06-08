@@ -16,6 +16,7 @@
     padding: 1em;
     grid-row: 1;
     grid-column: 2/span2;
+
 }
 
 #include {
@@ -80,12 +81,26 @@
     grid-template-columns: 27.5% 22.5% 22.5% 27.5%;
     flex-wrap: wrap;
     padding-bottom: 0.5em;
+    
 }
 
 .filters div .filter_item {
     display: flex;
     flex-direction: column;
 }
+
+#sort{
+    float:right;
+}
+#ordine{
+    float:left;
+}
+
+@media (max-width: 1000px) {
+    .filters div { grid-template-columns: repeat(auto-fit, minmax(5000px,100fr)); }
+  }
+
+
 
 .filter_item input,
 .filter_item select,
