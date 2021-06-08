@@ -21,7 +21,7 @@ function login(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
 
@@ -74,7 +74,7 @@ function register(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
 
@@ -108,7 +108,7 @@ function register(req, res, headers) {
                 data.password = md5(data.password).toString(crypto.enc.Hex)
 
                 const new_user = new User(data);
-                new_user.save(function(err) {
+                new_user.save(function (err) {
                     if (err) {
                         console.log(err);
                         res.writeHead(500, headers);
@@ -158,22 +158,38 @@ json sample for testing /change?type_of_change=email
  */
 
 function change(req, res, headers) {
-
     let data = '';
-
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
             let type_of_change = req.url.split('?')[1].split('=')[1]
-
+            // console.log(type_of_change)
+            console.log(data)
+            let auth = req.headers.authorization
+            //console.log(type_of_change)
+            let decoded, user_id
+            try {
+                decoded = jwt.verify(auth, constants.key)
+                //decoded.user_id to get the user_id
+                user_id = decoded.user_id
+            } catch (err) {
+                console.log(err)
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+                res.end();
+                return;
+            }
             if (type_of_change === "username") {
-                let check_pass = await User.findOne({ _id: data.id }, "password")
+
+                let check_pass = await User.findOne({ _id: user_id }, "password")
                 let user = await User.findOne({ username: data.username }, "_id")
 
-                if (data.username === undefined || data.password === undefined || data.id === undefined) {
+
+                console.log()
+                if (data.username === undefined || data.password === undefined) {
                     res.writeHead(400, headers);
                     res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
                     res.end()
@@ -190,15 +206,15 @@ function change(req, res, headers) {
                     res.write(JSON.stringify({ 'message': 'Username-ul exista deja in baza de date.' }, null, 4))
                     res.end()
                 } else {
-                    let update_user = await User.findByIdAndUpdate(data.id, { username: data.username })
+                    let update_user = await User.findByIdAndUpdate(user_id, { username: data.username })
                     res.writeHead(200, headers);
                     res.write(JSON.stringify({ 'message': 'Username actualizat!' }, null, 4))
                     res.end()
                 }
 
             } else if (type_of_change === "password") {
-                let user = await User.findById(data.id)
-                if (data.id === undefined || data.parola_veche === undefined || data.parola_noua === undefined || data.parola_noua2 === undefined) {
+                let user = await User.findById(user_id)
+                if (user_id === undefined || data.parola_veche === undefined || data.parola_noua === undefined || data.parola_noua2 === undefined) {
                     //date incomplete
                     res.writeHead(400, headers);
                     res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
@@ -233,9 +249,9 @@ function change(req, res, headers) {
                     }
                 }
             } else if (type_of_change === "email") {
-                let user = await User.findById(data.id)
+                let user = await User.findById(user_id)
                 let user2 = await User.findOne({ "email": data.email_nou })
-                if (data.email_nou === undefined || data.email_vechi === undefined || data.id === undefined || data.parola === undefined) {
+                if (data.email_nou === undefined || data.email_vechi === undefined || user_id === undefined || data.parola === undefined) {
                     res.writeHead(400, headers);
                     res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
                     res.end()
@@ -307,7 +323,7 @@ function grant(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
 
@@ -400,7 +416,7 @@ function restrict(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
 
