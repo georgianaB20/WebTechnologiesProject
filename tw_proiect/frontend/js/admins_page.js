@@ -38,8 +38,12 @@ function add_right_comment(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
+            
             alert(res.message)
         }
     }
@@ -72,8 +76,12 @@ function remove_right_to_comment(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
+            
             alert(res.message)
         }
     }
@@ -106,8 +114,12 @@ function add_right_recipes(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
+            
             alert(res.message)
         }
     }
@@ -140,6 +152,9 @@ function remove_right_recipe(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
             alert(res.message)
@@ -174,6 +189,9 @@ function add_right_access(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
             alert(res.message)
@@ -208,6 +226,9 @@ function remove_right_access(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
             alert(res.message)
@@ -242,6 +263,9 @@ function add_mod(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
             alert(res.message)
@@ -276,6 +300,9 @@ function remove_mod(event) {
     xhttp.onload = function () {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
+            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
+                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            }
             alert(res.message);
         } else {
             alert(res.message)

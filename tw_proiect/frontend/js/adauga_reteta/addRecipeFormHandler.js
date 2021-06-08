@@ -1,3 +1,4 @@
+import {sendAlert} from '../utils/error_handling.js'
 export async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -39,12 +40,9 @@ async function postFormDataAsJSON({ url, formData }) {
                 console.log(JSON.parse(req.response)._id)
                 alert("Reteta adaugata cu succes. Apasati OK pt redirectare.")
                 window.location.replace("./reteta.html?id=" + JSON.parse(req.response)._id)
-            } else {
-                if (req.status === 403) {
-                    alert("Nu puteti adauga retete. Contactati administratorul.")
-                } else {
-                    alert("Eroare interna! Incercati mai tarziu.")
-                }
+            } else if (req.status === 401 || req.status === 403 ||req.status === 404 ||req.status === 500){
+                let message=""
+                sendAlert(message,req.status)//ne ducem in eroarea pe care o primim
             }
         }
         req.send(formDataJsonString);

@@ -1,5 +1,9 @@
-let data = window.location.search.split("?")[1];
+import {sendAlert} from './utils/error_handling.js'
+
 let retete = document.getElementsByClassName("card-wrapper")[0]
+
+let data = window.location.search.split("?")[1];
+
 let [data2, data3] = window.location.search.split("=");
 import { add_card } from './recipe_card.js'
 
@@ -43,6 +47,11 @@ function request_at(link) {
                 });
             } else {
                 let resp = JSON.parse(this.response)
+                if (this.status === 401 || this.status === 403 || this.status === 404 || this.status === 500) {//la 401 este nume sau parola gresita
+                    let message = ""
+                    sendAlert(message, JSON.stringify(this.status))
+                }
+                //let resp = JSON.parse(this.response)
                 alert(resp.message)
                 window.location.href = "./retete.html"
             }

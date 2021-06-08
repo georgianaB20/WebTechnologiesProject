@@ -47,6 +47,10 @@ async function postFormDataAsJSON({ url, formData }) {
         if (req.status !== 200) {
 
             res = JSON.parse(req.response)
+            if (req.status === 401 ||req.status === 403 ||req.status === 404 ||req.status === 500){
+                ///window.location.href = './error'+JSON.stringify(req.status)+'.html'//ne ducem in eroarea pe care o primim
+                sendAlert(res.message,JSON.stringify(req.status))
+            }
             alert(res.message);
 
         }
