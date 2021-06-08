@@ -408,7 +408,6 @@ function grant(req, res, headers) {
 
 
 function restrict(req, res, headers) {
-    console.log("sunt in restrict")
     let type_of_restrict = req.url.split('?')[1].split('=')[1];
     let data = '';
 
@@ -437,9 +436,6 @@ function restrict(req, res, headers) {
                 _id: data.id,
                 password: md5(data.parola_admin).toString(crypto.enc.Hex)
             })
-
-            console.log(user)
-            console.log(admin)
 
             if (user === null) {
                 res.writeHead(401, headers);
