@@ -301,6 +301,7 @@ json sample for testing /grant?type={type_of_grant} , where {type_of_grant} = co
 
 
 function grant(req, res, headers) {
+    // console.log('sunt in functie')
     let type_of_grant = req.url.split('?')[1].split('=')[1];
     let data = '';
 
@@ -310,9 +311,26 @@ function grant(req, res, headers) {
     req.on('end', async() => {
         try {
             data = JSON.parse(data);
+            let auth = req.headers.authorization
 
-            let user = await User.findOne({ username: data.username, email: data.email })
+            let decoded, user_id
+            try {
+                decoded = jwt.verify(auth, constants.key)
+                //decoded.user_id to get the user_id
+                data.id = decoded.user_id
+            } catch (err) {
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+                res.end();
+                return;
+            }
+            console.log(data)
+
+            let user = await User.findOne({ username: data.username, email: data.email_user })
             let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin).toString(crypto.enc.Hex) })
+
+            console.log(user)
+            console.log(admin)
 
             if (user === null) {
                 res.writeHead(401, headers);
@@ -384,7 +402,7 @@ function grant(req, res, headers) {
             }
 
         } catch (err) {
-            console.log(error)
+            console.log(err)
             res.writeHead(500, headers);
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
             res.end()
@@ -536,7 +554,7 @@ async function check_favorite(req, res, headers) {
 
 
 async function getUser(req, res, headers) {
-    console.log(req.headers)
+    // console.log(req.headers)
     if ('authorization' in req.headers) {
         const auth = req.headers.authorization
         // console.log(auth)
