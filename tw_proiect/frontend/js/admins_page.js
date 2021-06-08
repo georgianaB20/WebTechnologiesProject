@@ -8,6 +8,7 @@ document.getElementById("ofera_acces").addEventListener("click", add_right_acces
 document.getElementById("restrictioneaza_acces").addEventListener("click", remove_right_access);
 
 document.getElementById("ofera_mod").addEventListener("click", add_mod);
+document.getElementById("restrictioneaza_mod").addEventListener("click", remove_mod);
 
 
 function add_right_comment(event) {
@@ -232,6 +233,40 @@ function add_mod(event) {
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/grant?type=moderator');
+
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
+
+    xhttp.onload = function () {
+        let res = JSON.parse(xhttp.response)
+        if (xhttp.status !== 200) {
+            alert(res.message);
+        } else {
+            alert(res.message)
+        }
+    }
+    xhttp.send(JSON.stringify(body))
+}
+
+function remove_mod(event) {
+    event.preventDefault();
+    let user = document.getElementById("username_mod").value;
+    let email_user = document.getElementById('email_mod').value;
+    let parola_admin = document.getElementById("parola_admin_mod").value
+
+    let body = {
+        "username": `${user}`,
+        "email_user": `${email_user}`,
+        "parola_admin": `${parola_admin}`
+    }
+
+    console.log(body)
+
+    const xhttp = new XMLHttpRequest()
+
+    xhttp.open('PUT', 'http://localhost:5000/restrict?type=moderator');
 
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.setRequestHeader("Accept", "application/json");
