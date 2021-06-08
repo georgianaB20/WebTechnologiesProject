@@ -4,6 +4,7 @@ document.getElementById("restrictioneaza_comentarii").addEventListener("click", 
 document.getElementById("ofera_retete").addEventListener("click", add_right_recipes);
 document.getElementById("restrictioneaza_retete").addEventListener("click", remove_right_recipe);
 
+document.getElementById("ofera_acces").addEventListener("click", add_right_access);
 
 function add_right_comment(event) {
     // console.log("poti adauga comntarii")
@@ -74,9 +75,7 @@ function remove_right_to_comment(event) {
     xhttp.send(JSON.stringify(body))
 }
 
-
 function add_right_recipes(event) {
-    // console.log("poti adauga comntarii")
     event.preventDefault();
     let user = document.getElementById("username_retete").value;
     let email_user = document.getElementById('email_retete').value;
@@ -127,6 +126,40 @@ function remove_right_recipe(event) {
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/restrict?type=post');
+
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.setRequestHeader("Accept", "application/json");
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
+
+    xhttp.onload = function () {
+        let res = JSON.parse(xhttp.response)
+        if (xhttp.status !== 200) {
+            alert(res.message);
+        } else {
+            alert(res.message)
+        }
+    }
+    xhttp.send(JSON.stringify(body))
+}
+
+function add_right_access(event) {
+    event.preventDefault();
+    let user = document.getElementById("username_acces").value;
+    let email_user = document.getElementById('email_acces').value;
+    let parola_admin = document.getElementById("parola_admin_acces").value
+
+    let body = {
+        "username": `${user}`,
+        "email_user": `${email_user}`,
+        "parola_admin": `${parola_admin}`
+    }
+
+    console.log(body)
+
+    const xhttp = new XMLHttpRequest()
+
+    xhttp.open('PUT', 'http://localhost:5000/grant?type=access');
 
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.setRequestHeader("Accept", "application/json");
