@@ -134,3 +134,11 @@ header {
     text-decoration: none;
     color: inherit;
 }
+
+@media screen and (max-width:750px) {
+    .layout_div {
+        float: right;
+        padding-left: 1em;
+        /* padding-top: 1em; */
+    }
+}

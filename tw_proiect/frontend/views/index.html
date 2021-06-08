@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/favorite.css">
+    <link rel="stylesheet" href="../css/filtre.css">
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 
 
@@ -45,6 +46,31 @@
     </header>
 
 
+    <form id="ranking">
+        <div class="filter_item" id="ranking_type">
+            <label for="ranking_name">Clasament</label>
+
+            <select name="ranking_name">
+                <option value=""></option>
+                <option value="retete_populare">Retete populare</option>
+                <option value="ingrediente_utilizate">Ingredientele cele mai utilizate</option>
+                <option value="ingrediente_evitate">Ingredientele cele mai evitate</option>
+            </select>
+        </div>
+
+
+        <div class="filter_item" id="file_type">
+            <label for="file_format">Format</label>
+
+            <select name="file_format">
+                <option value=""></option>
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+                <option value="html">HTML</option>
+            </select>
+        </div>
+        <a class="submit"><input type="submit" value="Descarca"></a>
+    </form>
 
     <section>
 
