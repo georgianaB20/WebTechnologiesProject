@@ -16,6 +16,7 @@
 	font-family: Montserrat, sans-serif;
 	font-weight: bold;
 	font-size: 23px;
+	padding-bottom: 10px;
 }
 
 .un {
@@ -44,7 +45,7 @@
 	letter-spacing: 1px;
 	background: rgba(136, 126, 126, 0.04);
 	padding: 10px 20px;
-	border: none;
+	/*border: none;*/
 	border-radius: 20px;
 	outline: none;
 	box-sizing: border-box;
@@ -65,17 +66,14 @@
 	color: #fff;
 	background: linear-gradient(to right, #423f3b, #847e77);
 	border: 0;
-	padding-left: 40px;
-	padding-right: 40px;
-	padding-bottom: 10px;
-	padding-top: 10px;
+	padding: 10px 40px;
 	font-family: Montserrat, sans-serif;
 	margin-left: 29%;
 	font-size: 13px;
 	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
 
-.forgot {
+.forgot, .admin {
 	text-align:center;
 	text-shadow: 0 0 3px rgba(117, 117, 117, 0.12);
 	color: #1d1c1a;

@@ -158,7 +158,6 @@ json sample for testing /change?type_of_change=email
  */
 
 function change(req, res, headers) {
-
     let data = '';
     req.on('data', chunk => {
         data += chunk;
@@ -508,7 +507,7 @@ async function check_favorite(req, res, headers) {
     let decoded, user_id
     try {
         decoded = jwt.verify(auth, constants.key)
-        //decoded.user_id to get the user_id
+            //decoded.user_id to get the user_id
         user_id = decoded.user_id
 
     } catch (err) {
@@ -517,7 +516,6 @@ async function check_favorite(req, res, headers) {
         res.end();
         return;
     }
-
     let user = await User.findById(user_id, 'favorite')
 
     if (user === null || user === undefined) {
@@ -550,7 +548,55 @@ async function check_favorite(req, res, headers) {
             res.end();
         }
     }
-
 }
 
-module.exports = { login, register, change, grant, restrict, check_favorite }
+
+async function getUser(req, res, headers) {
+    console.log(req.headers)
+    if ('authorization' in req.headers) {
+        const auth = req.headers.authorization
+        // console.log(auth)
+        const j = auth.split('.')
+        console.log(j)
+        if (j.length < 3) {
+            console.log('not a valid jwt')
+            res.writeHead(400, headers);
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.end()
+        } else {
+            let user_id
+            try {
+                const decoded = jwt.verify(auth, constants.key)
+                user_id = decoded.user_id;
+            } catch (err) {
+                console.log(err)
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+                    res.end();
+                return;
+            }
+
+            let user = await User.findById(user_id)
+
+            if (user === null) {
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ 'message': 'Utilizatorul nu exista!' }, null, 4))
+                res.end()
+            } else {
+                const user_type = user.type;
+                // console.log(user)
+                res.writeHead(200, headers);
+                res.write(JSON.stringify({ user_type }, null, 4))
+                res.end()
+                // console.log(user_type);
+
+            }
+        }
+
+    }
+    // else {
+    //     console.log("nu am camp de autorizare")
+    // }
+
+}
+module.exports = { login, register, change, grant, restrict, check_favorite, getUser }
