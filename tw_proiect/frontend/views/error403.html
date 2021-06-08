@@ -18,6 +18,7 @@
 </head>
 
 <body>
+    
 
 
 
@@ -32,8 +33,16 @@
 
 
 
-    </div>
 
 </body>
+
+<script>
+    let message=decodeURI(window.location.search.split("=")[1])
+    window.onload=function(){
+        if (message !== ""){
+        alert(message)
+        }
+    }
+</script>
 
 </html>

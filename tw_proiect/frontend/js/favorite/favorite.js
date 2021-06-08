@@ -20,6 +20,10 @@ if (localStorage.getItem("AuthorizationToken") === null) {
                     favorite_card(recipe, card_wrapper)
 
                 }
+                else{
+                    window.location.href = './error'+JSON.stringify(this.status)+'.html'//ne ducem in eroarea pe care o primim
+                //todo: de trimis alerta in fiecare eroare 
+                }
             }
             xhttp.open("GET", link + favorite[i], true);
             xhttp.setRequestHeader("Content-Type", "application/json");
@@ -44,6 +48,10 @@ if (localStorage.getItem("AuthorizationToken") === null) {
                 favorite_card(element, card_wrapper)
             });
         }
+        else if ( this.status === 401 || /*this.status === 403 ||*/this.status === 404 ||this.status === 500){//la 403 =cand nu esti logat, dar poti pastra favoritele si daca nu esti logat
+            sendAlert(JSON.stringify(JSON.parse(this.response).message),JSON.stringify(this.status))
+            }
+        
     }
     xhttp.open("GET", link_logged_user, true);
     xhttp.setRequestHeader("Content-Type", "application/json");

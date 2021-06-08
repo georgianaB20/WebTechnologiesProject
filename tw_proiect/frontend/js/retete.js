@@ -1,7 +1,7 @@
 // import { filter } from './filtrare.js'
 
 let retete = document.getElementsByClassName("card-wrapper")[0]
-    //console.log(retete[0].innerHTML)
+//console.log(retete[0].innerHTML)
 console.log(window.location.search)
 let data = window.location.search.split("?")[1];
 let [data2, data3] = window.location.search.split("=");
@@ -40,7 +40,7 @@ if (data2 === "?search") {
 
 function request_at(link) {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
 
         if (this.readyState == 4) {
             if (this.status == 200) {
@@ -52,11 +52,16 @@ function request_at(link) {
                         add_card(element, retete)
                 });
             } else {
-                console.log(this.response)
+                //console.log(this.response)
                 let resp = JSON.parse(this.response)
-                console.log(resp.message)
-                alert(resp.message)
-                window.location.href = "./retete.html"
+                // console.log(resp.message)
+                //alert(resp.message)
+                if (this.status === 401 || this.status === 403 || this.status === 404 || this.status === 500) {//la 401 este nume sau parola gresita
+                    ///window.location.href = './error'+JSON.stringify(req.status)+'.html'//ne ducem in eroarea pe care o primim
+                    let message = ""
+                    sendAlert(message, JSON.stringify(this.status))
+                }
+                //todo: de trimis alerta in fiecare eroare 
             }
         }
     }
