@@ -17,9 +17,20 @@ function compare(a, b) {
     return 0;
 }
 
-async function getMostPopular(req, res, headers) {
+async function getRecipes(req, res, headers) {
+    // http://localhost:5000/recipes?q=supa%20rosii
+
+    const baseURL = 'http://' + req.headers.host + '/';
+    const parsedUrl = new URL(req.url, baseURL);
+    const query = parsedUrl.searchParams.get('q');
+
     try {
-        let recipe2 = await Recipe.find({});
+        const filter = {};
+        // console.log(query)
+        if (query) {
+            filter.$text = { $search: query };
+        }
+        let recipe2 = await Recipe.find(filter, 'title description ingredients comments difficulty time');
         if (recipe2 !== null) {
             recipe2.sort(compare);
             res.writeHead(200, headers);
@@ -153,7 +164,7 @@ async function addRecipe(req, res, headers) {
             let new_recipe = new Recipe(data);
 
 
-            new_recipe.save(async function (err) {
+            new_recipe.save(async function(err) {
                 if (err) {
                     console.log(err);
                     res.writeHead(500, headers);
@@ -215,6 +226,12 @@ async function getRecipesUser(req, res, headers) { //returns a json with all rec
         return;
     }
     try {
+        // if (req.url.split("?")[1].split('=')[0] == 'username') {
+        //     let user = req.url.split("?")[1].split('=')[1]
+        //     let userexists = await User.findOne({ username: user })
+        //         //let recipebyid = await Recipe.findById(id);
+        //     let recipes = await Recipe.find({ username: user })
+
         if (user_id !== null && user_id !== undefined) {
             let userexists = await User.findById(user_id)
                 //let recipebyid = await Recipe.findById(id);
@@ -314,7 +331,7 @@ function updateRecipe(req, res, headers) {
                 if (ingredient.length !== 0) {
                     recipe.ingredients = ingredient
                 }
-                
+
                 let ok = await recipe.save()
 
                 if (ok === recipe) {
@@ -418,7 +435,7 @@ async function filter(req, res, headers) {
         let exclude = parsedUrl.searchParams.get('exclude')
         let order_by = parsedUrl.searchParams.get('order_by')
         let order = parsedUrl.searchParams.get('order')
-        
+
         if (include === null)
             include = ""
         if (exclude === null)
@@ -428,22 +445,23 @@ async function filter(req, res, headers) {
         if (order === null)
             order = ""
 
-        var include_exclude_flag = false, sort_flag = false
+        var include_exclude_flag = false,
+            sort_flag = false
         if (include !== "" || exclude !== "")
             include_exclude_flag = true
         if (parsedUrl.searchParams.get('order_by') !== "" && parsedUrl.searchParams.get('order') !== "")
             sort_flag = true
 
-        if (include_exclude_flag && sort_flag){
+        if (include_exclude_flag && sort_flag) {
             res.writeHead(400, headers)
-            res.write(JSON.stringify({"message": "Nu puteti selecta si criterii de includare si criterii de sortare. Va rugam selectati doar una din categoriile de criterii."}))
+            res.write(JSON.stringify({ "message": "Nu puteti selecta si criterii de includare si criterii de sortare. Va rugam selectati doar una din categoriile de criterii." }))
             res.end()
             return
         }
 
         if (sort_flag === false && (parsedUrl.searchParams.get('order_by') === "" || parsedUrl.searchParams.get('order') === "")) {
             res.writeHead(400, headers)
-            res.write(JSON.stringify({"message": "Pentru sortare e nevoie sa selectati atat ordinea, cat si criteriul de sortare."}))
+            res.write(JSON.stringify({ "message": "Pentru sortare e nevoie sa selectati atat ordinea, cat si criteriul de sortare." }))
             res.end()
             return
         }
@@ -455,8 +473,9 @@ async function filter(req, res, headers) {
             '^Master Chef$': parsedUrl.searchParams.get('diff_master') === "1"
         }
 
+        // let regex_diff = Object.keys(diff_map).reduce(function(acc, key) {
 
-        let regex_diff = Object.keys(diff_map).reduce(function (acc, key) {
+        let regex_diff = Object.keys(diff_map).reduce(function(acc, key) {
             if (diff_map[key] === true) {
                 if (acc !== "")
                     acc += "|"
@@ -480,9 +499,7 @@ async function filter(req, res, headers) {
         if (multiply === 0) {
             recipe = await Recipe.find().sort({ time: -1 }).limit(1)
             time_max = recipe[0].time
-        }
-
-        else time_max = parseInt(parsedUrl.searchParams.get('time_max_value')) * multiply
+        } else time_max = parseInt(parsedUrl.searchParams.get('time_max_value')) * multiply
 
         let entries = await Recipe.find({ difficulty: { $regex: regex_diff, $options: "i" }, time: { '$gte': time_min, '$lte': time_max } })
 
@@ -507,16 +524,19 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
         excludeList = []
     }
     order = (order === "ASC") ? -1 : 1
+        // let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
+        //     let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
 
-    let listAfterIncludeExclude = recipes.reduce(function (arr, recipe) {
-        let numberOfIncludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient) {
+    let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
+        let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
             if (includeList.find(element => ingredient.includes(element)) !== undefined)
                 return currentNumber + 1;
             return currentNumber;
         }, 0)
 
+        // let numberOfExcludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
 
-        let numberOfExcludedIngredients = recipe.ingredients.reduce(function (currentNumber, ingredient) {
+        let numberOfExcludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
             if (excludeList.find(element => ingredient.includes(element)) !== undefined)
                 return currentNumber + 1;
             return currentNumber;
@@ -527,11 +547,12 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
         return arr;
     }, [])
 
+    // let difficulties = ['Usor', 'Mediu', 'Greu', 'Master Chef']
 
-    let difficulties = ['Usor','Mediu','Greu','Master Chef']
+    let difficulties = ['Usor', 'Mediu', 'Greu', 'Master Chef']
 
     let finalList = listAfterIncludeExclude
-    finalList.sort(function (el1, el2) {
+    finalList.sort(function(el1, el2) {
         if (order_by === "") {
             if (el1.extra_ingredients < el2.extra_ingredients)
                 return -1;
@@ -577,7 +598,7 @@ function search(req, res, headers) {
                 i = i - 1
             }
         }
-        
+
         let regex_string = ""
         for (let j = 0; j < search_terms.length; j++) { //contruim regexurile pentru fiecare ingredient 
             regex_string += search_terms[j].toLowerCase()
@@ -601,7 +622,7 @@ function search(req, res, headers) {
                 }
             }
 
-        ], function (err, data) {
+        ], function(err, data) {
             if (data.length > 0) {
                 res.writeHead(200, headers)
                 res.write(JSON.stringify(data, null, 4));
@@ -622,4 +643,5 @@ function search(req, res, headers) {
     }
 }
 
-module.exports = { getMostPopular, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }
+
+module.exports = { getMostPopular: getRecipes, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }

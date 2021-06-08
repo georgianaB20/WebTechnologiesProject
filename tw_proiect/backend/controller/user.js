@@ -21,7 +21,7 @@ function login(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
 
@@ -74,7 +74,7 @@ function register(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
 
@@ -108,7 +108,7 @@ function register(req, res, headers) {
                 data.password = md5(data.password).toString(crypto.enc.Hex)
 
                 const new_user = new User(data);
-                new_user.save(function(err) {
+                new_user.save(function (err) {
                     if (err) {
                         console.log(err);
                         res.writeHead(500, headers);
@@ -158,22 +158,38 @@ json sample for testing /change?type_of_change=email
  */
 
 function change(req, res, headers) {
-
     let data = '';
-
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
             let type_of_change = req.url.split('?')[1].split('=')[1]
-
+            // console.log(type_of_change)
+            console.log(data)
+            let auth = req.headers.authorization
+            //console.log(type_of_change)
+            let decoded, user_id
+            try {
+                decoded = jwt.verify(auth, constants.key)
+                //decoded.user_id to get the user_id
+                user_id = decoded.user_id
+            } catch (err) {
+                console.log(err)
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+                res.end();
+                return;
+            }
             if (type_of_change === "username") {
-                let check_pass = await User.findOne({ _id: data.id }, "password")
+
+                let check_pass = await User.findOne({ _id: user_id }, "password")
                 let user = await User.findOne({ username: data.username }, "_id")
 
-                if (data.username === undefined || data.password === undefined || data.id === undefined) {
+
+                console.log()
+                if (data.username === undefined || data.password === undefined) {
                     res.writeHead(400, headers);
                     res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
                     res.end()
@@ -190,15 +206,15 @@ function change(req, res, headers) {
                     res.write(JSON.stringify({ 'message': 'Username-ul exista deja in baza de date.' }, null, 4))
                     res.end()
                 } else {
-                    let update_user = await User.findByIdAndUpdate(data.id, { username: data.username })
+                    let update_user = await User.findByIdAndUpdate(user_id, { username: data.username })
                     res.writeHead(200, headers);
                     res.write(JSON.stringify({ 'message': 'Username actualizat!' }, null, 4))
                     res.end()
                 }
 
             } else if (type_of_change === "password") {
-                let user = await User.findById(data.id)
-                if (data.id === undefined || data.parola_veche === undefined || data.parola_noua === undefined || data.parola_noua2 === undefined) {
+                let user = await User.findById(user_id)
+                if (user_id === undefined || data.parola_veche === undefined || data.parola_noua === undefined || data.parola_noua2 === undefined) {
                     //date incomplete
                     res.writeHead(400, headers);
                     res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
@@ -233,9 +249,9 @@ function change(req, res, headers) {
                     }
                 }
             } else if (type_of_change === "email") {
-                let user = await User.findById(data.id)
+                let user = await User.findById(user_id)
                 let user2 = await User.findOne({ "email": data.email_nou })
-                if (data.email_nou === undefined || data.email_vechi === undefined || data.id === undefined || data.parola === undefined) {
+                if (data.email_nou === undefined || data.email_vechi === undefined || user_id === undefined || data.parola === undefined) {
                     res.writeHead(400, headers);
                     res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
                     res.end()
@@ -301,17 +317,31 @@ json sample for testing /grant?type={type_of_grant} , where {type_of_grant} = co
 
 
 function grant(req, res, headers) {
+    // console.log('sunt in functie')
     let type_of_grant = req.url.split('?')[1].split('=')[1];
     let data = '';
 
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
+            let auth = req.headers.authorization
 
-            let user = await User.findOne({ username: data.username, email: data.email })
+            let decoded, user_id
+            try {
+                decoded = jwt.verify(auth, constants.key)
+                //decoded.user_id to get the user_id
+                data.id = decoded.user_id
+            } catch (err) {
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+                res.end();
+                return;
+            }
+
+            let user = await User.findOne({ username: data.username, email: data.email_user })
             let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin).toString(crypto.enc.Hex) })
 
             if (user === null) {
@@ -384,7 +414,7 @@ function grant(req, res, headers) {
             }
 
         } catch (err) {
-            console.log(error)
+            console.log(err)
             res.writeHead(500, headers);
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
             res.end()
@@ -400,24 +430,40 @@ function restrict(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async() => {
+    req.on('end', async () => {
         try {
             data = JSON.parse(data);
+            let auth = req.headers.authorization
 
-            let user = await User.findOne({ username: data.username, email: data.email })
-            let admin = await User.findOne({ _id: data.id, password: md5(data.parola_admin).toString(crypto.enc.Hex) })
+            let decoded, user_id
+            try {
+                decoded = jwt.verify(auth, constants.key)
+                //decoded.user_id to get the user_id
+                data.id = decoded.user_id
+            } catch (err) {
+                res.writeHead(401, headers);
+                res.write(JSON.stringify({"message": "Nu sunteti logat"}, null, 4));
+                res.end();
+                return;
+            }
+
+            let user = await User.findOne({username: data.username, email: data.email_user})
+            let admin = await User.findOne({
+                _id: data.id,
+                password: md5(data.parola_admin).toString(crypto.enc.Hex)
+            })
 
             if (user === null) {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest username si email!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Nu exista un user cu acest username si email!'}, null, 4))
                 res.end()
             } else if (admin === null) {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({ 'message': 'Nu exista un admin sau moderator cu acest id!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Nu exista un admin sau moderator cu acest id!'}, null, 4))
                 res.end()
             } else if ((type_of_restrict === "comments" || type_of_restrict === "post") && admin.type === "normal") {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({ 'message': 'Nu aveti rolul potrivit!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Nu aveti rolul potrivit!'}, null, 4))
                 res.end()
             } else if (type_of_restrict === "comments") {
                 user.can_comment = "no";
@@ -425,11 +471,11 @@ function restrict(req, res, headers) {
 
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Dreptul de a comenta a fost restrictionat!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Dreptul de a comenta a fost restrictionat!'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
 
@@ -438,11 +484,11 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Dreptul de a posta retete a fost restrictionat!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Dreptul de a posta retete a fost restrictionat!'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
             } else if (type_of_restrict === "access") {
@@ -450,11 +496,11 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Accesul userului a fost restrictionat !' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Accesul userului a fost restrictionat !'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
 
@@ -464,22 +510,22 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({ 'message': 'Userul nu mai este moderator!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Userul nu mai este moderator!'}, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
+                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
                     res.end()
                 }
             } else {
                 res.writeHead(404, headers);
-                res.write(JSON.stringify({ 'message': 'Not found!' }, null, 4))
+                res.write(JSON.stringify({'message': 'Not found!'}, null, 4))
                 res.end()
             }
         } catch (err) {
             console.log(error)
             res.writeHead(500, headers);
-            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
             res.end()
         }
     })
@@ -536,7 +582,7 @@ async function check_favorite(req, res, headers) {
 
 
 async function getUser(req, res, headers) {
-    console.log(req.headers)
+    // console.log(req.headers)
     if ('authorization' in req.headers) {
         const auth = req.headers.authorization
         // console.log(auth)

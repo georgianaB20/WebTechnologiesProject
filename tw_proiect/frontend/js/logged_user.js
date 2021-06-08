@@ -8,7 +8,6 @@ function check_if_logged(event) {
     console.log('hello there')
 
     event.preventDefault()
-    // let res;
     const logg = localStorage.getItem('AuthorizationToken')
     if (logg) {
         window.location.href = './contul_meu.html'
