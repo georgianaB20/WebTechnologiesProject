@@ -1,3 +1,5 @@
+import {sendAlert} from './utils/error_handling.js'
+
 window.onload = function () {
     const xhttp = new XMLHttpRequest()
 

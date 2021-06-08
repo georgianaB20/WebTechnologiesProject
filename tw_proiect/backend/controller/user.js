@@ -590,7 +590,7 @@ async function getUser(req, res, headers) {
         console.log(j)
         if (j.length < 3) {
             console.log('not a valid jwt')
-            res.writeHead(500, headers);
+            res.writeHead(400, headers);
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
             res.end()
         } else {
@@ -609,7 +609,7 @@ async function getUser(req, res, headers) {
             let user = await User.findById(user_id)
 
             if (user === null) {
-                res.writeHead(404, headers);
+                res.writeHead(400, headers);
                 res.write(JSON.stringify({ 'message': 'Utilizatorul nu exista!' }, null, 4))
                 res.end()
             } else {

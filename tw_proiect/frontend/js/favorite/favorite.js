@@ -1,4 +1,5 @@
 import { favorite_card } from '../recipe_card.js';
+import {sendAlert} from '../utils/error_handling.js'
 let card_wrapper = document.getElementsByClassName("card-wrapper")[0]
 let link_logged_user = "http://localhost:5000/favorites"
 let link = "http://localhost:5000/recipe?id="
@@ -21,8 +22,9 @@ if (localStorage.getItem("AuthorizationToken") === null) {
 
                 }
                 else{
-                    window.location.href = './error'+JSON.stringify(this.status)+'.html'//ne ducem in eroarea pe care o primim
-                //todo: de trimis alerta in fiecare eroare 
+                    if (this.status === 401 ||this.status === 403 ||this.status === 404 ||this.status === 500){
+                        sendAlert(JSON.stringify(JSON.parse(this.response).message),JSON.stringify(this.status))
+                    }
                 }
             }
             xhttp.open("GET", link + favorite[i], true);

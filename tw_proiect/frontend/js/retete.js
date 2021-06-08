@@ -1,7 +1,7 @@
+import {sendAlert} from './utils/error_handling.js'
 
 let retete = document.getElementsByClassName("card-wrapper")[0]
-//console.log(retete[0].innerHTML)
-console.log(window.location.search)
+
 let data = window.location.search.split("?")[1];
 let [data2, data3] = window.location.search.split("=");
 import { add_card } from './recipe_card.js'
@@ -57,8 +57,7 @@ function request_at(link) {
                     let message = ""
                     sendAlert(message, JSON.stringify(this.status))
                 }
-                //todo: de trimis alerta in fiecare eroare 
-                let resp = JSON.parse(this.response)
+                //let resp = JSON.parse(this.response)
                 alert(resp.message)
                 window.location.href = "./retete.html"
             }

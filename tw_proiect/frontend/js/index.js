@@ -1,5 +1,5 @@
 import { add_card } from './recipe_card.js'
-
+import {sendAlert} from './utils/error_handling.js'
 
 let retete = document.getElementsByClassName("card-wrapper")[0];
 //console.log(retete.innerHTML)
@@ -39,11 +39,9 @@ xhttp.onreadystatechange = function() {
         });
     }
 	else{
-		if (this.status === 401 ||this.status === 403 ||this.status === 404 ||this.status === 500){//la 401 este nume sau parola gresita
-			///window.location.href = './error'+JSON.stringify(req.status)+'.html'//ne ducem in eroarea pe care o primim
+		if (this.status === 401 ||this.status === 403 ||this.status === 404 ||this.status === 500){
 			sendAlert(JSON.stringify(JSON.parse(this.response).message),JSON.stringify(this.status))
 		}
-			//todo: de trimis alerta in fiecare eroare 
 	}
 }
 xhttp.open("GET", "http://localhost:5000/recipes", true);

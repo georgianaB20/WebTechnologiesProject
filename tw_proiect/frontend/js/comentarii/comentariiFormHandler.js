@@ -1,3 +1,4 @@
+import { sendAlert } from '../utils/error_handling.js'
 export async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -42,17 +43,16 @@ async function postFormDataAsJSON({ url, formData }) {
         var res;
 
         req.onload = function () {
-            //console.log(typeOf(req.status))
-            console.log("am ajs")
             if (req.status !== 200) {
                 res = JSON.parse(req.response)
                 if (req.status === 403 || req.status === 404 || req.status === 500) {
                     sendAlert(JSON.stringify(res.message), JSON.stringify(req.status))
                 }
-                //alert(res.message);
+                else {
+                    alert(res.message);
+                }
             }
             else {
-                console.log(req.status)
                 res = JSON.parse(req.response)
                 window.location.href = `./reteta.html?id=${plainFormData.rid}`
             }
@@ -60,11 +60,7 @@ async function postFormDataAsJSON({ url, formData }) {
         req.send(formDataJsonString);
     }
     reader.readAsBinaryString(plainFormData.picture)
-
+    return res;
 
 }
 
-export function sendAlert(message, status) {
-    window.location.href = './error' + status + '.html' + "?message=" + message
-    console.log(document)
-}

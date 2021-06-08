@@ -1,4 +1,4 @@
-import {sendAlert} from '../comentarii/comentariiFormHandler.js'
+import {sendAlert} from '../utils/error_handling.js'
 export async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -41,7 +41,7 @@ async function postFormDataAsJSON({ url, formData }) {
                 alert("Reteta adaugata cu succes. Apasati OK pt redirectare.")
                 window.location.replace("./reteta.html?id=" + JSON.parse(req.response)._id)
             } else if (req.status === 401 || req.status === 403 ||req.status === 404 ||req.status === 500){
-                message=""
+                let message=""
                 sendAlert(message,req.status)//ne ducem in eroarea pe care o primim
             }
         }

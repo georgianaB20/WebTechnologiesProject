@@ -1,3 +1,5 @@
+import {sendAlert} from '../utils/error_handling.js'
+
 export async function handleFormSubmit(event) {
     event.preventDefault();
 

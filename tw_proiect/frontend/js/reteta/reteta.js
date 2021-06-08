@@ -1,4 +1,5 @@
 import { images_server_url } from '../utils/constants.js'
+import {sendAlert} from '../utils/error_handling.js'
 
 const queryString = window.location.search;
 let id = queryString.split("=")[1]
