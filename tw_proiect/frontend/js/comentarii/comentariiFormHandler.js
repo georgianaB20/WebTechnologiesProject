@@ -39,7 +39,6 @@ async function postFormDataAsJSON({ url, formData }) {
         req.setRequestHeader("Accept", "application/json");
         req.setRequestHeader("Access-Control-Allow-Origin", "*");
         req.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'))
-
         var res;
 
         req.onload = function () {

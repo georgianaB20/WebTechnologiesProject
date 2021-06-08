@@ -163,6 +163,7 @@ async function addRecipe(req, res, headers) {
             delete data.picture
             let new_recipe = new Recipe(data);
 
+
             new_recipe.save(async function(err) {
                 if (err) {
                     console.log(err);
@@ -210,13 +211,31 @@ async function addRecipe(req, res, headers) {
     }
 }
 
-async function getRecipesUser(req, res, headers) { //returns a json with all reciepes from a user, by username
+async function getRecipesUser(req, res, headers) { //returns a json with all reciepes from a user, by user_id
+    let auth = req.headers.authorization
+    let decoded, user_id
     try {
-        if (req.url.split("?")[1].split('=')[0] == 'username') {
-            let user = req.url.split("?")[1].split('=')[1]
-            let userexists = await User.findOne({ username: user })
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+            // console.log(user_id === null, user_id === undefined)
+    } catch (err) {
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
+    try {
+        // if (req.url.split("?")[1].split('=')[0] == 'username') {
+        //     let user = req.url.split("?")[1].split('=')[1]
+        //     let userexists = await User.findOne({ username: user })
+        //         //let recipebyid = await Recipe.findById(id);
+        //     let recipes = await Recipe.find({ username: user })
+
+        if (user_id !== null && user_id !== undefined) {
+            let userexists = await User.findById(user_id)
                 //let recipebyid = await Recipe.findById(id);
-            let recipes = await Recipe.find({ username: user })
+            let recipes = await Recipe.find({ user_id: user_id })
             var len = recipes.length
             if (userexists === null) {
                 res.writeHead(404, headers)
@@ -234,13 +253,13 @@ async function getRecipesUser(req, res, headers) { //returns a json with all rec
             }
         } else {
             res.writeHead(400, headers); //bad request, nu se pot afisa retetele unui user decat cautate dupa username
-            res.write(JSON.stringify({ "message": "Nu puteti cauta retetele unui user decat dupa username-ul acestuia!" }, null, 4));
+            res.write(JSON.stringify({ "message": "Nu puteti cauta retetele! ID gresit." }, null, 4));
             res.end();
         }
     } catch (e) {
         console.log(e)
         res.writeHead(404, headers);
-        res.write(JSON.stringify({ 'message': 'Eroare!' }, null, 4))
+        res.write(JSON.stringify({ 'message': 'Eroare interna.' }, null, 4))
         res.end()
     }
 }
@@ -314,6 +333,7 @@ function updateRecipe(req, res, headers) {
                 }
 
                 let ok = await recipe.save()
+
                 if (ok === recipe) {
                     res.writeHead(200, headers);
                     res.write(JSON.stringify({ 'message': 'Reteta actualizata!' }, null, 4))
@@ -336,8 +356,21 @@ function updateRecipe(req, res, headers) {
 
 async function deleteRecipe(req, res, headers) {
     try {
-        let userid = req.url.split('?')[1].split('&')[0].split('=')[1]
-        let recipeid = req.url.split('?')[1].split('&')[1].split('=')[1]
+        let auth = req.headers.authorization
+        let decoded, userid
+        try {
+            decoded = jwt.verify(auth, key)
+                //decoded.user_id to get the user_id
+            userid = decoded.user_id
+        } catch (err) {
+            res.writeHead(401, headers);
+            res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+            res.end();
+            return;
+        }
+        // let userid = req.url.split('?')[1].split('&')[0].split('=')[1]
+        let recipeid = req.url.split('?')[1].split('=')[1]
+
 
         //data = JSON.parse(data);
         //aici lucram cu datele primite, le prelucram etc
@@ -348,6 +381,7 @@ async function deleteRecipe(req, res, headers) {
         } else {
             let user = await User.findById(userid) //daca nu gaseste=null
             let recipe = await Recipe.findById(recipeid)
+            console.log(!(user._id.toString() === recipe.user_id || (user.type === 'admin')))
             if (user === null) {
                 res.writeHead(404, headers);
                 res.write(JSON.stringify({ 'message': 'Userul nu exista' }, null, 4))
@@ -360,7 +394,7 @@ async function deleteRecipe(req, res, headers) {
                 res.end()
                 return;
             }
-            if (!(user._id === recipe.user_id || (user.type === 'admin'))) {
+            if (!(user._id.toString() !== recipe.user_id || (user.type !== 'admin'))) {
                 res.writeHead(422, headers);
                 res.write(JSON.stringify({ 'message': 'Nu puteti sterge aceasta reteta.' }, null, 4))
                 res.end()
@@ -369,9 +403,10 @@ async function deleteRecipe(req, res, headers) {
                     if (err) {
                         console.log(err)
                         res.writeHead(500, headers);
-                        res.write(JSON.stringify({ 'message': 'Eroare de la baza de date' }, null, 4))
+                        res.write(JSON.stringify({ 'message': 'Eroare interna' }, null, 4))
                         res.end()
                     } else {
+
                         res.writeHead(200, headers);
                         res.write(JSON.stringify({ 'message': 'Ati sters reteta' }, null, 4))
                         res.end()
@@ -438,6 +473,8 @@ async function filter(req, res, headers) {
             '^Master Chef$': parsedUrl.searchParams.get('diff_master') === "1"
         }
 
+        // let regex_diff = Object.keys(diff_map).reduce(function(acc, key) {
+
         let regex_diff = Object.keys(diff_map).reduce(function(acc, key) {
             if (diff_map[key] === true) {
                 if (acc !== "")
@@ -487,12 +524,17 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
         excludeList = []
     }
     order = (order === "ASC") ? -1 : 1
+        // let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
+        //     let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
+
     let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
         let numberOfIncludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
             if (includeList.find(element => ingredient.includes(element)) !== undefined)
                 return currentNumber + 1;
             return currentNumber;
         }, 0)
+
+        // let numberOfExcludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
 
         let numberOfExcludedIngredients = recipe.ingredients.reduce(function(currentNumber, ingredient) {
             if (excludeList.find(element => ingredient.includes(element)) !== undefined)
@@ -504,6 +546,8 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
 
         return arr;
     }, [])
+
+    // let difficulties = ['Usor', 'Mediu', 'Greu', 'Master Chef']
 
     let difficulties = ['Usor', 'Mediu', 'Greu', 'Master Chef']
 
@@ -524,6 +568,7 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
         if (order_by === "difficulty") {
             return (difficulties.indexOf(el1.recipe.difficulty) - difficulties.indexOf(el2.recipe.difficulty)) * (-order)
         }
+
         if (el1.recipe[order_by] < el2.recipe[order_by])
             return order;
         return -order;

@@ -2,6 +2,7 @@
 
 let retete = document.getElementsByClassName("card-wrapper")[0]
     //console.log(retete[0].innerHTML)
+// <<<<<<< HEAD
     // let data = window.location.search.split("?")[1];
 let data2 = window.location.search.split("=")[0];
 import { add_card } from './recipe_card.js'
@@ -11,6 +12,16 @@ let data = window.location.search.split("=")[1]; //"data de pe search"
 if (data2 === "?search") { //OK
     // event.preventDefault();
     let request_link = "http://localhost:5000/recipes?q=" + data
+// =======
+// console.log(window.location.search)
+// let data = window.location.search.split("?")[1];
+// let [data2, data3] = window.location.search.split("=");
+// import { add_card } from './recipe_card.js'
+//
+// // event.preventDefault();
+// if (data2 === "?search") {
+//     let request_link = "http://localhost:5000/search?data=" + data3
+// >>>>>>> master
     request_at(request_link)
 } else if (data !== undefined) {
     let request_link = "http://localhost:5000/recipes/filter?"
@@ -46,6 +57,7 @@ function request_at(link) {
             if (this.status == 200) {
                 let arr = JSON.parse(this.response)
                 arr.forEach(element => {
+// <<<<<<< HEAD
                     if (element.recipe !== undefined)
                         add_card(element.recipe, retete)
                     else {
@@ -53,6 +65,15 @@ function request_at(link) {
                     }
                 });
             } else {
+// =======
+//                     if (element.recipe)
+//                         add_card(element.recipe, retete)
+//                     else
+//                         add_card(element, retete)
+//                 });
+//             } else {
+//                 console.log(this.response)
+// >>>>>>> master
                 let resp = JSON.parse(this.response)
                 alert(resp.message)
                 window.location.href = "./retete.html"
