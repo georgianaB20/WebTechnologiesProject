@@ -1,12 +1,10 @@
-
+let data = window.location.search.split("?")[1];
 let retete = document.getElementsByClassName("card-wrapper")[0]
-let data2 = window.location.search.split("=")[0];
+let [data2, data3] = window.location.search.split("=");
 import { add_card } from './recipe_card.js'
 
-
-let data = window.location.search.split("=")[1]; //"data de pe search"
-if (data2 === "?search") { //OK
-    let request_link = "http://localhost:5000/recipes?q=" + data
+if (data2 === "?search") {
+    let request_link = "http://localhost:5000/recipes?q=" + data3
     request_at(request_link)
 } else if (data !== undefined) {
     let request_link = "http://localhost:5000/recipes/filter?"
@@ -27,14 +25,10 @@ if (data2 === "?search") { //OK
         request_link += name + "=" + value + "&"
     }
     request_at(request_link)
-
 } else {
     let request_link = "http://localhost:5000/recipes"
     request_at(request_link)
 }
-
-
-
 function request_at(link) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -42,11 +36,10 @@ function request_at(link) {
             if (this.status == 200) {
                 let arr = JSON.parse(this.response)
                 arr.forEach(element => {
-                    if (element.recipe !== undefined)
+                    if (element.recipe)
                         add_card(element.recipe, retete)
-                    else {
+                    else
                         add_card(element, retete)
-                    }
                 });
             } else {
                 let resp = JSON.parse(this.response)
