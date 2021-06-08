@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="https://kit.fontawesome.com/8bc87031e7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/error.css">
+    <link rel="stylesheet" href="../css/login.css">
+
+    <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+</head>
+
+<body>
+
+
+
+
+    <div id="main">
+        <div class="fof">
+            <h1>Error 404</h1>
+            <p>Not Found</p>
+            <h3 class="back_to_index"><a href="index.html">Inapoi acasa</a></h3>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+<script>
+    let message=decodeURI(window.location.search.split("=")[1])
+    window.onload=function(){
+        if (message !== ""){
+        alert(message)
+        }
+    }
+</script>
+
+</html>
