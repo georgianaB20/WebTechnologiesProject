@@ -77,13 +77,13 @@ ranking_form.onsubmit = function(event) {
             sendAlert(JSON.stringify(JSON.parse(this.response).message), JSON.stringify(this.status))
         } else {
             let url = images_server_url + '?files/' + ranking_type + '.' + file_type
-                // let a = `<a id="ancora" download href ="${url}"`
             let a = document.createElement("a")
             a.setAttribute("href", url)
             a.setAttribute("download", ranking_type + '.' + file_type)
+            console.log(a)
             ranking_form.appendChild(a)
-                // alert("sacasca")
             a.click()
+            a.remove()
 
         }
     }
