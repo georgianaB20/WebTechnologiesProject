@@ -21,7 +21,7 @@ function login(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             data = JSON.parse(data);
 
@@ -74,7 +74,7 @@ function register(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             data = JSON.parse(data);
 
@@ -108,7 +108,7 @@ function register(req, res, headers) {
                 data.password = md5(data.password).toString(crypto.enc.Hex)
 
                 const new_user = new User(data);
-                new_user.save(function (err) {
+                new_user.save(function(err) {
                     if (err) {
                         console.log(err);
                         res.writeHead(500, headers);
@@ -162,18 +162,15 @@ function change(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             data = JSON.parse(data);
             let type_of_change = req.url.split('?')[1].split('=')[1]
-            // console.log(type_of_change)
-            console.log(data)
             let auth = req.headers.authorization
-            //console.log(type_of_change)
             let decoded, user_id
             try {
                 decoded = jwt.verify(auth, constants.key)
-                //decoded.user_id to get the user_id
+                    //decoded.user_id to get the user_id
                 user_id = decoded.user_id
             } catch (err) {
                 console.log(err)
@@ -188,7 +185,6 @@ function change(req, res, headers) {
                 let user = await User.findOne({ username: data.username }, "_id")
 
 
-                console.log()
                 if (data.username === undefined || data.password === undefined) {
                     res.writeHead(400, headers);
                     res.write(JSON.stringify({ 'message': 'Ati trimis date incomplete!' }, null, 4))
@@ -317,14 +313,13 @@ json sample for testing /grant?type={type_of_grant} , where {type_of_grant} = co
 
 
 function grant(req, res, headers) {
-    // console.log('sunt in functie')
     let type_of_grant = req.url.split('?')[1].split('=')[1];
     let data = '';
 
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             data = JSON.parse(data);
             let auth = req.headers.authorization
@@ -332,7 +327,7 @@ function grant(req, res, headers) {
             let decoded, user_id
             try {
                 decoded = jwt.verify(auth, constants.key)
-                //decoded.user_id to get the user_id
+                    //decoded.user_id to get the user_id
                 data.id = decoded.user_id
             } catch (err) {
                 res.writeHead(401, headers);
@@ -430,7 +425,7 @@ function restrict(req, res, headers) {
     req.on('data', chunk => {
         data += chunk;
     })
-    req.on('end', async () => {
+    req.on('end', async() => {
         try {
             data = JSON.parse(data);
             let auth = req.headers.authorization
@@ -438,16 +433,16 @@ function restrict(req, res, headers) {
             let decoded, user_id
             try {
                 decoded = jwt.verify(auth, constants.key)
-                //decoded.user_id to get the user_id
+                    //decoded.user_id to get the user_id
                 data.id = decoded.user_id
             } catch (err) {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({"message": "Nu sunteti logat"}, null, 4));
+                res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
                 res.end();
                 return;
             }
 
-            let user = await User.findOne({username: data.username, email: data.email_user})
+            let user = await User.findOne({ username: data.username, email: data.email_user })
             let admin = await User.findOne({
                 _id: data.id,
                 password: md5(data.parola_admin).toString(crypto.enc.Hex)
@@ -455,15 +450,15 @@ function restrict(req, res, headers) {
 
             if (user === null) {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({'message': 'Nu exista un user cu acest username si email!'}, null, 4))
+                res.write(JSON.stringify({ 'message': 'Nu exista un user cu acest username si email!' }, null, 4))
                 res.end()
             } else if (admin === null) {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({'message': 'Nu exista un admin sau moderator cu acest id!'}, null, 4))
+                res.write(JSON.stringify({ 'message': 'Nu exista un admin sau moderator cu acest id!' }, null, 4))
                 res.end()
             } else if ((type_of_restrict === "comments" || type_of_restrict === "post") && admin.type === "normal") {
                 res.writeHead(401, headers);
-                res.write(JSON.stringify({'message': 'Nu aveti rolul potrivit!'}, null, 4))
+                res.write(JSON.stringify({ 'message': 'Nu aveti rolul potrivit!' }, null, 4))
                 res.end()
             } else if (type_of_restrict === "comments") {
                 user.can_comment = "no";
@@ -471,11 +466,11 @@ function restrict(req, res, headers) {
 
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({'message': 'Dreptul de a comenta a fost restrictionat!'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Dreptul de a comenta a fost restrictionat!' }, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
                     res.end()
                 }
 
@@ -484,11 +479,11 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({'message': 'Dreptul de a posta retete a fost restrictionat!'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Dreptul de a posta retete a fost restrictionat!' }, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
                     res.end()
                 }
             } else if (type_of_restrict === "access") {
@@ -496,11 +491,11 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({'message': 'Accesul userului a fost restrictionat !'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Accesul userului a fost restrictionat !' }, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
                     res.end()
                 }
 
@@ -510,22 +505,22 @@ function restrict(req, res, headers) {
                 let ok = await user.save()
                 if (ok === user) {
                     res.writeHead(200, headers);
-                    res.write(JSON.stringify({'message': 'Userul nu mai este moderator!'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Userul nu mai este moderator!' }, null, 4))
                     res.end()
                 } else {
                     res.writeHead(500, headers);
-                    res.write(JSON.stringify({'message': 'Eroare la baza de date!'}, null, 4))
+                    res.write(JSON.stringify({ 'message': 'Eroare la baza de date!' }, null, 4))
                     res.end()
                 }
             } else {
                 res.writeHead(404, headers);
-                res.write(JSON.stringify({'message': 'Not found!'}, null, 4))
+                res.write(JSON.stringify({ 'message': 'Not found!' }, null, 4))
                 res.end()
             }
         } catch (err) {
             console.log(error)
             res.writeHead(500, headers);
-            res.write(JSON.stringify({'message': 'Eroare interna!'}, null, 4))
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
             res.end()
         }
     })
@@ -582,14 +577,10 @@ async function check_favorite(req, res, headers) {
 
 
 async function getUser(req, res, headers) {
-    // console.log(req.headers)
     if ('authorization' in req.headers) {
         const auth = req.headers.authorization
-        // console.log(auth)
         const j = auth.split('.')
-        console.log(j)
         if (j.length < 3) {
-            console.log('not a valid jwt')
             res.writeHead(400, headers);
             res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
             res.end()
@@ -602,7 +593,7 @@ async function getUser(req, res, headers) {
                 console.log(err)
                 res.writeHead(401, headers);
                 res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
-                    res.end();
+                res.end();
                 return;
             }
 
@@ -614,19 +605,15 @@ async function getUser(req, res, headers) {
                 res.end()
             } else {
                 const user_type = user.type;
-                // console.log(user)
                 res.writeHead(200, headers);
                 res.write(JSON.stringify({ user_type }, null, 4))
                 res.end()
-                // console.log(user_type);
 
             }
         }
 
     }
-    // else {
-    //     console.log("nu am camp de autorizare")
-    // }
+
 
 }
 module.exports = { login, register, change, grant, restrict, check_favorite, getUser }

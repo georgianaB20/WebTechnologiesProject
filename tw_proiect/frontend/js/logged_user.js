@@ -5,16 +5,11 @@ const req = new XMLHttpRequest()
 
 
 function check_if_logged(event) {
-    console.log('hello there')
-
     event.preventDefault()
     const logg = localStorage.getItem('AuthorizationToken')
     if (logg) {
         window.location.href = './contul_meu.html'
-    }  else  {
-        window.location.href='./login.html'
+    } else {
+        window.location.href = './login.html'
     }
 }
-
-
-
