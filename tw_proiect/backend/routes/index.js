@@ -10,6 +10,7 @@ const commentController = require('../controller/comment')
 
 let router = new Router()
 
+router.get('/getFilter',recipeController.getFilter)
 router.get('/recipes', recipeController.getMostPopular) //OK
 router.get('/recipe', recipeController.getRecipe) //OK
 router.get('/comment', commentController.getComments) //OK
@@ -24,6 +25,7 @@ router.post('/recipes', recipeController.addRecipe) //OK
 router.post('/login', userController.login)
 router.post('/register', userController.register)
 router.post('/comment', commentController.addComment)
+router.post('/insertFilter',recipeController.insertFilter)
 
 router.put('/change', userController.change)
 router.put('/recipe', recipeController.updateRecipe)

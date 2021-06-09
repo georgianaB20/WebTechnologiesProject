@@ -34,9 +34,12 @@ var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
     if (this.status == 200 && this.readyState == 4) {
         let arr = JSON.parse(this.response)
-
+		let recipeCount=0
         arr.forEach(element => {
-            add_card(element, retete)
+			recipeCount+=1
+			if (recipeCount < 5){
+            add_card(element, retete)}
+
         });
     } else {
         if (this.status === 401 || this.status === 403 || this.status === 404 || this.status === 500) {

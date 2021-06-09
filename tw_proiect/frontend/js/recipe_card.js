@@ -32,6 +32,7 @@ export function add_card(recipe, HTML_element) {
     }
 
     HTML_element.innerHTML += `<a href="reteta.html?id=${recipe._id}">
+            <div style="padding:1rem 1rem 1rem 1rem;">
                 <div class="card">
                     <img src='${images_server_url}?${recipe.picture}' alt=${recipe.title} class="card-img">
                     <h2>${recipe.title}</h2>
@@ -52,6 +53,7 @@ export function add_card(recipe, HTML_element) {
                             <span class="txt">${recipe.comments.length}</span>
                         </div>
                     </div>
+                </div>
                 </div>
             </a>`
 }
