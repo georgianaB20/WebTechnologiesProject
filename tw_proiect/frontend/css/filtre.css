@@ -236,4 +236,23 @@
             padding-top: 0;
             padding-bottom: 0;
         }
+        #ranking {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+        }
+        #ranking .filter_item {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            align-items: center;
+        }
+        #ranking a {
+            width: max-content;
+            align-self: center;
+            margin-top: 10px;
+        }
+        #ranking input {
+            width: max-content;
+        }
     }
