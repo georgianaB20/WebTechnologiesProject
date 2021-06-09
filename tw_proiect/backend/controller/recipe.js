@@ -30,7 +30,7 @@ async function getRecipes(req, res, headers) {
         if (query) {
             filter.$text = { $search: query };
         }
-        let recipe2 = await Recipe.find(filter, 'title description ingredients comments difficulty time');
+        let recipe2 = await Recipe.find(filter);
         if (recipe2 !== null) {
             recipe2.sort(compare);
             res.writeHead(200, headers);
