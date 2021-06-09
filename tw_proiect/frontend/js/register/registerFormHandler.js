@@ -22,6 +22,7 @@ async function postFormDataAsJSON({ url, formData }) {
     const plainFormData = Object.fromEntries(formData.entries());
 
     const formDataJsonString = JSON.stringify(plainFormData);
+    console.log(formDataJsonString)
 
     const req = new XMLHttpRequest()
 
