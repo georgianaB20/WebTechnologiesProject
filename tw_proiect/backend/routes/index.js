@@ -1,6 +1,7 @@
 const { Router } = require('../utils/Router')
 const userController = require('../controller/user')
 const recipeController = require('../controller/recipe')
+const rankingsController = require('../controller/rankings')
 
 const favoriteController = require('../controller/favorite')
     // const user = require('../models/user')
@@ -30,6 +31,7 @@ router.put('/favorites/add', favoriteController.addFavorite) //OK
 router.put('/favorites/remove', favoriteController.removeFavorite) //OK
 router.put('/grant', userController.grant)
 router.put('/restrict', userController.restrict)
+router.put('/rankings', rankingsController.update)
 
 router.delete('/recipe', recipeController.deleteRecipe)
 router.delete('/comment', commentController.deleteComment)

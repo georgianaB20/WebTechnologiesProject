@@ -47,10 +47,10 @@
 
 
     <form id="ranking">
-        <div class="filter_item" id="ranking_type">
+        <div class="filter_item">
             <label for="ranking_name">Clasament</label>
 
-            <select name="ranking_name">
+            <select name="ranking_name" id="ranking_type">
                 <option value=""></option>
                 <option value="retete_populare">Retete populare</option>
                 <option value="ingrediente_utilizate">Ingredientele cele mai utilizate</option>
@@ -59,17 +59,17 @@
         </div>
 
 
-        <div class="filter_item" id="file_type">
+        <div class="filter_item">
             <label for="file_format">Format</label>
 
-            <select name="file_format">
+            <select name="file_format" id="file_type">
                 <option value=""></option>
                 <option value="csv">CSV</option>
                 <option value="json">JSON</option>
                 <option value="html">HTML</option>
             </select>
         </div>
-        <a class="submit"><input type="submit" value="Descarca"></a>
+        <a class="submit"><input type="submit" value="Descarca" id="download"></a>
     </form>
 
     <section>
