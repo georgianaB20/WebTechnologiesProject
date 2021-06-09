@@ -9,14 +9,89 @@ import { add_card } from './recipe_card.js'
 
 //console.log(auth)
 //console.log(key)
+let filterCookie = ""
+//console.log(data)
+if (data !== undefined) {
+    filterCookie = '{"' + decodeURI(data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}'
+    filterCookie = JSON.parse(filterCookie)
+}
 
-let filterCookie = '{"' + decodeURI(data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}'
-filterCookie = JSON.parse(filterCookie)
-console.log(filterCookie)
+//console.log(filterCookie)
+function showFilters(filters){
+    
+    let element=document.getElementsByName("diff_easy")[0]
+    if (filters.diff_easy==="1"){
+        element.checked=true
+    }
+    element=document.getElementsByName("diff_medium")[0]
+    if (filters.diff_medium==="1"){
+        element.checked=true
+    }
+
+    element=document.getElementsByName("diff_hard")[0]
+    if (filters.diff_hard==="1"){
+        element.checked=true
+    }
+    element=document.getElementsByName("diff_master")[0]
+    if (filters.diff_master==="1"){
+        element.checked=true
+    }
+
+    //--
+    element=document.getElementsByName("include")[0]
+    if (filters.include!==""){
+        element.value=decodeURIComponent(filters.include).replace(/\+/g, " ")//.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"')
+    }
+    element=document.getElementsByName("exclude")[0]
+    if (filters.exclude!==""){
+        element.value=decodeURIComponent(filters.exclude).replace(/\+/g, " ")//.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"')
+    }
+    // element=document.getElementsByName("diff_hard")[0]
+    // if (filters.diff_hard==="1"){
+    //     element.checked=true
+    // }
+    element=document.getElementsByName("time_min_value")[0]
+    if (filters.time_min_value!==""){
+        element.value=filters.time_min_value
+    }
+
+    element=document.getElementsByName("time_min_unit")[0]
+    if (filters.time_min_unit!==""){
+        element.value=filters.time_min_unit
+    }
+
+    element=document.getElementsByName("time_max_value")[0]
+    if (filters.time_max_value!==""){
+        element.value=filters.time_max_value
+    }
+
+    element=document.getElementsByName("time_max_unit")[0]
+    if (filters.time_max_unit!==""){
+        element.value=filters.time_max_unit
+    }
+
+    element=document.getElementsByName("time_max_unit")[0]
+    if (filters.time_max_unit!==""){
+        element.value=filters.time_max_unit
+    }
+
+    element=document.getElementsByName("order_by")[0]
+    if (filters.order_by!==""){
+        element.value=filters.order_by
+    }
+
+    element=document.getElementsByName("order")[0]
+    if (filters.order!==""){
+        element.value=filters.order
+    }
+}
 
 window.onload = function () {
     if (localStorage.getItem("AuthorizationToken") === null) {
-        
+        if  (localStorage.getItem("filter")!==null){
+            let filtre=JSON.parse(localStorage.getItem("filter"))
+            showFilters(filtre)
+        }
     }
     else {
 
@@ -27,7 +102,8 @@ window.onload = function () {
             if (this.readyState == 4) {
                 if (this.status == 200) {
                     let data = JSON.parse(this.response)
-                    console.log(data)
+                    //console.log(data)
+                    showFilters(data)
                 }
             }
         }
@@ -62,7 +138,29 @@ if (data2 === "?search") {
         request_link += name + "=" + value + "&"
     }
     //getFilterData += request_link.split('?')[1]
+    //console.log(filterCookie)
+    if (localStorage.getItem("AuthorizationToken") === null) {
+        localStorage.setItem("filter", JSON.stringify(filterCookie))
+    }
+    else {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    console.log("okay")
 
+                }
+                else {
+                    console.log("eroare")
+                }
+            }
+        }
+        let link = "http://localhost:5000/insertFilter"
+        xhttp.open("POST", link, true);
+        xhttp.setRequestHeader("Authorization", localStorage.getItem("AuthorizationToken"))
+        xhttp.send(JSON.stringify(filterCookie));
+
+    }
     request_at(request_link)
     //request_at(getFilterData)
 } else {
@@ -72,7 +170,7 @@ if (data2 === "?search") {
 function request_at(link) {
     let type = link.split('?')[0].split('/')
     type = type[type.length - 1]
-    console.log(type)
+    //console.log(type)
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {

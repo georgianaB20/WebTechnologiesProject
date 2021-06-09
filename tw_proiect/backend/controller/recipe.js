@@ -661,7 +661,9 @@ async function getFilter(req, res, headers){
         res.end();
         return;
     }
-    let filter= await Filter.findOne({user_id:user_id})
+
+    let filter= await Filter.findOne({user_id:decoded.user_id})
+
     console.log(filter)
     if (filter!==null){
         res.writeHead(200, headers);
@@ -670,7 +672,6 @@ async function getFilter(req, res, headers){
     }
     else {
         res.writeHead(404, headers);
-        res.write(JSON.stringify( filter, null, 4));
         res.end();
     }
 }
