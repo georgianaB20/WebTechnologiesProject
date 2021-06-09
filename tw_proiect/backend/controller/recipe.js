@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/recipe')
+const Ingredient = require('../models/ingredient')
 const User = require('../models/user')
 const Filter = require('../models/filter')
 const { db, key, images_server_url } = require('../utils/constants')
@@ -7,7 +8,8 @@ const jwt = require('jsonwebtoken')
 let url = require('url');
 const fs = require('fs');
 
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const ingredient = require('../models/ingredient');
 
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -522,10 +524,20 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
     let includeList = includeString.split(",")
     if (includeString === "") {
         includeList = []
+    } else {
+        //request cu put in bd ca sa salvam ingredientul
+        includeList.forEach(element => {
+            insert_update_ingredient(element, "include")
+        });
     }
     let excludeList = excludeString.split(",")
     if (excludeString === "") {
         excludeList = []
+    } else {
+        //request cu put in bd ca sa salvam ingredientul
+        excludeList.forEach(element => {
+            insert_update_ingredient(element, "exclude")
+        });
     }
     order = (order === "ASC") ? -1 : 1
     // let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
@@ -647,6 +659,32 @@ function search(req, res, headers) {
     }
 }
 
+
+async function insert_update_ingredient(iname, type) {
+    iname = iname.toLowerCase().trim()
+    let ingredient = await Ingredient.findOne({ name: iname })
+    if (ingredient === null) {
+        ingredient = new Ingredient({ name: iname, includes: 0, excludes: 0 })
+        let ok = await ingredient.save()
+        if (ok === ingredient) {
+            console.log("ok insert")
+        } else {
+            console.log("fail insert")
+        }
+    } else {
+        if (type === "include")
+            ingredient.includes = ingredient.includes + 1
+        else if (type === "exclude")
+            ingredient.excludes = ingredient.excludes + 1
+        let ok = await ingredient.save()
+        if (ok === ingredient) {
+            console.log("ok update")
+        } else {
+            console.log("fail update")
+        }
+
+    }
+
 async function getFilter(req, res, headers){
     let auth = req.headers.authorization
     let decoded, user_id
@@ -753,6 +791,7 @@ async function insertFilter(req, res, headers){
             res.end()
         }
     })
+
 
 }
 
