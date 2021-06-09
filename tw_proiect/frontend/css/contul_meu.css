@@ -32,16 +32,17 @@ main {
 .ad {
     display: flex;
     flex-direction: row;
-    margin-bottom: 5em;
+    margin-top: 5em;
+    margin-bottom: 12em;
 }
-.aside {
+.aside, #formulare_configurare {
     background-color: transparent;
     border-radius: 1em;
     display:flex;
     flex-direction: column;
     width:fit-content;
     padding:1em;
-    font-size: 1.5em;
+    font-size: 1.1em;
     box-sizing: content-box;
     overflow:scroll;
     overflow-x:hidden;
@@ -49,19 +50,6 @@ main {
 
 }
 
-.formulare_configurare{
-    background-color: transparent;
-    border-radius: 1em;
-    display:flex;
-    flex-direction: column;
-    width:fit-content;
-    padding:1em;
-    font-size: 1.5em;
-    box-sizing: content-box;
-    overflow:scroll;
-    overflow-x:hidden;
-    overflow-y:hidden;
-}
 
 .formular{
     background-color: transparent;
@@ -89,6 +77,8 @@ main {
 }
 
 .formular input[type="submit"]{
+    align-items: center;
+    align-content: center;
     align-self:center;
     width:fit-content;
     color: rgba(255, 255, 255, 0.767);
@@ -106,6 +96,7 @@ main {
     background-color:transparent;
     border-radius: 1em;
     border-color: rgba(56, 34, 0, 0.39);
+    align-self: center;
 }
 
 .admin {

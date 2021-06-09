@@ -2,7 +2,6 @@
 async function handleFormSubmit(event) {
 
     event.preventDefault();
-    console.log("bn varule")
     const form = event.currentTarget;
 
     const url = form.action;
