@@ -1,26 +1,5 @@
 [
     {
-        "titlu": "Tiramisu",
-        "ingrediente": [
-            "1 ceapa",
-            "smth",
-            "200 gr carne tocata",
-            "2 catei de usturoi netocate"
-        ],
-        "descriere": "jhfbahlbfbgfbhagfbh",
-        "popularitate": 1
-    },
-    {
-        "titlu": "Friptura",
-        "ingrediente": [
-            "rosii",
-            "paste",
-            "200 gr carne tocata"
-        ],
-        "descriere": "wefrewfewfwefw",
-        "popularitate": 0
-    },
-    {
         "titlu": "Supa simpla cu rosii",
         "ingrediente": [
             " 1,5 kilograme de rosii coapte (preferabil prunisoare)",
@@ -32,7 +11,23 @@
             "fulgi de ardei iute"
         ],
         "descriere": "1. Roșii se se curăță de semințe și se taie în patru.\r\n\r\n2. Într-o tigaie înaltă se încălzește, la foc mediu spre mare, uleiul de măsline și untul. Se adaugă usturoiul și anșoa și se amestecă maxim un minut. Cu grijă, se adaugă roșiile, sarea și fulgii de ardei iute. Se amestecă cu grijă la câteva minute până când roșiile încep să se dizolve.\r\n\r\n3. După ce roșiile au început să dizolve, se reduce focul la mediu-mic și se lasă să fiarbă, amestecând ocazional. Se lasă la fiert până ce arată ca un sos gros (durează cam 45 de minute).\r\n\r\n4. Supa se strecoară. Cojile și semințele rămase se aruncă.\r\n\r\n5. Dacă doriți o supă mai groasă, puneți tigaia înapoi pe aragaz, la foc mic spre mediu. Continuați gătirea până la îngroșare.\r\n\r\n6. Supa se servește cu pâine prăjită.",
-        "popularitate": 0
+        "popularitate": 3
+    },
+    {
+        "titlu": "Fursecuri americane",
+        "ingrediente": [
+            "250 g unt gras (82% grăsime)",
+            "275 g zahăr brun",
+            "195 g zahăr alb",
+            "3 ouă mari",
+            "330 g făină",
+            "4 g sare",
+            "6 g bicarbonat de sodiu",
+            "15 ml esență de vanilie",
+            "300 g chips-uri de ciocolată"
+        ],
+        "descriere": "Am pregătit pentru tine o rețetă din care rezultă între 50 și 60 de astfel de fursecuri. Iată care sunt pașii:\r\n\r\nÎntr-un bol, amestecă făină, sarea și bicarbonatul de sodiu bine, cu ajutorul unei furculițe, sfărâmând orice cocoloașe.\r\nÎntr-un bol separat, adaugă zahărul alb, zahărul brun și untul. Untul trebuie să fie moale, la temperatura camerei sau chiar mai cald. Amestecă bine totul, până se formează o pastă uniformă de culoarea caramelului.\r\nAdaugă, pe rând, ouăle în compoziția de unt și zahăr. Amestecă până se omogenizează ingredientele.\r\nAdaugă esența de vanilie și continuă să amesteci.\r\nÎn crema de unt, zahăr și ouă începe să adaugi treptat făina, amestecând vertiginos. Nu o adăuga pe toată odată, pentru că vor rămâne cocoloașe în aluat.\r\nCând ai un aluat moale, adaugă și chips-urile de ciocolată. Încorporează-le bine, cu ajutorul unei spatule sau a unei furculițe.\r\nAluatul format se lasă la frigider. Ideal este să fie lăsat aproximativ două ore, pentru o textură desăvârșită după coacere, dar dacă te grăbești, îl poți lăsa și jumătate de oră.\r\nTapetează o tavă lată cu hârtie de copt. Pe ea adaugă biluțe de mărime medie din aluat, păstrând o distanță de câțiva centimetri între ele, întrucât ele se vor întinde la coacere.\r\nSe coc la o temperatură de 180 de grade Celsius, timp de 10-12 minute. Se scot de la cuptor când devin aurii pe margine. Fursecurile trebuie să fie încă moi, dar nu te speria – ele se vor întări odată ce le pui pe o farfurie cu ajutorul unei spatule, ajungând să aibă acea textură irezistibilă: moi la interior și fragede pe margini.",
+        "popularitate": 2
     },
     {
         "titlu": "Gazpacho - supa rece de rosii",
@@ -49,6 +44,16 @@
             "sare si piper dupa gust"
         ],
         "descriere": "Cea mai simplă rețetă de supă rece de roșii se prepară rapid, în câteva minute. Toate ingredientele se pun într-un blender și se pasează.\r\n\r\nGazpacho se servește cu frunze de busuioc proaspete.",
+        "popularitate": 1
+    },
+    {
+        "titlu": "Friptura",
+        "ingrediente": [
+            "rosii",
+            "paste",
+            "200 gr carne tocata"
+        ],
+        "descriere": "wefrewfewfwefw",
         "popularitate": 0
     },
     {
@@ -103,22 +108,6 @@
         "popularitate": 0
     },
     {
-        "titlu": "Fursecuri americane",
-        "ingrediente": [
-            "250 g unt gras (82% grăsime)",
-            "275 g zahăr brun",
-            "195 g zahăr alb",
-            "3 ouă mari",
-            "330 g făină",
-            "4 g sare",
-            "6 g bicarbonat de sodiu",
-            "15 ml esență de vanilie",
-            "300 g chips-uri de ciocolată"
-        ],
-        "descriere": "Am pregătit pentru tine o rețetă din care rezultă între 50 și 60 de astfel de fursecuri. Iată care sunt pașii:\r\n\r\nÎntr-un bol, amestecă făină, sarea și bicarbonatul de sodiu bine, cu ajutorul unei furculițe, sfărâmând orice cocoloașe.\r\nÎntr-un bol separat, adaugă zahărul alb, zahărul brun și untul. Untul trebuie să fie moale, la temperatura camerei sau chiar mai cald. Amestecă bine totul, până se formează o pastă uniformă de culoarea caramelului.\r\nAdaugă, pe rând, ouăle în compoziția de unt și zahăr. Amestecă până se omogenizează ingredientele.\r\nAdaugă esența de vanilie și continuă să amesteci.\r\nÎn crema de unt, zahăr și ouă începe să adaugi treptat făina, amestecând vertiginos. Nu o adăuga pe toată odată, pentru că vor rămâne cocoloașe în aluat.\r\nCând ai un aluat moale, adaugă și chips-urile de ciocolată. Încorporează-le bine, cu ajutorul unei spatule sau a unei furculițe.\r\nAluatul format se lasă la frigider. Ideal este să fie lăsat aproximativ două ore, pentru o textură desăvârșită după coacere, dar dacă te grăbești, îl poți lăsa și jumătate de oră.\r\nTapetează o tavă lată cu hârtie de copt. Pe ea adaugă biluțe de mărime medie din aluat, păstrând o distanță de câțiva centimetri între ele, întrucât ele se vor întinde la coacere.\r\nSe coc la o temperatură de 180 de grade Celsius, timp de 10-12 minute. Se scot de la cuptor când devin aurii pe margine. Fursecurile trebuie să fie încă moi, dar nu te speria – ele se vor întări odată ce le pui pe o farfurie cu ajutorul unei spatule, ajungând să aibă acea textură irezistibilă: moi la interior și fragede pe margini.",
-        "popularitate": 0
-    },
-    {
         "titlu": "TRUFE CU OREO",
         "ingrediente": [
             "36 de biscuiti Oreo",
@@ -139,6 +128,22 @@
             "o lingura sare"
         ],
         "descriere": "Incepe prin a pregati drojdia, amestecand-o cu apa calduta si zaharul si lasa compozitia sa se odihneasca pentru 10 minute. Vei sti ca este gata si ca drojdia este activata atunci cand incep sa apara bule la suprafata apei. Amesteca apoi faina cu sarea si uleiul de masline intr-un bol sau poti folosi chiar si robotul de bucatarie. Odata ce compozitia este omogenizata, poti adauga amestecul de drojdie si continua sa framanti sau sa lasi robotul de bucatarie sa isi faca treaba.\r\n\r\nAlatul de pizza este gata atunci cand este elastic, omogen si usor lipicios. Muta apoi aluatul intr-un vas curat, pe care l-ai uns in prealabil cu ulei de masline si lasa-l la dospit pentru doua ore, intr-un loc caldut. Pentru a obtine un blat de pizza mai bun, il poti lasa la dospit peste noapte, in frigider.\r\n\r\nAluatul de pizza este dospit atunci cand isi dubleaza volumul. Imparte-l in doua parti egale, pe care le vei modela sub forma unor bile si pe care le vei intinde cu sucitorul. Poti pudra tava in care vei coace pizza cu putin malai si apoi poti adauga blatul de pizza. Ai grija ca marginile sa fie putin mai groase decat in centrul aluatului.\r\n\r\nFoloseste o furculita pentru a intepa blatul in cateva locuri, astfel incat sa nu se umfle prea tare in timpul coacerii. Apoi e momentul sa adaugi sosul de rosii si alte toppinguri preferate.",
+        "popularitate": 0
+    },
+    {
+        "titlu": "Sufleu de ciocolata",
+        "ingrediente": [
+            "100 g ciocolata neagra",
+            "70 g zahar alb",
+            "130 ml lapte",
+            "30 g faina",
+            "5 g sare",
+            "30 g unt gras cu cel puțin 80% grasime",
+            "85 g albusuri",
+            "50 g galbenusuri",
+            "15 ml esenta de vanilie"
+        ],
+        "descriere": "Pentru amatorii de dulciuri, un sufleu de ciocolată este un răsfăț culinar incredibil, care poate fi savurat nu doar la restaurant, ci și acasă.\r\n\r\nSeparat de celelalte ingrediente, tapetăm cu unt și zahăr 2 vase ramequin mai mari sau 4 mici.\r\nSe amestecă cu grijă făina cu sarea și untul.\r\nÎntr-o oală, încălzim laptele și 55 de grame de zahăr, până aproape de punctul de fierbere.\r\nSe adaugă compoziția de făină și unt, până compoziția devine omogenă.\r\nSe oprește focul și imediat se adaugă ciocolata, amestecând până se topește.\r\nSe adaugă gălbenușurile și esența de vanilie și se amestecă bine.\r\nSeparat, se bat albușurile și restul de zahăr, până se obține o spumă tare.\r\nA venit vremea combinării celor două compoziții. În baza de ciocolată se amestecă inițial câteva linguri de spumă de albuș.\r\nUlterior, restul de spumă de albușuri se încorporează treptat, cu ajutorul unei spatule, cu mișcări foarte ușoare, pentru a nu elimina bulele de aer.\r\nSe umplu vasele tapetate anterior până la margine și se dau la cuptorul preîncălzit la 190 de grade Celsius timp de 13 minute.",
         "popularitate": 0
     }
 ]
