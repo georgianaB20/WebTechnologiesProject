@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 html {
@@ -12,6 +11,7 @@ html {
 section {
     padding: 2rem 0;
 }
+
 
 
 /*.heading {*/
@@ -75,6 +75,7 @@ section {
 
 
 /*}*/
+
 
 .card-wrapper {
     display: flex;
@@ -153,14 +154,17 @@ section {
     box-shadow: none;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 400px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
     .card-wrapper {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-    }
-    .card {
-        margin: 2rem;
+        overflow: hidden;
     }
 }
