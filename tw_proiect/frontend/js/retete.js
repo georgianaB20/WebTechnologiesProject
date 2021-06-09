@@ -156,7 +156,7 @@ if (data2 === "?search") {
             }
         }
         let link = "http://localhost:5000/insertFilter"
-        xhttp.open("POST", link, true);
+        xhttp.open("POST", link, false);
         xhttp.setRequestHeader("Authorization", localStorage.getItem("AuthorizationToken"))
         xhttp.send(JSON.stringify(filterCookie));
 
