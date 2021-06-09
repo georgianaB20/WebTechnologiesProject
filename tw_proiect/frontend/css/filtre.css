@@ -1,160 +1,258 @@
-.filters {
-    justify-self: center;
-    padding-top: 1em;
-    display: flex;
-    flex-direction: column;
-    flex: 100%;
-    width: 100%;
-    /* grid-auto-rows: 6; */
-    /* grid-template-columns: 27.5% 15% 15% 15% 27.5%; */
-}
-
-.filters p,
-.filters a {
-    /* grid-column: 2 / span 2; */
-    margin: 0 auto;
-    padding: 1em;
-    grid-row: 1;
-    grid-column: 2/span2;
-}
-
-#include {
-    grid-row: 1;
-    grid-column: 3;
-    padding-top: 2em;
-}
-
-#exclude {
-    grid-row: 2 / span 1;
-    grid-column: 3;
-    padding-bottom: 2em;
-}
-
-#sort {
-    grid-row: 4 /span 1;
-    grid-column: 2/ span 1;
-    padding-left: 2em;
-}
-
-#ordine {
-    grid-row: 4 / span 1;
-    grid-column: 3 / span 1;
-    padding-right: 2em;
-}
-
-#timp {
-    grid-row: 3 / span 1;
-    grid-column: 2 / span 2;
-    width: max-content;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-}
-
-#timp label {
-    margin-right: 10px;
-}
-
-#timp input {
-    width: 4em;
-}
-
-#timp select {
-    width: 6em;
-    height: 2em;
-}
-
-#timp option {
-    width: 6em;
-}
-
-.filters div {
-    /* -ms-grid-column-align: center; */
-    display: grid;
-    flex: 100%;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    align-content: center;
-    grid-auto-rows: 4;
-    grid-template-columns: 27.5% 22.5% 22.5% 27.5%;
-    flex-wrap: wrap;
-    padding-bottom: 0.5em;
-}
-
-.filters div .filter_item {
-    display: flex;
-    flex-direction: column;
-}
-
-.filter_item input,
-.filter_item select,
-.filter_item option {
-    width: 15em;
-    height: 2em;
-    font-family: Montserrat;
-    border-radius: 2em;
-    border-color: burlywood;
-}
-
-#checks {
-    grid-row: 1 / span 2;
-    grid-column: 2
-}
-
-.filter_item .check {
-    display: flex;
-    flex-direction: row;
-    align-self: flex-start;
-}
-
-.filter_item .check input {
-    width: 2em;
-}
-
-.filter_item .check label {
-    margin-left: 10px;
-}
-
-.submit {
-    cursor: pointer;
-    border-radius: 5em;
-    color: #fff;
-    background: linear-gradient(to right, #423f3b, #847e77);
-    border: 0;
-    padding: 5px 10px 10px;
-    font-family: Montserrat, sans-serif;
-    font-size: 13px;
-    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
-    grid-column: 5;
-}
-
-.ref {
-    text-decoration: none;
-    color: inherit;
-}
-
-.adauga {
-    font-family: Montserrat, sans-serif;
-    outline: none;
-    border-color: #cfb491;
-    border-radius: 3em;
-    background-color: #cfb491;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-left: 7em;
-    font-size: 1.1em;
-}
-
-.adauga:hover {
-    transform: scale(1.1);
-    z-index: -1;
-}
-
-input[type="submit"] {
-    color: inherit;
-    background-color: inherit;
-    font-family: inherit;
-    border: inherit;
-}
+    .filters {
+        justify-self: center;
+        padding-top: 1em;
+        display: flex;
+        flex-direction: column;
+        flex: 100%;
+        width: 100%;
+        /* grid-auto-rows: 6; */
+        /* grid-template-columns: 27.5% 15% 15% 15% 27.5%; */
+    }
+    
+    #ranking {
+        display: flex;
+        flex-direction: row;
+        align-self: center;
+        justify-content: center;
+        padding-top: 1em;
+        width: 100%
+    }
+    
+    #ranking div {
+        padding-right: 1em;
+    }
+    
+    #file_type select {
+        width: 5em;
+        padding-left: 0em;
+    }
+    
+    #ranking_type select {
+        width: max-content;
+        padding-left: 0em;
+    }
+    
+    #ranking_type label,
+    #file_type label {
+        padding-right: 0;
+    }
+    
+    .filters p,
+    .filters a {
+        /* grid-column: 2 / span 2; */
+        margin: 0 auto;
+        padding: 1em;
+        grid-row: 1;
+        grid-column: 2/span2;
+    }
+    
+    #include {
+        grid-row: 1;
+        grid-column: 3;
+        padding-top: 2em;
+        /* width: 8em; */
+    }
+    
+    #exclude {
+        grid-row: 2 / span 1;
+        grid-column: 3;
+        padding-bottom: 2em;
+        /* width: 8em; */
+    }
+    
+    #sort {
+        grid-row: 4 /span 1;
+        grid-column: 2/ span 1;
+        /* padding-left: 5em; */
+        float: left;
+    }
+    
+    #sort select {
+        width: max-content;
+    }
+    
+    #ordine {
+        grid-row: 4 / span 1;
+        grid-column: 3 / span 1;
+        float: right;
+        /* padding-right: 10em; */
+    }
+    
+    #ordine select {
+        width: max-content;
+    }
+    
+    #timp {
+        grid-row: 3 / span 1;
+        grid-column: 2 / span 2;
+        width: max-content;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    #timp label {
+        margin-right: 10px;
+    }
+    
+    #timp input {
+        width: 4em;
+    }
+    
+    #timp select {
+        width: 6em;
+        height: 2em;
+    }
+    
+    #timp option {
+        width: 6em;
+    }
+    
+    .filters div {
+        /* -ms-grid-column-align: center; */
+        display: grid;
+        flex: 100%;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        align-content: center;
+        grid-auto-rows: 4;
+        grid-template-columns: 27.5% 22.5% 22.5% 27.5%;
+        flex-wrap: wrap;
+        padding-bottom: 0.5em;
+    }
+    
+    .filters div .filter_item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .filter_item input,
+    .filter_item select,
+    .filter_item option {
+        width: 15em;
+        height: 2em;
+        font-family: Montserrat;
+        border-radius: 2em;
+        border-color: burlywood;
+    }
+    
+    #checks {
+        grid-row: 1 / span 2;
+        grid-column: 2
+    }
+    
+    .filter_item .check {
+        display: flex;
+        flex-direction: row;
+        align-self: flex-start;
+    }
+    
+    .filter_item .check input {
+        width: 2em;
+    }
+    
+    .filter_item .check label {
+        margin-left: 10px;
+    }
+    
+    .submit {
+        cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #423f3b, #847e77);
+        border: 0;
+        padding: 5px 10px 10px;
+        font-family: Montserrat, sans-serif;
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+        grid-column: 5;
+    }
+    
+    .ref {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .adauga {
+        font-family: Montserrat, sans-serif;
+        outline: none;
+        border-color: #cfb491;
+        border-radius: 3em;
+        background-color: #cfb491;
+        text-decoration: none;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-left: 7em;
+        font-size: 1.1em;
+    }
+    
+    .adauga:hover {
+        transform: scale(1.1);
+        z-index: -1;
+    }
+    
+    input[type="submit"] {
+        color: inherit;
+        background-color: inherit;
+        font-family: inherit;
+        border: inherit;
+    }
+    
+    @media screen and (max-width: 600px) {
+        #ranking_type select {
+            width: 7em;
+        }
+    }
+    
+    @media screen and (max-width: 750px) {
+        /* .filters {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        } */
+        .filters label,
+        .filters a,
+        .filters p {
+            font-size: 13px;
+            text-align: center;
+        }
+        .filters div {
+            display: flex;
+            flex-direction: column;
+        }
+        .check label {
+            font-size: 13px;
+        }
+        #include input,
+        #exclude input {
+            width: 9em;
+        }
+        #timp {
+            display: flex;
+            flex-direction: column;
+        }
+        #timp p {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        #ranking {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+        }
+        #ranking .filter_item {
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            align-items: center;
+        }
+        #ranking a {
+            width: max-content;
+            align-self: center;
+            margin-top: 10px;
+        }
+        #ranking input {
+            width: max-content;
+        }
+    }

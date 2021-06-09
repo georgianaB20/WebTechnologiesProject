@@ -25,6 +25,7 @@ header {
     z-index: 1;
     width: 100%;
 }
+
 nav {
     width: 100%;
 }
@@ -96,7 +97,6 @@ nav {
     transition: 1s;
 }
 
-
 .nav a {
     text-decoration: none;
     color: inherit;
@@ -138,6 +138,14 @@ nav {
 .layout_div a {
     text-decoration: none;
     color: inherit;
+}
+
+@media screen and (max-width:750px) {
+    .layout_div {
+        float: right;
+        padding-left: 1em;
+        /* padding-top: 1em; */
+    }
 }
 
 @media screen and (max-width:400px) {

@@ -1,0 +1,22 @@
+[
+    {
+        "name": "lapte",
+        "excludes": 1,
+        "includes": 0
+    },
+    {
+        "name": "oua",
+        "excludes": 1,
+        "includes": 0
+    },
+    {
+        "name": "rosii",
+        "excludes": 0,
+        "includes": 2
+    },
+    {
+        "name": "cartofi",
+        "excludes": 0,
+        "includes": 1
+    }
+]
