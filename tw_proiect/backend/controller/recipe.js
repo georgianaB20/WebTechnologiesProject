@@ -662,9 +662,9 @@ function search(req, res, headers) {
 
 async function insert_update_ingredient(iname, type) {
     iname = iname.toLowerCase().trim()
-    let ingredient = await Ingredient.findOne({ name: iname })
+    let ingredient = await Ingredient.findOne({name: iname})
     if (ingredient === null) {
-        ingredient = new Ingredient({ name: iname, includes: 0, excludes: 0 })
+        ingredient = new Ingredient({name: iname, includes: 0, excludes: 0})
         let ok = await ingredient.save()
         if (ok === ingredient) {
             console.log("ok insert")
@@ -684,7 +684,7 @@ async function insert_update_ingredient(iname, type) {
         }
 
     }
-
+}
 async function getFilter(req, res, headers){
     let auth = req.headers.authorization
     let decoded, user_id

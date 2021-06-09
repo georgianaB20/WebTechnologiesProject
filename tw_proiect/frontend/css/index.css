@@ -13,11 +13,12 @@
 .card .filtre .bg {
 	text-align: center;
 	border-radius: 3em;
-	width: 5em;
+	width: 6em;
 	background-color: #cfb491;
 }
 
 footer{
+	margin-top: 10em;
 	display: flex;
 	flex-direction: column;
 	width:100%;
