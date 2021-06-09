@@ -1,9 +1,7 @@
 import { images_server_url } from './utils/constants.js'
 
 export function add_card(recipe, HTML_element) {
-    // console.log(recipe)
     let descr = "";
-    console.log(recipe)
     if (recipe.description.length > 100)
         descr = recipe.description.substring(0, 100) + "...";
     else

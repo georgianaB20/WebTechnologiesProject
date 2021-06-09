@@ -1,13 +1,11 @@
 import { images_server_url } from '../utils/constants.js'
-import {sendAlert} from '../utils/error_handling.js'
+import { sendAlert } from '../utils/error_handling.js'
 
 const queryString = window.location.search;
 let id = queryString.split("=")[1]
-    // console.log(queryString.split("=")[1]);
 
 var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
-    //console.log(this.readyState);
     if (this.status == 200 && this.readyState == 4) {
         let recipe = JSON.parse(this.response)
         let element = document.getElementsByTagName("title")[0]
@@ -107,10 +105,9 @@ xhttp.onreadystatechange = function() {
             });
         }
 
-    }
-    else if (req.status === 401 ||req.status === 403 ||req.status === 404 ||req.status === 500){//la 401 este nume sau parola gresita
+    } else if (req.status === 401 || req.status === 403 || req.status === 404 || req.status === 500) { //la 401 este nume sau parola gresita
         ///window.location.href = './error'+JSON.stringify(req.status)+'.html'//ne ducem in eroarea pe care o primim
-        sendAlert(JSON.stringify(recipe.message),JSON.stringify(req.status))
+        sendAlert(JSON.stringify(recipe.message), JSON.stringify(req.status))
     }
 }
 xhttp.open("GET", "http://localhost:5000/recipe?id=" + id, true);

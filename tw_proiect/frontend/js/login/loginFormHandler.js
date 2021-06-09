@@ -12,14 +12,12 @@ export async function handleFormSubmit(event) {
 
         var res = await postFormDataAsJSON({ url, formData });
 
-        console.log(res)
     } catch (error) {
         console.error(error);
     }
 }
 
 async function postFormDataAsJSON({ url, formData }) {
-    console.log(formData.entries())
 
     const plainFormData = Object.fromEntries(formData.entries());
 
@@ -35,18 +33,17 @@ async function postFormDataAsJSON({ url, formData }) {
 
     var res;
 
-    req.onload = function () {
+    req.onload = function() {
         if (req.status !== 200) {
             res = JSON.parse(req.response)
-            //alert(res.message);
-            if (/*req.status === 401 ||*/ req.status === 403 || req.status === 404 || req.status === 500) {//la 401 este nume sau parola gresita
+                //alert(res.message);
+            if ( /*req.status === 401 ||*/ req.status === 403 || req.status === 404 || req.status === 500) { //la 401 este nume sau parola gresita
                 sendAlert(res.message, JSON.stringify(req.status))
             }
             if (req.status === 401)
                 alert(res.message);
 
-        }
-        else {
+        } else {
             res = JSON.parse(req.response)
             localStorage.setItem("AuthorizationToken", res.Authorization)
             window.location.href = "./index.html"
