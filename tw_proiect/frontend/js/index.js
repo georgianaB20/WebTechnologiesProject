@@ -1,6 +1,6 @@
 import { add_card } from './recipe_card.js'
-import {sendAlert} from './utils/error_handling.js'
-import {images_server_url} from './utils/constants.js'
+import { sendAlert } from './utils/error_handling.js'
+import { images_server_url } from './utils/constants.js'
 
 let retete = document.getElementsByClassName("card-wrapper")[0];
 //console.log(retete.innerHTML)
@@ -38,48 +38,53 @@ xhttp.onreadystatechange = function() {
         arr.forEach(element => {
             add_card(element, retete)
         });
+    } else {
+        if (this.status === 401 || this.status === 403 || this.status === 404 || this.status === 500) {
+            sendAlert(JSON.stringify(JSON.parse(this.response).message), JSON.stringify(this.status))
+        }
     }
-	else{
-		if (this.status === 401 ||this.status === 403 ||this.status === 404 ||this.status === 500){
-			sendAlert(JSON.stringify(JSON.parse(this.response).message),JSON.stringify(this.status))
-		}
-	}
 }
 xhttp.open("GET", "http://localhost:5000/recipes", true);
 xhttp.send();
 
+
 let ranking_form = document.getElementById("ranking")
 ranking_form.onsubmit = function(event) {
-	event.preventDefault()
-	let file_type = document.getElementById("file_type").value
-	let ranking_type = document.getElementById("ranking_type").value
-	
-	let body = {
-		'ranking_type': `${ranking_type}`,
-		'file_type': `${file_type}`
-	}
-	
-	let xhttp = new XMLHttpRequest()
-	
-	xhttp.setRequestHeader("Content-Type", "application/json");
+    event.preventDefault()
+    let file_type = document.getElementById("file_type").value
+    let ranking_type = document.getElementById("ranking_type").value
+
+    let body = {
+        'ranking_type': `${ranking_type}`,
+        'file_type': `${file_type}`
+    }
+
+    console.log(body)
+
+    let xhttp = new XMLHttpRequest()
+    xhttp.open("PUT", "http://localhost:5000/rankings")
+
+
+    xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-	xhttp.onload = function() {
-		if (this.status!==200){
-				sendAlert(JSON.stringify(JSON.parse(this.response).message),JSON.stringify(this.status))
-		}
-		else {
-			let url = images_server_url + '/' + ranking_type+'.'+file_type
-			a = document.createElement("a")
-			a.setAttribute("href",url)
-			a.setAttribute("download")
-			ranking_form.appendChild(a)
-			alert("sacasca")
-		}
-	}
+    xhttp.onload = function() {
+        if (this.status !== 200) {
+            sendAlert(JSON.stringify(JSON.parse(this.response).message), JSON.stringify(this.status))
+        } else {
+            let url = images_server_url + '?files/' + ranking_type + '.' + file_type
+            console.log("de aici:", url)
+                // let a = `<a id="ancora" download href ="${url}"`
+            let a = document.createElement("a")
+            a.setAttribute("href", url)
+            a.setAttribute("download", ranking_type + '.' + file_type)
+            ranking_form.appendChild(a)
+                // alert("sacasca")
+            a.click()
 
-	xhttp.open("PUT", "http://localhost:5000/rankings")
-	xhttp.send(JSON.stringify(body))
+        }
+    }
+    xhttp.send(JSON.stringify(body))
 }
