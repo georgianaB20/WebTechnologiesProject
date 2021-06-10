@@ -15,7 +15,6 @@
 
 }
 
-.container-reteta div
 .imagine-reteta {
     transition: 0.2s none;
     margin-top: 2.5em;
@@ -33,16 +32,12 @@
     transform: scale(1.05);
 }
 
-.header {
-    margin-right: 0;
-}
-
 .recipe-info {
     display: flex;
     flex-direction: row;
     /*margin-right: 3em;*/
-    /*margin-left: 3em;*/
     /*font-family: inherit;*/
+    padding-left: 4em;
 }
 
 h1 {
