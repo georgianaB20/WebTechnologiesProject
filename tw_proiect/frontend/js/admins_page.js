@@ -12,7 +12,6 @@ document.getElementById("restrictioneaza_mod").addEventListener("click", remove_
 
 
 function add_right_comment(event) {
-    // console.log("poti adauga comntarii")
     event.preventDefault();
     let user = document.getElementById("username_comentarii").value;
     let email_user = document.getElementById('email_comentarii').value;
@@ -24,7 +23,6 @@ function add_right_comment(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
 
     const xhttp = new XMLHttpRequest()
 
@@ -35,15 +33,15 @@ function add_right_comment(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {
-            
+
             alert(res.message)
         }
     }
@@ -62,8 +60,6 @@ function remove_right_to_comment(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
-
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/restrict?type=comments');
@@ -73,15 +69,15 @@ function remove_right_to_comment(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {
-            
+
             alert(res.message)
         }
     }
@@ -100,8 +96,6 @@ function add_right_recipes(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
-
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/grant?type=post');
@@ -111,15 +105,15 @@ function add_right_recipes(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {
-            
+
             alert(res.message)
         }
     }
@@ -138,8 +132,6 @@ function remove_right_recipe(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
-
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/restrict?type=post');
@@ -149,11 +141,11 @@ function remove_right_recipe(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {
@@ -175,7 +167,6 @@ function add_right_access(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
 
     const xhttp = new XMLHttpRequest()
 
@@ -186,11 +177,11 @@ function add_right_access(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {
@@ -212,8 +203,6 @@ function remove_right_access(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
-
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/restrict?type=access');
@@ -223,11 +212,11 @@ function remove_right_access(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {
@@ -249,8 +238,6 @@ function add_mod(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
-
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/grant?type=moderator');
@@ -260,11 +247,11 @@ function add_mod(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {
@@ -286,8 +273,6 @@ function remove_mod(event) {
         "parola_admin": `${parola_admin}`
     }
 
-    console.log(body)
-
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('PUT', 'http://localhost:5000/restrict?type=moderator');
@@ -297,11 +282,11 @@ function remove_mod(event) {
     xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'));
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
         let res = JSON.parse(xhttp.response)
         if (xhttp.status !== 200) {
-            if (xhttp.status === 401 ||xhttp.status === 403 ||xhttp.status === 404 ||xhttp.status === 500){
-                sendAlert(JSON.stringify(res.message),JSON.stringify(xhttp.status))
+            if (xhttp.status === 401 || xhttp.status === 403 || xhttp.status === 404 || xhttp.status === 500) {
+                sendAlert(JSON.stringify(res.message), JSON.stringify(xhttp.status))
             }
             alert(res.message);
         } else {

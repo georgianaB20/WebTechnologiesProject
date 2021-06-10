@@ -1,4 +1,4 @@
-import {sendAlert} from '../utils/error_handling.js'
+import { sendAlert } from '../utils/error_handling.js'
 export async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -20,7 +20,7 @@ async function postFormDataAsJSON({ url, formData }) {
 
     plainFormData.picture_type = plainFormData.picture.type
     var reader = new FileReader()
-    reader.onload = async function (e) {
+    reader.onload = async function(e) {
 
         plainFormData.picture = btoa(reader.result);
 
@@ -35,14 +35,13 @@ async function postFormDataAsJSON({ url, formData }) {
         req.setRequestHeader("Access-Control-Allow-Origin", "*");
         req.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'))
 
-        req.onload = function () {
+        req.onload = function() {
             if (req.status === 200) {
-                console.log(JSON.parse(req.response)._id)
                 alert("Reteta adaugata cu succes. Apasati OK pt redirectare.")
                 window.location.replace("./reteta.html?id=" + JSON.parse(req.response)._id)
-            } else if (req.status === 401 || req.status === 403 ||req.status === 404 ||req.status === 500){
-                let message=""
-                sendAlert(message,req.status)//ne ducem in eroarea pe care o primim
+            } else if (req.status === 401 || req.status === 403 || req.status === 404 || req.status === 500) {
+                let message = ""
+                sendAlert(message, req.status) //ne ducem in eroarea pe care o primim
             }
         }
         req.send(formDataJsonString);

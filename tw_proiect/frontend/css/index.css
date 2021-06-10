@@ -17,23 +17,27 @@
 	background-color: #cfb491;
 }
 
-.dificultate,
-.popularitate {
-	margin-left: 0.3em
-}
-
 footer{
-	position: absolute;
+	display: flex;
+	flex-direction: column;
 	width:100%;
-	object-fit: fill;
 	padding:0;
 	background-color: rgba(207, 180, 145, 0.3);
 	font-size:17px;
 	font-family:Montserrat, sans-serif;
 	text-align: center;
-	display: block;
-	height:fit-content;
-	/*bottom: 0;*/
+	bottom: 0;
+	position: relative;
+	/*height: ;
+	/*z-index: -1;*/
+
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.dificultate,
+.popularitate {
+	margin-left: 0.3em
 }
 
 footer p{
@@ -41,10 +45,11 @@ footer p{
 }
 
 footer .creators{
-	column-count: 3;
-	column-gap: 3em;
-	display:inline-block;
-	padding:10px 0;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	flex-direction: row;
+	margin: 0 4em;
 }
 
 .creator{
@@ -52,9 +57,9 @@ footer .creators{
 	margin:5px;
 }
 
-.creator a{
-	margin:auto 0;
-}
+/*.creator a{*/
+/*	margin:auto 0;*/
+/*}*/
 
 .face {
 	text-decoration: none;
@@ -68,9 +73,15 @@ footer .creators{
 	margin-top: 8px;
 }
 
-@media screen and (max-height:1000px),
-		screen and (max-width:1000px){
-	footer{
-		margin-top: 10%;
+
+@media screen and (max-width:400px){
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	.footer .creators {
+		display: flex;
+		flex-direction: column;
 	}
 }

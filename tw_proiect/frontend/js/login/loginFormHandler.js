@@ -12,14 +12,12 @@ export async function handleFormSubmit(event) {
 
         var res = await postFormDataAsJSON({ url, formData });
 
-        console.log(res)
     } catch (error) {
         console.error(error);
     }
 }
 
 async function postFormDataAsJSON({ url, formData }) {
-    console.log(formData.entries())
 
     const plainFormData = Object.fromEntries(formData.entries());
 
@@ -44,9 +42,8 @@ async function postFormDataAsJSON({ url, formData }) {
             }
             if (req.status === 401)
                 alert(res.message);
+           } else {
 
-        }
-        else {
             res = JSON.parse(req.response)
             localStorage.setItem("AuthorizationToken", res.Authorization)
             window.location.href = "./index.html"
