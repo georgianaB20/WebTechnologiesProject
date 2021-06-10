@@ -1,208 +1,928 @@
 <!DOCTYPE html>
-<html lang="en"> 
-<head>
-  <title>WhaF Documentatie</title>
-  <link rel="stylesheet" type="text/css" href="https://w3c.github.io/scholarly-html/css/scholarly.min.css"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="utf-8"/>
-</head>
-<body>
-   <header>
-       <h1>Documentatie What the Food</h1>
-   </header>
-    <section typeof="sa:Authors" class="main_container">
+<html lang="ro">
 
-        <h3><a href="./ghidul_utilizatorului.html">Consultati Ghidul Utilizatorului</a></h3>
-        <h2>1. Despre echipa</h2>
+<head>
+    <title>WhaF Documentatie</title>
+    <link rel="stylesheet" type="text/css" href="https://w3c.github.io/scholarly-html/css/scholarly.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <header>
+        <h1>Documentatie What the Food</h1>
+    </header>
+    <section typeof="sa:ProjectLinks">
         <ul>
-            <li>
-                <h3>Autori</h3>
+            <li typeof="schema:WebPage" role="link" resource="https://github.com/georgianaB20/WebTechnologiesProject"
+                property="schema:citation" id="github">
+                <cite property="schema:name">
+                    <a href="https://github.com/georgianaB20/WebTechnologiesProject">Github</a>
+                </cite>
+            </li>
+            <li typeof="schema:WebPage" role="link"
+                resource="https://app.swaggerhub.com/apis/CernatMonicaRoxana/Whaf/1.0.0" property="schema:citation"
+                id="github">
+                <cite property="schema:name">
+                    <a href="https://app.swaggerhub.com/apis/CernatMonicaRoxana/Whaf/1.0.0">Swagger</a>
+                </cite>
+            </li>
+        </ul>
+    </section>
+
+    <section typeof="sa:AuthorsList">
+        <h2>Autori</h2>
+        <ul>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person">
+                    <meta property="schema:givenName" content="Georgiana Viorica">
+                    <meta property="schema:familyName" content="Boghiu">
+                    <span property="schema:name">Georgiana Viorica Boghiu</span>
+                </span>
                 <ul>
-                    <li>Boghiu Georgiana-Viorica</li>
-                    <li>Cernat Roxana Monica</li>
-                    <li>Formagiu Michael-Gabriel</li>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="georgiana.boghiu20@gmail.com" property="schema:email">georgiana.boghiu20@gmail.com</a>
+                    </li>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="telephone:+40745849783" property="schema:telephone">+40745849783</a>
+                    </li>
                 </ul>
             </li>
-            <li>
-                <h3>Facultate</h3>
-                <p>Facultatea de Informatica Iasi, Romania</p>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person">
+                    <meta property="schema:givenName" content="Roxana">
+                    <meta property="schema:additionalName" content="Cernat">
+                    <meta property="schema:familyName" content="Iacob">
+                    <span property="schema:name">Roxana Cernat</span>
+                </span>
+                <ul>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="cernatmonicaroxana@gmail.com" property="schema:email">cernatmonicaroxana@gmail.com</a>
+                    </li>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="telephone:+40751532384" property="schema:telephone">+40751532384</a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <h3>An 3, grupa X1</h3>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person">
+                    <meta property="schema:givenName" content="Michael-Gabriel">
+                    <meta property="schema:familyName" content="Formagiu">
+                    <span property="schema:name">Michael-Gabriel Formagiu</span>
+                </span>
+                <ul>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="mikyqwe@yahoo.com" property="schema:email">mikyqwe@yahoo.com</a>
+                    </li>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="telephone:+40751572309" property="schema:telephone">+40751572309</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </section>
-    <section typeof="sa:Abstract" class="main_container">
-        <h2>2. Abstract</h2>
-        <p>
-            What the Food este o aplicatie web a carui scop este formarea unei comunitati a oamenilor pasionati de arta culinara. Utilizatorii isi pot imbogati agenda de retete, explorand lumea aromata si condimentata a bucataritului. Acestia pot publica propriile retete pe site, impartasind cu ceilalti secretele unei mese gustoase, pot cauta o reteta usoara si rapida sau, dimpotriva, noua si provocatoare punandu-si abilitatile la incercare. 
+
+    <h2>Cuprins</h2>
+    <ol role="directory">
+        <li>
+            <a href="#introducere">
+                <span> 1. </span>
+                Introducere
+            </a>
+        </li>
+        <li>
+            <a href="#database">
+                <span> 2. </span>
+                Baza de date
+            </a>
+
+            <ol role="directory">
+                <li>
+                    <a href="#usersdb">
+                        <span> 2.1. </span>
+                        Tabelul Users
+                    </a>
+                </li>
+                <li>
+                    <a href="#recipesdb">
+                        <span> 2.2. </span>
+                        Tabelul Recipes
+                    </a>
+                </li>
+                <li>
+                    <a href="#searchesdb">
+                        <span> 2.2. </span>
+                        Tabelul Searches
+                    </a>
+                </li>
+
+            </ol>
+        </li>
+        <li>
+            <a href="#front-end">
+                <span> 3. </span>
+                Front End
+            </a>
+
+            <ol role="directory">
+                <li>
+                    <a href="#registerfront">
+                        <span> 3.1. </span>
+                        Register
+                    </a>
+                </li>
+                <li>
+                    <a href="#loginfront">
+                        <span> 3.2. </span>
+                        Login
+                    </a>
+                </li>
+                <li>
+                    <a href="#logoutfront">
+                        <span> 3.3. </span>
+                        Logout
+                    </a>
+                </li>
+                <li>
+                    <a href="#retetefront">
+                        <span> 3.4. </span>
+                        Retete
+                    </a>
+
+                    <ol role="directory">
+                        <li>
+                            <a href="#adaugaretetefront">
+                                <span> 3.4.1. </span>
+                                Adauga retete
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#filtrareretetefront">
+                                <span> 3.4.2. </span>
+                                Filtrare retete
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#retetelemelefront">
+                                <span> 3.4.3. </span>
+                                Retetele mele
+                            </a>
+                        </li>
+
+
+                    </ol>
+
+                </li>
+                <li>
+                    <a href="#retetefavoritefront">
+                        <span> 3.5 </span>
+                        Retete favorite
+                    </a>
+                </li>
+                <li>
+                    <a href="#acasafront">
+                        <span> 3.6 </span>
+                        Acasa
+                    </a>
+                </li>
+                <li>
+                    <a href="#retetafront">
+                        <span> 3.7 </span>
+                        Reteta
+                    </a>
+                </li>
+
+            </ol>
+        </li>
+        <li>
+            <a href="#back-end">
+                <span> 4. </span>
+                Back End
+            </a>
+
+            <ol role="directory">
+                <li>
+                    <a href="#signuploginback">
+                        <span> 4.1. </span>
+                        Sign-Up & Login
+                    </a>
+                </li>
+                <li>
+                    <a href="#reteteback">
+                        <span> 4.2. </span>
+                        Retete
+                    </a>
+                    <ol role="directory">
+                        <li>
+                            <a href="#adaugaretetaback">
+                                <span> 4.2.1. </span>
+                                Adauga Reteta
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#filtrareback">
+                                <span> 4.2.2 </span>
+                                Filtrare
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#retetelemeleback">
+                                <span> 4.2.3. </span>
+                                Retetele mele
+                            </a>
+                        </li>
+
+
+
+                    </ol>
+
+                </li>
+                <li>
+                    <a href="#retetefavoriteback">
+                        <span> 4.3 </span>
+                        Retete favorite
+                    </a>
+                </li>
+                <li>
+                    <a href="#acasaback">
+                        <span> 4.4. </span>
+                        Acasa
+                    </a>
+                </li>
+                <li>
+                    <a href="#retetaback">
+                        <span> 4.5. </span>
+                        Reteta
+                    </a>
+                </li>
+            </ol>
+        </li>
+        <li>
+            <a href="#diagram">
+                <span> 5. </span>
+                Diagrama aplicatiei
+            </a>
+        </li>
+        <li>
+            <a href="#teamwork">
+                <span> 6. </span>
+                Lucru in echipa
+            </a>
+        </li>
+    </ol>
+
+    <section id="introducere">
+
+        <h3>
+            Introducere
+        </h3>
+
+    </section>
+
+    <section id="database">
+
+        <h3>
+            Baza de date
+        </h3>
+        <p>Am optat pentru a folosi MongoDB, datorita faptului ca este in cloud, si in acest mod avem acces la date
+            sincronizate,
+            iar faptul ca este usor de interogat a reprezentat un plus.
+        </p>
+        <section id="usersdb">
+            <h3>
+                Tabelul Users
+            </h3>
+            <p>Datele ce vor fi introduse in acest tabel sunt furnizate de form-ul din pagina de register si corespund
+                credentialelor contului nou creat.</p>
+            <p>Asa arata tabelul users, ca structura, acesta fiind tabelul unde vor fi stocate toate detaliile legate de
+                un utilizator:</p>
+            <ul>
+                <li>id</li>
+                <li>username</li>
+                <li>password</li>
+                <li>email</li>
+                <li>can_coment(yes/no)</li>
+                <li>can_post(yes/no)</li>
+                <li>can_access(yes/no)</li>
+                <li>favorite</li>
+                <li>type</li>
+                <li>gender</li>
+            </ul>
+            <p>can_coment, can_post, can_access reprezinta campurile care pot fi restrictionate de un admin.</p>
+            <p>Asa arata un exemplu de date stocate in tabelul users:</p>
+            <figure typeof="sa:image">
+                <img src="../images/documentatie/doc/userdb.PNG">
+                <figcaption>Fig.1 - Exemplu de date din tabelulul users</figcaption>
+            </figure>
+        </section>
+
+        <section id="recipesdb">
+            <h3>
+                Tabelul Recipes
+            </h3>
+            <p>Datele ce vor fi introduse in acest tabel sunt furnizate de form-ul din pagina de creare a unei noi
+                retete si corespund datelor retetei nou create.</p>
+            <p>Datele necesare popularii acestui tabel vor fi trimise printr-un apel xmlhttprequest la API.
+            </p>
+            <p>Asa arata structura tabelului recipes:</p>
+            <ul>
+                <li>title</li>
+                <li>ingredients</li>
+                <li>time</li>
+                <li>difficulty</li>
+                <li>description</li>
+                <li>picture</li>
+                <li>user_id</li>
+                <li>comments</li>
+            </ul>
+
+
+            <p>Asa arata un exemplu de date stocate in tabelul recipes:</p>
+            <figure typeof="sa:image">
+                <img src="../images/documentatie/doc/recipedb.PNG">
+                <figcaption>Fig.2 - Exemplu de date din tabelulul recipes</figcaption>
+            </figure>
+
+
+
+        </section>
+
+        <section id="searchesdb">
+            <h3>
+                Tabelul Searches
+            </h3>
+            <p> Campurile reprezinta toate campurile dupa care un utilizator poate efectua o filtrare.
+                diff_easy,diff_medium,diff_hard,diff_master sunt campuri optionale.order si order_by reprezinta
+                criteriul si ordinea de ordonare a retetelor in filtrare. include reprezinta ingredientele care dorim sa
+                le includem in retete, iar exclude reprezinta ingredientele care nu dorim sa le avem in retete. include
+                si exclude nu pot si completate in acelasi timp cu order si order_by. </p>
+            <p> Tabelul searches ne ajuta sa stocam ultima filtrare a unui utilizator pentru a-i putea sugera campurile
+                la urmatoarea filtrare</p>
+            <p>Asa arata structura tabelului searches:</p>
+
+            <ul>
+                <li>id</li>
+                <li>include</li>
+                <li>exclude</li>
+                <li>time_min_value</li>
+                <li>time_min_unit</li>
+                <li>time_max_value</li>
+                <li>time_max_unit</li>
+                <li>user_id</li>
+                <li>diff_easy</li>
+                <li>diff_medium</li>
+                <li>diff_hard</li>
+                <li>diff_master</li>
+                <li>order</li>
+                <li>order_by</li>
+            </ul>
+
+
+        </section>
+
+    </section>
+    <section id="front-end">
+
+    </section>
+    <h3>
+        Front End
+    </h3>
+
+    <p>Toate paginile site-ului sunt responsive, elementele ce le compun redimensionandu-se in pagina in functie de
+        dispozitivul utilizat, paginile oferind astfel o experienta placuta inclusiv pe device-uri ca iPhone 5 SE ce
+        are un ecran ingust si scurt.</p>
+    <section id="registerfront">
+        <h3>
+            Register
+        </h3>
+
+        <p>Pagina de Register are denumirea de register.html.</p>
+
+        <p>Pagina de register este intuitiva. Pentru a completa acest formular trebuiesc introduse urmatoarele date:
+            username, parola, confirmare parola, e-mail si gender. Completarea tuturor acestor campuri este obligatorie,
+            in afara
+            campului gender care este by default "Altceva".</p>
+
+
+        <p>Campul pentru e-mail necesita introducerea unui text cu un format de e-mail, altfel nu vom putea da submit.
+        </p>
+        <p>Input box-ul destinat introducerii parolei va avea ca tip "password pentru ca textul introdus inauntru sa
+            fie cenzurat.</p>
+        <p> Campul pentru parola este cenzurat pentru a proteja datele utilizatorului</p>
+
+        <p>Username-ul va putea contine doar caractere alfanumerice.</p>
+
+        <p>Nu se va putea apasa butonul "Submit" fara ca toate campurile sa fie completate folosindu-se formatul
+            specificat, in afara de campul Gender.</p>
+
+        <p>Dupa ce s-a apasat butonul de "Creeaza cont", daca datele sunt valide, se va face o redirectare catre pagina
+            de login.</p>
+
+    </section>
+
+    <section id="loginfront">
+        <h3>
+            Login
+        </h3>
+
+        <p>Pentru a se conecta cu un cont existent user-ul trebuie sa fie pe pagina contul_meu al site-ului si sa nu fie
+            logat la acel moment dat. </p>
+        <p>In partea dreapta a homepage-ului, sunt 2 input box-uri, in primul dintre ele trebuie introdus numele iar
+            in al doilea parola.</p>
+        <p>Pe aceasta pagina se afla un formular cu 2 input box-uri, in primul trebuie introdus username-ul iar in al
+            doilea
+            parola, ce va fi cenzurata.</p>
+
+        <p>Validarea acestor input box-uri client-side se face prin intermediul atributului pattern.</p>
+        <p>Formatul cerut pentru ambele dintre ele este identic cu cel cerut de pagina de Sign Up in momentul
+            inregistrarii pentru campurile username respectiv password.</p>
+        <p>Input box-urile trebuie completate cu date valide.</p>
+        <p>Daca datele din ele sunt valide si apartin unui utilizator inregistrat atunci la apasarea butonului
+            "Login" utilizatorul va fi redirectat catre view-ul index, el conectandu-se cu succes in
+            acest caz.</p>
+    </section>
+
+    <section id="logoutfront">
+        <h3>
+            Logout
+        </h3>
+
+
+        <p>Pentru deconectarea utilizatorul logat trebuie sa apese butonul de log-out, ce se afla in dreapta sus
+            sub navbar, pe orice pagina.
         </p>
     </section>
-    <section typeof="sa:Introduction" class="main_container">
-        <h2>3. Proiect </h2>
-        <ul>
-            <li>
-                <h3> Titlu </h3>
-                <p>What the Food</p>
-            </li>
-            <li>
-                <h3> Descriere</h3>
-                <p>
-                    Se doreste creare unei aplicatii de retete culinare care permite sugerarea de retete pe baza unor ingrediente minimizand numarul de ingrediente suplimentare necesare. Un utilizator va putea adauga retete (ingrediente, pasi de preparare, dificultate, durata preparare, durata finalizare). Vizitatorii pot cauta retete introducand ingredientele pe care le au la dispozitie si o serie de alte criterii suplimentare, cum ar fi: ingrediente suplimentare indezirabile, dificultate, durata preparare, durata finalizare etc.). Lista rezultatelor va putea fi ordonata dupa diverse criterii: popularitate, durata preparare, durata finalizare, dificultate. Utilizatorul poate alege sa marcheze ca a preparat o retata adaugand minim o fotografie cu rezultatul final (in acest fel este determinata popularitate unei retete). Daca utilizatorul care cauta o reteta nu este autentificat, atunci preferintele ultimei cautari vor fi salvate la nivel de browser, altfel in contul utilizatorului respectiv. Se vor oferi clasamente in formatele HTML, CSV si JSON cu cele mai populare retete, cele mai populare ingrediente, ingredientele cele mai evitate.
-                </p>
-            </li>
-        </ul>
+
+    <section id="retetefront">
+        <h3>
+            Retete
+        </h3>
+        <p>
+            Pagina de retete este populata cu carduri de retete.
+        </p>
+        <p>
+            Pe un card de reteta se afiseaza urmatoarele detalii:
+            numele retetei, descrierea, timpul de preparare,
+            nivelul de dificultate si numarul de comentarii.
+        </p>
+        <section id="adaugaretetefront">
+            <h4>Adauga reteta</h4>
+            <p>Pe pagina de retete, pentru un utilizator logat va aparea un buton ce va face
+                redirectarea catre pagina "Adauga reteta".
+            </p>
+            <p>
+                Pagina adauga_reteta contine un formular cu toate campurile obligatorii.
+                Campurile sunt: titlu, poza, timp de preparare, nivel de dificultate, lista de
+                ingrediente, pasi de preparare.
+
+            </p>
+            <p>
+                Dupa ce formularul este completat, avem un buton "Adauga" de tip submit.
+            </p>
+        </section>
+
+
+        <section id="vizualizareretetefront">
+            <h4>Vizualizare reteta</h4>
+            <p>Pe pagina de retete, pentru un utilizator logat va aparea un buton ce va face
+                redirectarea catre pagina "Adauga reteta".
+            </p>
+            <p>
+                Pagina adauga_reteta contine un formular cu toate campurile obligatorii.
+                Campurile sunt: titlu, poza, timp de preparare, nivel de dificultate, lista de
+                ingrediente, pasi de preparare.
+
+            </p>
+            <p>
+                Dupa ce formularul este completat, avem un buton "Adauga" de tip submit.
+            </p>
+        </section>
+        <section id="filtrareretetefront">
+            <h4> Filtrarea retetelor</h4>
+            <p>Formularul de filtrare permite urmatoarele filtre : </p>
+            <ul>
+                <li>nivel de dificultate (cu valorile Usor, Mediu, Greu sau Master Chef) : campurile pot fi
+                    selectate 1 sau mai multe simultan pentru a obtine retete cu 1 sau mai multe nivele de
+                    dificultate</li>
+                <li>include : camp in care se vor introduce ingredientele ce doresc a fi continute de reteta. Toate
+                    ingredientele vor fi incluse</li>
+                <li>exclude : camp in care se vor introduce ingredientele ce se doreste a fi excluse din toate
+                    retetele</li>
+                <li> timp : se va completa un interval de timp care reprezinta intervalul in care vom cauta timpul
+                    necesar prepararii retetelor</li>
+                <li> sortare si ordine : campurile nu vor fi completate simultan cu include si exclude. In cadrul
+                    lor vom selecta un criteriu de sortare si ordinea de sortare (ascendent sau descendent) aferenta
+                    criteriului.</li>
+            </ul>
+            <p> Pentru a obtine rezultatele filtrarii trebuie apasat butonul “Afiseaza”.</p>
+            <p>In cadrul formularului vom retine ultimele optiuni de filtrare ale utilizatorului logat (in baza de
+                date) sau nelogat (in localStorage) cu scopul de a sugera urmatoarele filtrari.</p>
+        </section>
+        <section id="retetelemelefront">
+            <h4> Retetele mele </h4>
+            <p> Pagina retetele_mele.html este accesibila unui user logat. Daca acesta nu este logat, nu poate accesa
+                pagina sau vedea butonul aferent in pagina de retete.html.</p>
+            <p>Aici utilizatorul isi poate vedea lista de retete adaugate. El poate accesa o reteta sau sterge o reteta
+                din cele dinsponibile.</p>
+            <p> Pe aceasta pagina, utilizatorul are un buton cu legatura catre pagina de adaugare a unei retete.</p>
+        </section>
+
     </section>
-    <section typeof="sa:Structure" class="main_container">
-        <h2>4. Structura </h2>
-        <ul>
-            <li>
-                <h3> Frontend </h3>
+    <section id="retetefavoritefront">
+        <h3>
+            Retete favorite
+        </h3>
+        <p> Pagina de retete favorite afiseaza retetele pe care un user logat sau nelogat le-a marcat ca favorite.
+            La incarcarea paginii vor fi incarcate dinamic retetele din baza de date, daca userul este logat sau din
+            localStorage daca user-ul nu este logat.
+            Pe aceasta pagina utilizatorul poate accesa una dintre retetele din lista.
+    </section>
+    <section id="acasafront">
+        <h3>
+            Acasa
+        </h3>
+        <p> Pagina de acasă va afisa cele mai populare 4 retete de pe site. Popularitatea retetelor este stabilita in
+            functie de numarul de comentarii. Utilizatorul poate accesa o reteta din cele afisate pentru a o citi.
+            Pe aceasta pagina, utilizatorul, indiferent daca este logat sau nu, poate alege sa descarce anumite
+            clasamente de pe site. Clasamentele disponibile sunt: Retete populare, Cele mai populare ingrediente si Cele
+            mai evitate ingrediente. Totodata, utilizatorul poate alege formatul in care sa descarce clasamentul: JSON,
+            CSV sau HTML. Apasand butonul “Descarca”, utilizatorul va descarca local clasamentul selectat.</p>
+    </section>
+    <section id="retetafront">
+        <h3> Reteta </h3>
+        <p> Pagina reteta.html va afisa datele unei singure retete: poza, titlu, nivel de dificultate, timp de
+            preparare, popularitate, lista de ingrediente, pasii de preparare si comentariile. </p>
+        <p>Userul are posibilitatea de a adauga reteta la favorite, apasand pe butonul in forma de inima. Daca butonul
+            este negru, atunci reteta este adaugata la favorite. Altfel, reteta nu se afla la favorite.</p>
+        <p> Un user logat are posibilitatea de a adauga un comentariu. Daca userul nu este logat, acesta va primi o
+            eroare daca incearca sa adauge un comentariu</p>
+    </section>
+
+
+    <section id="back-end">
+        <h3>
+            Back End
+        </h3>
+        <section id="signuploginback">
+            <h3>
+                Register & Login
+            </h3>
+            <p>Arhitectura generala a partii/modulului responsabil de Register si Login este bazata pe MVC.</p>
+            <p>Fiecare utilizator inregistrat va avea un nume si un id unic.</p>
+            <h4>Register</h4>
+            <p>
+                Pentru a ne creea un cont se verifica daca datele transmise in request.body cu metoda POST in formularul
+                de register
+                sunt corecte.
+            </p>
+            <p>
+                Dupa ce se realizeaza, unui cont nou creat i se vor salva campurile transmise in baza de date, dupa
+                modelul user,
+                iar parola contului nou creat este salvata ca un hash criptat cu ajutorul functiei MD5.
+            </p>
+
+            <h4>Login</h4>
+            <p>Pentru a realiza logarea utilizatorului vom trimite un request la back-end cu metoda POST. Dupa validarea
+                datelor
+                si verificarea userului in baza de date, daca acesta exista, atunci vom cripta id-ul userului cu o cheie
+                privata folosind jsonWebToken
+                si il vom trimite la front.
+                In modulul de front vom seta cheia AuthorizationToken in localStorage.
+
+            </p>
+            <figure typeof="sa:image">
+                <img src="../images/documentatie/doc/localStorageLogin.PNG">
+                <figcaption>Fig.1 - Exemplu de authorization token</figcaption>
+            </figure>
+            <p>Dupa ce se realizeaza logarea, ne folosim de tokenul salvat in localStorage pentru a verifica in cadrul
+                modulului de front-end daca
+                userul este logat. Astfel sesiunea de login este salvata. </p>
+
+        </section>
+        <section id="reteteback">
+            <h3> Retete </h3>
+            <p> La incarcarea paginii de retete, se vor afisa dinamic retetele cele mai populare. In realizarea
+                functionalitatii se executa un apel cu ajutorul unui obiect XMLHttpRequest la API cu metoda GET pe ruta
+                http://localhost:5000/recipes. Retetele astfel returnate in front, vor fi injectate in documentul HTML
+                cu javascript.</p>
+            <p>Pe pagina de verificam daca userul este logat prin verificarea AuthorizationToken. Daca userul este
+                logat, vom genera butoanele pentru Adauga reteta, Retetele mele si Logout.</p>
+            <h4>Serverul de imagini</h4>
+            <p>Serverul de imagini ne ajuta sa stocam imaginile local, dar sa protejam modularitatea componentelor. Nu
+                dorim sa stocam imaginile in baza de date, deoarece transferul lor prin requesturi este costisitor din
+                punctul de vedere al tipului. </p>
+            <p>Pe un card de reteta vom afisa poza retetei, care va fi preluata din serverul de imagini. Legatura cu
+                serverul de imagini va fi facuta prin atributul href=”http://localhost:7001/?images/_id.mimeType”. Pe
+                serverul de imagini avem stocate in folderul public/images toate pozele pentru retete si comentarii,
+                denumite cu id-ul lor din baza de date si mime type.</p>
+
+            <section id="adaugaretetaback">
+                <h4> Adaugare reteta</h4>
+                <p>Formularul de adaugare reteta trebuie trimis cu toate campurile completate. Trebuie sa existe cel
+                    putin un ingredient. Totodata, avem posibilitatea sa adaugam sau sa stergem ingrediente de la
+                    coada listei.</p>
+                <p>Trimiterea formularului este tratata cu ajutorul unei functii handleFormSubmit, care preia
+                    campurile si creaza un obiect json cu ele. JSON-ul astfel obtinut este dat ca parametru catre
+                    functia postFormDataAsJSON care executa un request cu metoda POST la API pe ruta:
+                    http://localhost:5000/recipes . In backend vom interoga baza de date si insera reteta. Totodata,
+                    se va efectua un request XMLHttpRequest la serverul de imagini cu metoda POST pentru a memora in
+                    local in serverul de imagini poza retetei date.</p>
+                <p>Deoarece doar un user logat poate adauga o reteta,in headerele requestului vom trimite si
+                    AuthorizationToken care va fi decriptat in backend pentru a obtine id-ul userului care a adaugat
+                    reteta.</p>
+                <p>Dupa trimiterea cu succes a formularului si inserarea retetei, userul este redirectat pe pagina
+                    noii reteta adaugate.</p>
+
+            </section>
+
+            <section id="filtrareback">
+                <h4>Filtrarea</h4>
+                <p>Dupa trimiterea formularului de filtrare aflat pe pagina retete.html, datele din formular sunt
+                    apendate la link-ul API:
+                    http://localhost:5000/recipes/filter?diff_easy=1&diff_medium=1&diff_hard=1&diff_master=1&include=carne&exclude=ulei&time_min_value=1&time_min_unit=min&time_max_value=3&time_max_unit=hours&order_by=popularity&order=ASC
+                    Se efectueaza un request la backend, care ne va returna retetele filtrate conform specificatiilor
+                    din link.</p>
+                <p>Inainte de efectuarea filtrarii, vom face un request cu metoda POST la ruta
+                    http://localhost:5000/insertFilter pentru a salva filtrarea prezenta pentru userul curent. Daca
+                    userul nu este logat, filtrarea se va salva in localStorage.</p>
+                <h5> Algoritmul de filtrare </h5>
+                <p>Verificam daca nu sunt simultan completate campurile order_by si order cu include si exclude.</p>
+                <p>Verificam daca primim campurile order si order_by cand dorim sa aplicam sortarea criteriala.</p>
+                <p>Verificam daca campurile diff_easy,diff_medium,diff_hard,diff_master sunt egale cu 1. In acest caz,
+                    le selectam intr-un map si construim un regex pentru nivelul de dificultate.</p>
+                <p>Calculam valorile pentru timpul minim(default=0) si tipul maxim(default= valoarea maxima din baza de
+                    date).</p>
+                <p> Luam retetele din baza de date pe baza criteriilor de dificultate si timp.
+                <p>Daca avem campurile de include si exclude atunci, inseram ingredientele in tabelul de Ingredients
+                    (pentru a contoriza numarul de incluziuni si excluziuni) si calculam numarul de ingrediente din
+                    fiecare categorie.</p>
+                <p>Retetele preluate anterior le vom filtra luand din ele toate retetele care au toate ingredientele de
+                    la include si niciun ingredient mentionat la exclude. Sortarea in acest caz se va face dupa numarul
+                    de ingrediente extra din fiecare reteta.</p>
+                <p>Daca nu avem specificate campurile include si/sau exclude atunci vom ordona elementele dupa
+                    criteriile date la order. Daca nu primim niciun criteriu la sortare, atunci retetele vor fi sortate
+                    in crescator dupa numarul de elemente.</p>
+            </section>
+            <section id="retetelemeleback">
+                <h4>Retetele mele </h4>
+                        <p> Pentru preluarea datelor de la baza de date, se efectueaza un request cu metoda GET la ruta
+                            http://localhost:5000/recipes/user. In header-ul requestu-ului se adauga AuthorizationToken
+                            pentru a identifica userul care doreste sa acceseze pagina. In backend decodificam
+                            AuthorizationToken, verificam daca userul exista si interogam baza de date pentru retetele
+                            adaugate de el. Retetele returnate vor fi ordonate ascendent dupa data adaugarii.</p>
+                        <p> Pentru optiunea de stergere a unei retete, adaugam dinamic la fiecare card de reteta
+                            atributul id=”delete_{_id}”, unde {_id} este id-ul retetei. Pe fiecare element cu un astfel
+                            de id , adaugam un handler care va efectua un request cu metoda DELETE la ruta
+                            http://localhost:5000/recipe. </p>
+                        <p> Functia de stergere a unei retete din baza de date verifica daca userul care doreste sa
+                            stearga reteta exista, daca reteta ce va fi stearsa exista , daca userul logat a postat
+                            reteta ce urmeaza a fi stearsa (doar un user care a postat o reteta, o poate sterge).</p>
+            </section>
+        </section>
+
+        <section id="retetefavoriteback">
+            <h3> Retete favorite</h3>
+            <p>Retetele favorite ale unui utilizator vor fi returnate cu ajutorul metodei GET
+                la http://localhost:5000/favorites?user_id=.
+                Pentru utilizatorii nelogati, retetele favorite vor fi returnate din localStorage, iar pentru
+                cei logati
+                retetele vor fi returnate din baza de date.
+            </p>
+            <h4>Adauga la favorite</h4>
+            <p>Un utilizator poate salva o reteta in favorite apasand butonul (emptyInimioara) transformandu-se
+                in
+                (fullInimioara), fara a mai da reload la pagina.</p>
+            <p>Retetele pot fi adaugate la favorite prin intermediul metodei POST la
+                http://localhost:5000/favorites/add?recipe_id=
+                de catre utilizatorii logati, dar si catre cei nelogati.</p>
+            <p>Pentru utilizatorii nelogati, ca la login se vor salva in localStorage, iar pentru cei logati
+                in array-ul de favorite din baza de date, in tabela user.
+            </p>
+            <figure typeof="sa:image">
+                <img src="../images/documentatie/doc/favoritesEmptyHeart.PNG">
+                <figcaption>Fig.1 - buton adauga la favorite(reteta nu este la favorite)</figcaption>
+            </figure>
+            <h4>Sterge din favorite</h4>
+            <p>Retetele stocate in aceeasi maniera ca si la adauga in favorite, se vor sterge apasand acelasi
+                buton de inimioara anterior colorat folosind metoda PUT la
+                http://localhost:5000/favorites/remove?recipe_id= ,
+                stergand din array id-ul retetei respective, revenindu-si la forma initiala (emptyHeart), fara a mai
+                da
+                reload la
+                pagina.
+            </p>
+            <figure typeof="sa:image">
+                <img src="../images/documentatie/doc/favoritesFullHeart.PNG">
+                <figcaption>Fig.1 - buton sterge de la favorite(reteta este la favorite)</figcaption>
+            </figure>
+
+
+
+        </section>
+
+
+
+
+        <section id="acasaback">
+            <h3>Acasa</h3>
+            <p>
+                Prin metoda GET la http://localhost:5000/recipes pagina va fi populata cu primele 4 cele mai
+                populare
+                retete.
+                Popularitatea unei retete va fi determinata de numarul de comentarii ale retetei respective.
+
+            </p>
+            <h4>
+                Descarcare Clasamente
+            </h4>
+            <p>
+                Clasamentele vor fi realizate in functie de cele mai populare retete, cele mai populare ingrediente
+                si cele mai
+                evitate ingrediente.
+                Pentru a vedea cele mai populare retete ne luam dupa popularitatea retetei, adica numarul de
+                commentarii.
+                Pentru a vedea cele mai populare/evitate ingrediente ne luam dupa intrarile din modelul ingredients
+                care va
+                numara numarul de cautari pt id-ul fiecarui ingredient, si va crea o intrare noua, din caz de nu
+                exista deja.
+
+            </p>
+            <p>
+                Aceste clasamente vor fi downloadate in formatele: HTML, JSON sau CSV.
+            </p>
+
+            <h4>
+                Search
+            </h4>
+            <p>
+                Prin queryParameters http://localhost:5000/recipes?q=supa%20rosii se poate realiza cautarea unei
+                retete dupa
+                campurile: titlu, descriere si lista ingrediente.
+            </p>
+
+        </section>
+        <section id="retetaback">
+            <h3>Reteta</h3>
+            <p>
+                Reteta este luata din baza de date printr-un request de forma GET la
+                http://localhost:5000/recipes.
+            </p>
+            <p>
+                Toate informatiile primite despre o reteta vor fi afisate: nume, imagine, timp de preparare,
+                nivel de dificultate, numarul de comentarii, ingrediente, instructiuni de preparare si
+                comentariile.
+            </p>
+            <h4>
+                Adauga comentariu
+            </h4>
+            <p>
+                Optiunea de adaugare comentariu ne va deschide o pagina separata, unde pentru a ne posta
+                comentariul,
+                va trebui sa introducem un text si o imagine.
+            </p>
+            <h4>
+                Vizualizare comentarii
+            </h4>
+            <p>
+                In reteta actuala toate comentariile retetei actuale vor fi afisate in josul paginii, si vor
+                fi preluate cu metoda GET la
+                http://localhost:5000/comment?recipe_id=. Aceste comentarii au si o poza care a fost luata din
+                serverul
+                de imagini si pentru a vedea poza avem o sectiune colapsata ce trebuie decolapsata, cu un click pe
+                butonul
+                Vezi poza. Pentru a ascunde imaginea trebuie doar sa dam click pe acelasi buton.
+            </p>
+
+
+        </section>
+        <section id="diagram">
+            <h3>Diagrama aplicatiei</h3>
+            <figure typeof="sa:image">
+                <img src="../images/documentatie/doc/Diagrama_aplicatiei.png">
+                <figcaption>Diagrama aplicatiei MVC</figcaption>
+            </figure>
+        </section>
+        <section>
+            <section id="teamwork">
+                <h2>Lucru in echipa</h2>
+                <p>Pentru a distribui taskurile si manageria timpul de lucru, am organizat saptamanal intalniri pe
+                    Discord,
+                    unde am discutat lucrul pe saptamana curenta si taskurile pentru urmatoarea saptamana. Am lucrat
+                    impreuna la pagini
+                    si la integrarea lor continua.
+                </p>
+                <p>Am tinut legatura constant, iar atunci când cineva se afla intr-un impas, am incercat cu totii sa
+                    rezolvam problema.</p>
                 <ul>
                     <li>
-                        <p>Am creat o interfata web folosind HTML5 si CSS3 pentru a pune la dispozitie o experienta estetica si flexibila pentru utilizatori.
+                        <h3>Boghiu Georgiana-Viorica</h3>
+                        <p>
+                            Partea 1: A lucrat la paginile: Index, Contul meu, Adauga reteta.
+
+                        </p>
+                        <p>
+                            Partea 2: A lucrat la: GET = /getFilter , /recipe,  /recipes/user, /recipes/filter, /check_favorites,
+                            POST = /recipes , /login, /register
+                            PUT = /change ,/grant, /restrict, /rankings.
+                            Integrare Front-Back:->lucrul cu localStorage,
+                            ->descarcare clasamente
+                            ->handler stergere/adaugare favorite
+                            -> handler stergere favorite
+                            -> lucrul cu serverul de fisiere si imagini
+                        </p>
+                    </li>
+                    <li>
+                        <h3>Cernat Roxana Monica</h3>
+                        <p>
+                            Partea 1: Index, Afisare reteta, Favorite, mockup interfata.
+                        </p>
+                        <p>
+                            Partea 2: POST /comment addComment,
+                            GET /comment getComments,
+                            DELETE /comment deleteComment,
+                            
+                            GET /favorites getFavorites, 
+                            PUT /favorites/add addFavorite,
+                            PUT /favorites/remove removeFavorite,
+                            
+                            GET /get_user getUser,
+                            
+                            search care se afla in getMostPopular,
+                            
+                            legatura front back pentrubuton admin si functiile,
+                            grant restrict pe pagina de admin.
+                            
+                            
+                            
+                            Descrierea API-ului in swagger si  Ghidul utilizatorului
+                        </p>
+                    </li>
+                    <li>
+                        <h3>Formagiu Michael-Gabriel</h3>
+                        <p>
+                            Partea 1: Index, Retete, Login, Inregistrare.
                             
                         </p>
-                    </li>
-                    <li>
-                        <h4>Mockup</h4>
-                        <p>Inainte de a incepe lucrul la interfata, s-a creat un mockup pentru paginile aplicatiei pentru a avea un punct de pornire si o idee de design unitara.</p>
-                        <p>Acasa</p>
-                        <img alt="pagina acasa" src="../../images/acasa.png">
-                        <p>Retete</p>
-                        <img alt="pagina retete" src="../../images/retete.png">
-                        <p>Afisare reteta</p>
-                        <img alt="pagina reteta" src="../../images/pagina_reteta.png">
-
-                    </li>
-                    <li>
-                        <h4>Paginile aplicatiei</h4>
-                        <ul>
-                            <li>Inregistrare
-
-                                <p>Disponibila pentru utilizatorii nelogati, aici acestia se pot inregistra pe site cu un cont nou.</p>
-                            </li>
-                            <li>Login
-                                <p>Utilizatorii nelogati se pot loga intr-un cont.</p>
-                            </li>
-
-                            <li>Acasa
-                                <p>Pagina Acasa va afisa cele mai populare retete disponibile pe site.</p>
-                            </li>
-                            <li>Retete
-                                <p>Va afisa cele mai recente retete adaugate pe site. Ofera optiunea filtrarii retetelor si a ordonarii lor dupa popularitate, durata preparare, dificultate.</p>
-                            </li>
-                            <li>Favorite
-                                <p>Disponibila pentru utilizatorii inregistrati, pagina de Favorite va afisa retetele marcate ca preferate de un utilizator.Utilizatorul poate alege sa vizualizeze sau scoata o reteta de la Favorite.</p>
-                            </li>
-                            <li>Retetele mele
-                                <p>Pagina accesibila unui utiliator logat unde acesta poate manageria retetele adaugate de el, poate vizualiza,edita sau sterge o astfel de reteta.</p>
-                            </li>
-                            <li>Afisare reteta
-                                <p>Pagina de vizualizare contine detalii despre o reteta, precum: nivel de dificultate, timp de preparare, popularitate, lista de ingrediente, pasi de preparare si poze adaugate de alti utilizatori care au incercat reteta.</p>
-                            </li>
-                            <li>Contul meu
-                                <p>Pagina care permite utilizatorului sa schimbe detaliile contului precum: numele de utlizator, adresa de e-mail sau parola.</p>
-                            </li>
-
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <h3> Backend</h3>
-                <ul>
-                    <li>
-                        <h4>Technologies</h4>
                         <p>
-                            Pentru implementarea aplicatiei dorim sa folosim NodeJS pe partea de server.
+                            Partea2:POST /insertFilter,
+                            GET /getFilter,
+                            GET /recipes,
+                            GET /recipes/user?id={user_id},
+                            POST /recipes,
+                            GET /recipe?id={recipe_id},
+                            PUT /recipe?uid={user_id}&rid={recipe_id},
+                            DELETE /recipe?uid={user_id}&rid={recipe_id},
+                            
+                            responsiveness la pagini pe partea de front,
+                            
+                            legatura front-back la contul meu, error handling cu redirectarea catre paginile de eroare dupa raspunsul de la API,
+                            recipe_cards generare html dinamic
                         </p>
-                        <p>Urmeaza a fi actualizat.</p>
                     </li>
                 </ul>
-            </li>
-            <li>
-                <h3>Baza de date</h3>
+
+            </section>
+            <section typeof="sa:Ajutor" class="main_container">
+                <h2>Resurse externe</h2>
                 <ul>
                     <li>
-                        <h4>Tip</h4>
-                        <p>Baza de date folosita este MongoDB.</p>
-                        <p>Urmeaza a fi actualizat.</p>
+                        <a href="https://trello.com/b/xNxQQMsn/tw%22%3ETrello">Trello</a>  pentru organizarea si distribuirea task-urilor membrilor echipei si monitorizarea progresului.
                     </li>
-                </ul>
-            </li>
-        </ul>
-    </section>
-    <section typeof="sa:Functionalities" class="main_container">
-        <h2>5. Interactiuni</h2>
-        <ul>
-            <li>
-                <h3>Utilizatorul</h3>
-                <ul>
-                    <li>Login</li>
-                    <li>Inregistrare</li>
-                    <li>Filtrare retete dupa criterii: popularitate, durata preparare, dificultate</li>
-                    <li>Cautare retete cu ajutorul functionalitatii de search dupa: ingrediente, timpul de preparare, nume</li>
-                    <li>Adaugarea unei retete</li>
-                    <li>Editarea sau stergerea unei retete proprii</li>
-                    <li>Salvarea unei retete in lista "Favorite"</li>
-                </ul>
-            </li>
-        </ul>
-    </section>
-    <section typeof="sa:Ajutor" class="main_container">
-        <h2>6. Resurse externe</h2>
-        <ul>
-            <li>
-                <a href="https://trello.com/b/xNxQQMsn/tw">Trello</a>  pentru organizarea si distribuirea task-urilor membrilor echipei si monitorizarea progresului.
-            </li>
-            <li>
-                <a href="https://discord.com/">Discord</a> pentru a organiza intalniri si zile de lucru impreuna pentru integrarea proiectului.
-            </li>
-            <li>
-                <a href="https://github.com/georgianaB20/WebTechnologiesProject">Github</a> pentru publicarea proiectului.
-            </li>
-            <li>
-                <a href="https://developer.mozilla.org/en-US/">MDN</a>, 
-                <a href="https://www.w3schools.com">w3schools</a>, 
-                <a href="https://css-tricks.com">css-tricks</a> pentru a ne documenta in realizarea proiectului.
-                
-            </li>
-            <li>
-                <a href="https://www.freeformatter.com/html-validator.html">Free formater - HTML Validator</a>,
-                <a href="http://csslint.net">CSS Lint</a> pentru validarea codului de HTML, respectiv CSS.
-            </li>
-        </ul>
-    </section>
-    <section typeof="sa:Teamwork" class="main_container">
-        <h2>9. Lucru in echipa</h2>
-        <p>Pentru a distribui taskurile si manageria timpul de lucru, am organizat saptamanal intalniri pe Discord, 
-            unde am discutat lucrul pe saptamana curenta si taskurile pentru urmatoarea saptamana. Am lucrat impreuna la pagini
-             si la integrarea lor continua.
-        </p>
-        <p>Am tinut legatura constant, iar atunci când cineva se afla intr-un impas, am incercat cu totii sa rezolvam problema.</p>
-        <ul>
-            <li>
-                <h3>Boghiu Georgiana-Viorica</h3>
-                <p>
-                    A lucrat la paginile: Index, Contul meu, Adauga reteta.
+                    <li>
+                        <a href="https://discord.com/%22%3EDiscord">Discord</a> pentru a organiza intalniri si zile de lucru impreuna pentru integrarea proiectului.
+                    </li>
+                    <li>
+                        <a href="https://github.com/georgianaB20/WebTechnologiesProject%22%3EGithub">Github</a> pentru publicarea proiectului.
+                    </li>
+                    <li>
+                        <a href="https://developer.mozilla.org/en-US/%22%3EMDN">devMozilla</a>, 
+                        <a href="https://www.w3schools.com/%22%3Ew3schools">w3schools</a>, 
+                        <a href="https://css-tricks.com/%22%3Ecss-tricks">css-tricks</a> pentru a ne documenta in realizarea proiectului.
+        
+                    </li>
+                    <li>
+                        <a href="https://validator.w3.org/">HTML validator</a>,
+                        <a href="http://csslint.net/%22%3ECSS Lint">CSS validator</a> pentru validarea codului de HTML, respectiv CSS.
                     
-                </p>
-            </li>
-            <li>
-                <h3>Cernat Roxana Monica</h3>
-                <p>
-                    A lucrat la paginile: Index, Afisare reteta, Favorite, mockup interfata.
-                </p>
-            </li>
-            <li>
-                <h3>Formagiu Michael-Gabriel</h3>
-                <p>
-                    A lucrat la paginile: Index, Retete, Login, Inregistrare.
-                </p>
-            </li>
-        </ul>
-    </section>
-   
+                    </li>
+                    <li>
+                        <a href="https://github.com/stefanT9/Routing-In-NodeJs">Routing in NodeJs</a> pentru preluarea modelului de routing in nodeJs 
+                        </li>
+                </ul>
+            </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
+
 </html>

@@ -33,10 +33,10 @@
 .recipe-info {
     display: flex;
     flex-direction: row;
-    /*margin-right: 3em;*/
+    /* margin-right: 3em; */
     /*font-family: inherit;*/
-    padding-left: 2em;
-    /* padding-right: 4em; */
+    /* padding-left: 6em; */
+    padding-right: 0;
 }
 
 h1 {
@@ -74,7 +74,6 @@ h1 {
     border-radius: 3em;
     width: 5em;
     background-color: #cfb491;
-    margin-left: 0.3em;
 }
 
 .reteta {
@@ -181,6 +180,25 @@ h1 {
 }
 
 @media screen and (max-width:400px) {
+    .ingrediente {
+        padding-left: 1em;
+    }
+    #instructiuni {
+        padding-left: 1em;
+    }
+    .header {
+        width: fit-content;
+        padding-left: 2em;
+    }
+    .reteta {
+        margin: 0;
+        /* padding-left: 1em; */
+    }
+    .container-reteta {
+        margin: 0;
+        padding-left: 3em;
+        padding-top: 1em;
+    }
     .comment {
         margin: 1em auto;
     }
@@ -197,6 +215,7 @@ h1 {
     .img {
         height: 15em;
         width: 10em;
+        margin: 0;
     }
     #recipe_title {
         font-size: 1em;
@@ -208,9 +227,13 @@ h1 {
         padding-right: 0;
     }
     .recipe-info {
-        width: 90%;
+        margin-right: 0;
     }
     .filtre {
         padding-right: 0;
+        /* padding-left: 7em; */
+    }
+    .comentarii-btn {
+        padding-left: 1em;
     }
 }
