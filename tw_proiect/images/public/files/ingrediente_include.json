@@ -1,6 +1,11 @@
 [
     {
         "name": "rosii",
+        "includes": 3,
+        "excludes": 1
+    },
+    {
+        "name": "carne",
         "includes": 2,
         "excludes": 0
     },
@@ -12,11 +17,46 @@
     {
         "name": "lapte",
         "includes": 0,
-        "excludes": 1
+        "excludes": 2
     },
     {
         "name": "oua",
         "includes": 0,
-        "excludes": 1
+        "excludes": 3
+    },
+    {
+        "name": "branza",
+        "includes": 0,
+        "excludes": 0
+    },
+    {
+        "name": "ulei",
+        "includes": 0,
+        "excludes": 0
+    },
+    {
+        "name": "rulei",
+        "includes": 0,
+        "excludes": 0
+    },
+    {
+        "name": "sare",
+        "includes": 0,
+        "excludes": 0
+    },
+    {
+        "name": "marar",
+        "includes": 0,
+        "excludes": 0
+    },
+    {
+        "name": "leustean",
+        "includes": 0,
+        "excludes": 0
+    },
+    {
+        "name": "ciocolata",
+        "includes": 0,
+        "excludes": 0
     }
 ]

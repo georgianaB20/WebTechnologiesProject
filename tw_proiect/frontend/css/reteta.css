@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
 .container-reteta {
     display: flex;
     flex-direction: column;
@@ -64,7 +65,7 @@ h1 {
 .time {
     text-align: center;
     border-radius: 3em;
-    width: 5em;
+    width: 7em;
     background-color: #cfb491;
 }
 
@@ -72,7 +73,7 @@ h1 {
 .popularitate {
     text-align: center;
     border-radius: 3em;
-    width: 5em;
+    width: 7em;
     background-color: #cfb491;
     margin-left: 0.3em;
 }
@@ -128,7 +129,7 @@ h1 {
 }
 
 .comm-wraper .nume {
-    padding-right: 5rem;
+    padding-right: 2rem;
 }
 
 .comm .coment-img {
@@ -214,3 +215,4 @@ h1 {
         padding-right: 0;
     }
 }
+
