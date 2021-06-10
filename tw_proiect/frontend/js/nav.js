@@ -1,7 +1,6 @@
 function searchFct(event) {
     const searchText = document.getElementsByClassName("search-txt")[0].value;
     if (searchText.length > 0) {
-        console.log(searchText);
         const query = encodeURIComponent(searchText);
         document.getElementsByClassName("search-button")[0].setAttribute("href", "retete.html?search=" + query);
     } else {

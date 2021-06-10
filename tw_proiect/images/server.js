@@ -40,12 +40,8 @@ var server = http.createServer(function(req, res) {
             return res.end('Forbidden');
         }
 
-        console.log(file)
-            // console.log(typeof file)
-
         if (req.method === 'GET') {
             var type = mime[path.extname(file).slice(1)] || 'text/plain';
-            console.log(type)
             var s = fs.createReadStream(file);
             s.on('open', function() {
                 res.setHeader('Content-Type', type);
@@ -85,7 +81,7 @@ var server = http.createServer(function(req, res) {
                     //-------------------JSON
                 try {
                     fs.writeFileSync(includes_json, JSON.stringify(data.includes, null, 4), 'utf8')
-                    console.log("The file was saved!");
+                    console.log(includes_json + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -94,7 +90,7 @@ var server = http.createServer(function(req, res) {
                 //fs.writeFile(excludes_json, JSON.stringify(data.excludes, null, 4), 'utf8')
                 try {
                     fs.writeFileSync(excludes_json, JSON.stringify(data.excludes, null, 4), 'utf8')
-                    console.log("The file was saved!");
+                    console.log(excludes_json + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -103,7 +99,7 @@ var server = http.createServer(function(req, res) {
                 //fs.writeFile(retete_json, JSON.stringify(data.retete, null, 4), 'utf8')
                 try {
                     fs.writeFileSync(retete_json, JSON.stringify(data.retete, null, 4), 'utf8')
-                    console.log("The file was saved!");
+                    console.log(retete_json + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -120,11 +116,10 @@ var server = http.createServer(function(req, res) {
                 })
                 csv.unshift(fields.join(',')) // add header column
                 csv = csv.join('\r\n');
-                // console.log(csv)
                 // fs.writeFile(includes_csv, csv, 'utf8')
                 try {
                     fs.writeFileSync(includes_csv, csv, 'utf8')
-                    console.log("The file was saved!");
+                    console.log(includes_csv + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -145,7 +140,7 @@ var server = http.createServer(function(req, res) {
                 // fs.writeFile(excludes_csv, csv, 'utf8')
                 try {
                     fs.writeFileSync(excludes_csv, csv, 'utf8')
-                    console.log("The file was saved!");
+                    console.log(excludes_csv + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -166,7 +161,7 @@ var server = http.createServer(function(req, res) {
                 // fs.writeFile(retete_csv, csv, 'utf8')
                 try {
                     fs.writeFileSync(retete_csv, csv, 'utf8')
-                    console.log("The file was saved!");
+                    console.log(retete_csv + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -247,7 +242,7 @@ var server = http.createServer(function(req, res) {
                 // fs.writeFile(includes_html, html_file_includes, 'utf8')
                 try {
                     fs.writeFileSync(includes_html, html_file_includes, 'utf8')
-                    console.log("The file was saved!");
+                    console.log(includes_html + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -256,7 +251,7 @@ var server = http.createServer(function(req, res) {
                 // fs.writeFile(excludes_html, html_file_excludes, 'utf8')
                 try {
                     fs.writeFileSync(excludes_html, html_file_excludes, 'utf8')
-                    console.log("The file was saved!");
+                    console.log(excludes_html + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
@@ -313,13 +308,12 @@ var server = http.createServer(function(req, res) {
                 // fs.writeFile(retete_html, html_recipe, 'utf8')
                 try {
                     fs.writeFileSync(retete_html, html_recipe, 'utf8')
-                    console.log("The file was saved!");
+                    console.log(retete_html + " was saved!");
                     success += 1
                 } catch (err) {
                     console.log(err)
                 }
 
-                console.log(success)
                 if (success === 9) {
                     res.statusCode = 200;
                     res.end(JSON.stringify({ "message": "Files updated successfully." }));

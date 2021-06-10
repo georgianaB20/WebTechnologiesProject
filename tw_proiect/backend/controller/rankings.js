@@ -49,9 +49,6 @@ async function update(req, res, headers) {
                 popularitate: most_popular_ranking[i].comments.length
             })
     }
-    // console.log(aincludes)
-    // console.log(aexcludes)
-
 
     //Request la 7001, cu listele updatate (PUT)
     let request = new XMLHttpRequest();
@@ -66,8 +63,6 @@ async function update(req, res, headers) {
 
     request.onload = async function() {
         if (request.status === 200) {
-            //tralala
-            console.log("am facut post la serverul de imagini")
             res.writeHead(200, headers);
             res.write(JSON.stringify({ 'message': 'OK' }, null, 4))
             res.end()
@@ -80,21 +75,5 @@ async function update(req, res, headers) {
     }
     request.send(JSON.stringify(body));
 }
-
-// let data = '';
-// req.on('data', chunk => {
-//     data += chunk;
-// })
-// req.on('end', async() => {
-//     try {
-//         data = JSON.parse(data);
-//     } catch (err) {
-//         console.log(err)
-//         res.writeHead(500, headers);
-//         res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
-//         res.end()
-//     }
-// })
-//}
 
 module.exports = { update }

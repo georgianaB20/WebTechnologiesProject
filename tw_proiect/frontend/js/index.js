@@ -34,11 +34,12 @@ var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
     if (this.status == 200 && this.readyState == 4) {
         let arr = JSON.parse(this.response)
-		let recipeCount=0
+        let recipeCount = 0
         arr.forEach(element => {
-			recipeCount+=1
-			if (recipeCount < 5){
-            add_card(element, retete)}
+            recipeCount += 1
+            if (recipeCount < 5) {
+                add_card(element, retete)
+            }
 
         });
     } else {
@@ -62,8 +63,6 @@ ranking_form.onsubmit = function(event) {
         'file_type': `${file_type}`
     }
 
-    console.log(body)
-
     let xhttp = new XMLHttpRequest()
     xhttp.open("PUT", "http://localhost:5000/rankings")
 
@@ -78,14 +77,13 @@ ranking_form.onsubmit = function(event) {
             sendAlert(JSON.stringify(JSON.parse(this.response).message), JSON.stringify(this.status))
         } else {
             let url = images_server_url + '?files/' + ranking_type + '.' + file_type
-            console.log("de aici:", url)
-                // let a = `<a id="ancora" download href ="${url}"`
             let a = document.createElement("a")
             a.setAttribute("href", url)
             a.setAttribute("download", ranking_type + '.' + file_type)
+            console.log(a)
             ranking_form.appendChild(a)
-                // alert("sacasca")
             a.click()
+            a.remove()
 
         }
     }

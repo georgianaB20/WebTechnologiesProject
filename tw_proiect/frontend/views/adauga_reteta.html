@@ -62,16 +62,19 @@
                 <input type="file" accept="image/png image/jpg" id="poza" name="picture" required><br>
             </div>
 
-            <div>
+            <div id="timp">
                 <label for="valoare_timp">Timp de preparare</label>
-                <input type="number" id="valoare_timp" name="time_value" min="1" required>
+                <div>
+                    <input type="number" id="valoare_timp" name="time_value" min="1" required>
 
-                <label for="unitate_timp"></label>
-                <select id="unitate_timp" name="time_unit">
-            <option value="min">minute</option>
-            <option value="h">ore</option>
-            <option value="d">zile</option>
-        </select><br>
+                    <label for="unitate_timp"></label>
+                    <select id="unitate_timp" name="time_unit">
+                    <option value="min">minute</option>
+                    <option value="h">ore</option>
+                    <option value="d">zile</option>
+                </select>
+                    <br>
+                </div>
             </div>
 
             <div>
@@ -88,7 +91,7 @@
                 <label>Lista de ingrediente</label><br>
                 <div id="ingrediente" name="ingrediente">
                     <label for="ingredient1"></label>
-                    <input type="text" id="ingredient1" name="ingredient1" required>
+                    <input class="ingr" type="text" id="ingredient1" name="ingredient1" required>
                 </div>
                 <button id="adauga_ingredient"><i class="fa fa-plus"></i>Adauga</button>
                 <button id="sterge_ingredient"><i class="fa fa-minus"></i>Sterge</button><br>
