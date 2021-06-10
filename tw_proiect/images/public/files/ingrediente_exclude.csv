@@ -1,13 +1,5 @@
 name,excludes,includes
-"oua",3,0
-"lapte",2,0
-"rosii",1,3
+"lapte",1,0
+"oua",1,0
+"rosii",0,2
 "cartofi",0,1
-"branza",0,0
-"ulei",0,0
-"carne",0,2
-"rulei",0,0
-"sare",0,0
-"marar",0,0
-"leustean",0,0
-"ciocolata",0,0
