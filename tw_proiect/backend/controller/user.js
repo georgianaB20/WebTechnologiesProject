@@ -78,17 +78,6 @@ function register(req, res, headers) {
         try {
             data = JSON.parse(data);
 
-            if (data.male !== undefined) {
-                data.gender = 'M';
-                delete data.male;
-            } else if (data.female !== undefined) {
-                data.gender = 'F';
-                delete data.female;
-            } else if (data.other !== undefined) {
-                data.gender = 'Other';
-                delete data.altceva;
-            }
-
             //verificam daca emailul mai exista in BD
             let user_exists = await User.findOne({ 'email': data.email, 'username': data.username })
             if (user_exists !== null) {

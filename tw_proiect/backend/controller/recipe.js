@@ -661,7 +661,10 @@ async function insert_update_ingredient(iname, type) {
     iname = iname.toLowerCase().trim()
     let ingredient = await Ingredient.findOne({ name: iname })
     if (ingredient === null) {
-        ingredient = new Ingredient({ name: iname, includes: 0, excludes: 0 })
+        if (type === "include")
+            ingredient = new Ingredient({ name: iname, includes: 1, excludes: 0 })
+        else if (type === "exclude")
+            ingredient = new Ingredient({ name: iname, includes: 0, excludes: 1 })
         let ok = await ingredient.save()
     } else {
         if (type === "include")

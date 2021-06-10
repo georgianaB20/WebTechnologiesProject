@@ -9,8 +9,7 @@
 
 .wrapper {
     padding: 2.5rem;
-    box-shadow: .5rem .5rem 3rem rgba(0,0,0,0.2);
-
+    box-shadow: .5rem .5rem 3rem rgba(0, 0, 0, 0.2);
 }
 
 .input {
@@ -19,7 +18,8 @@
     margin-bottom: 2rem;
 }
 
-.input input, .input textarea {
+.input input,
+.input textarea {
     font-family: inherit;
     width: 100%;
     height: 100%;
@@ -43,4 +43,10 @@
 
 .submit-btn {
     padding: 0.3rem;
+}
+
+@media screen and (max-width:400px) {
+    .wrapper {
+        padding: 0.9em;
+    }
 }
