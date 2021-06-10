@@ -1,9 +1,7 @@
 import { images_server_url } from './utils/constants.js'
 
 export function add_card(recipe, HTML_element) {
-    // console.log(recipe)
     let descr = "";
-    console.log(recipe)
     if (recipe.description.length > 100)
         descr = recipe.description.substring(0, 100) + "...";
     else
@@ -32,6 +30,7 @@ export function add_card(recipe, HTML_element) {
     }
 
     HTML_element.innerHTML += `<a href="reteta.html?id=${recipe._id}">
+            <div style="padding:1rem 1rem 1rem 1rem;">
                 <div class="card">
                     <img src='${images_server_url}?${recipe.picture}' alt=${recipe.title} class="card-img">
                     <h2>${recipe.title}</h2>
@@ -53,6 +52,7 @@ export function add_card(recipe, HTML_element) {
                         </div>
                     </div>
                 </div>
+                </div>
             </a>`
 }
 
@@ -65,7 +65,8 @@ export function favorite_card(recipe, HTML_element) {
 
     HTML_element.innerHTML += `
     <a href="reteta.html?id=${recipe._id}">
-        <div class="card">
+    <div style="padding:1rem 1rem 1rem 1rem;">    
+    <div class="card">
             <img src="${images_server_url}?${recipe.picture}" alt="${recipe.title}" class="card-img">
             <h2>${recipe.title}</h2>
             <p class="descriere">${descr}</p>
@@ -73,6 +74,7 @@ export function favorite_card(recipe, HTML_element) {
                 <i class="fas fa-heart"></i>
             </button>
 
+        </div>
         </div>
     </a>`
 

@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const Recipe = require('../models/recipe')
+const Ingredient = require('../models/ingredient')
 const User = require('../models/user')
+const Filter = require('../models/filter')
 const { db, key, images_server_url } = require('../utils/constants')
 const jwt = require('jsonwebtoken')
 let url = require('url');
 const fs = require('fs');
 
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const ingredient = require('../models/ingredient');
 
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -26,7 +29,6 @@ async function getRecipes(req, res, headers) {
 
     try {
         const filter = {};
-        // console.log(query)
         if (query) {
             filter.$text = { $search: query };
         }
@@ -218,7 +220,6 @@ async function getRecipesUser(req, res, headers) { //returns a json with all rec
         decoded = jwt.verify(auth, key)
             //decoded.user_id to get the user_id
         user_id = decoded.user_id
-            // console.log(user_id === null, user_id === undefined)
     } catch (err) {
         res.writeHead(401, headers);
         res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
@@ -381,7 +382,6 @@ async function deleteRecipe(req, res, headers) {
         } else {
             let user = await User.findById(userid) //daca nu gaseste=null
             let recipe = await Recipe.findById(recipeid)
-            console.log(!(user._id.toString() === recipe.user_id || (user.type === 'admin')))
             if (user === null) {
                 res.writeHead(404, headers);
                 res.write(JSON.stringify({ 'message': 'Userul nu exista' }, null, 4))
@@ -435,6 +435,9 @@ async function filter(req, res, headers) {
         let exclude = parsedUrl.searchParams.get('exclude')
         let order_by = parsedUrl.searchParams.get('order_by')
         let order = parsedUrl.searchParams.get('order')
+            //adaugam filterCookie in db la noi pt un user logat si il adaugam in local storage pt un user nelogat
+
+        //{user_id,filterCookie}
 
         if (include === null)
             include = ""
@@ -518,10 +521,20 @@ function apply_include_exclude_sort(recipes, includeString, excludeString, order
     let includeList = includeString.split(",")
     if (includeString === "") {
         includeList = []
+    } else {
+        //request cu put in bd ca sa salvam ingredientul
+        includeList.forEach(element => {
+            insert_update_ingredient(element, "include")
+        });
     }
     let excludeList = excludeString.split(",")
     if (excludeString === "") {
         excludeList = []
+    } else {
+        //request cu put in bd ca sa salvam ingredientul
+        excludeList.forEach(element => {
+            insert_update_ingredient(element, "exclude")
+        });
     }
     order = (order === "ASC") ? -1 : 1
         // let listAfterIncludeExclude = recipes.reduce(function(arr, recipe) {
@@ -644,4 +657,121 @@ function search(req, res, headers) {
 }
 
 
-module.exports = { getMostPopular: getRecipes, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search }
+async function insert_update_ingredient(iname, type) {
+    iname = iname.toLowerCase().trim()
+    let ingredient = await Ingredient.findOne({ name: iname })
+    if (ingredient === null) {
+        if (type === "include")
+            ingredient = new Ingredient({ name: iname, includes: 1, excludes: 0 })
+        else if (type === "exclude")
+            ingredient = new Ingredient({ name: iname, includes: 0, excludes: 1 })
+        let ok = await ingredient.save()
+    } else {
+        if (type === "include")
+            ingredient.includes = ingredient.includes + 1
+        else if (type === "exclude")
+            ingredient.excludes = ingredient.excludes + 1
+        let ok = await ingredient.save()
+    }
+}
+
+async function getFilter(req, res, headers) {
+    let auth = req.headers.authorization
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        console.log(err)
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
+
+    let filter = await Filter.findOne({ user_id: decoded.user_id })
+
+    if (filter !== null) {
+        res.writeHead(200, headers);
+        res.write(JSON.stringify(filter, null, 4));
+        res.end();
+    } else {
+        res.writeHead(404, headers);
+        res.end();
+    }
+}
+
+async function insertFilter(req, res, headers) {
+    let auth = req.headers.authorization
+    let decoded, user_id
+    try {
+        decoded = jwt.verify(auth, key)
+            //decoded.user_id to get the user_id
+        user_id = decoded.user_id
+    } catch (err) {
+        console.log(err)
+        res.writeHead(401, headers);
+        res.write(JSON.stringify({ "message": "Nu sunteti logat" }, null, 4));
+        res.end();
+        return;
+    }
+    let data = ""
+    req.on('data', chunk => {
+        data += chunk;
+    })
+    req.on('end', async() => {
+        try {
+
+            data = JSON.parse(data);
+            data.user_id = user_id
+            let variabila = new Filter(data)
+            let filter1 = await Filter.findOne({ user_id: data.user_id })
+
+            if (filter1 === null) {
+                let ok = await variabila.save()
+                if (ok === variabila) {
+                    res.writeHead(200, headers)
+                    res.end();
+                } else {
+                    res.writeHead(500, headers)
+                    res.end();
+                }
+            } else {
+                filter1.diff_easy = data.diff_easy
+                filter1.diff_medium = data.diff_medium
+                filter1.diff_hard = data.diff_hard
+                filter1.diff_master = data.diff_master
+                filter1.exclude = data.exclude
+                filter1.include = data.include
+                filter1.order = data.order
+                filter1.order_by = data.order_by
+                filter1.time_max_unit = data.time_max_unit
+                filter1.time_max_value = data.time_max_value
+                filter1.time_min_unit = data.time_min_unit
+                filter1.time_min_value = data.time_min_value
+
+
+                let ok = await filter1.save()
+                if (ok === filter1) {
+                    res.writeHead(200, headers)
+                    res.end();
+                } else {
+                    res.writeHead(500, headers)
+                    res.end();
+                }
+            }
+
+        } catch (err) {
+            console.log(err)
+            res.writeHead(500, headers);
+            res.write(JSON.stringify({ 'message': 'Eroare interna!' }, null, 4))
+            res.end()
+        }
+    })
+
+
+}
+
+
+module.exports = { getMostPopular: getRecipes, getRecipe, addRecipe, updateRecipe, getRecipesUser, deleteRecipe, filter, search, getFilter, insertFilter }

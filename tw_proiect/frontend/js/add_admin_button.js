@@ -1,6 +1,6 @@
-import {sendAlert} from './utils/error_handling.js'
+import { sendAlert } from './utils/error_handling.js'
 
-window.onload = function () {
+window.onload = function() {
     const xhttp = new XMLHttpRequest()
 
     xhttp.open('GET', 'http://localhost:5000/get_user');
@@ -11,21 +11,18 @@ window.onload = function () {
 
     xhttp.setRequestHeader("Authorization", localStorage.getItem('AuthorizationToken'))
 
-    xhttp.onload = function () {
+    xhttp.onload = function() {
 
         if (xhttp.status !== 200) {
             let res = JSON.parse(xhttp.response)
-            if (req.status === 401 ||req.status === 403 ||req.status === 404 ||req.status === 500){//la 401 este nume sau parola gresita
+            if (req.status === 401 || req.status === 403 || req.status === 404 || req.status === 500) { //la 401 este nume sau parola gresita
                 ///window.location.href = './error'+JSON.stringify(req.status)+'.html'//ne ducem in eroarea pe care o primim
-                sendAlert(res.message,JSON.stringify(req.status))
+                sendAlert(res.message, JSON.stringify(req.status))
             }
             //todo: de trimis alerta in fiecare eroare 
             alert(res.message);
-        }
-        else {
+        } else {
             let res = JSON.parse(xhttp.response)
-
-            // console.log(res.user_type)
 
             if (res.user_type === 'admin') {
                 let admin_button = document.createElement("admin_button");
