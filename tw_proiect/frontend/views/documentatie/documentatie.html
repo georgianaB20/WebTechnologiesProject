@@ -257,6 +257,18 @@
                 </li>
             </ol>
         </li>
+        <li>
+            <a href="#diagram">
+                <span> 5. </span>
+                Diagrama aplicatiei
+            </a>
+        </li>
+        <li>
+            <a href="#teamwork">
+                <span> 6. </span>
+                Lucru in echipa
+            </a>
+        </li>
     </ol>
 
     <section id="introducere">
@@ -652,12 +664,20 @@
                     in crescator dupa numarul de elemente.</p>
             </section>
             <section id="retetelemeleback">
-                <h4>Retetele mele <h4>
-                <p> Pentru preluarea datelor de la baza de date, se efectueaza un request cu metoda GET la ruta
-                http://localhost:5000/recipes/user. In header-ul requestu-ului se adauga AuthorizationToken pentru a identifica userul care doreste sa acceseze pagina. In backend decodificam AuthorizationToken, verificam daca userul exista si interogam baza de date pentru retetele adaugate de el. Retetele returnate vor fi ordonate ascendent dupa data adaugarii.</p>
-                <p> Pentru optiunea de stergere a unei retete, adaugam dinamic la fiecare card de reteta atributul id=”delete_{_id}”, unde {_id} este id-ul retetei. Pe fiecare element cu un astfel de id , adaugam un handler care va efectua un request cu metoda DELETE la ruta http://localhost:5000/recipe. </p>
-                <p> Functia de stergere a unei retete din baza de date verifica daca userul care doreste sa stearga reteta exista, daca reteta ce va fi stearsa exista , daca userul logat a postat reteta ce urmeaza a fi stearsa (doar un user care a postat o reteta, o poate sterge).</p>
-                </section>
+                <h4>Retetele mele </h4>
+                        <p> Pentru preluarea datelor de la baza de date, se efectueaza un request cu metoda GET la ruta
+                            http://localhost:5000/recipes/user. In header-ul requestu-ului se adauga AuthorizationToken
+                            pentru a identifica userul care doreste sa acceseze pagina. In backend decodificam
+                            AuthorizationToken, verificam daca userul exista si interogam baza de date pentru retetele
+                            adaugate de el. Retetele returnate vor fi ordonate ascendent dupa data adaugarii.</p>
+                        <p> Pentru optiunea de stergere a unei retete, adaugam dinamic la fiecare card de reteta
+                            atributul id=”delete_{_id}”, unde {_id} este id-ul retetei. Pe fiecare element cu un astfel
+                            de id , adaugam un handler care va efectua un request cu metoda DELETE la ruta
+                            http://localhost:5000/recipe. </p>
+                        <p> Functia de stergere a unei retete din baza de date verifica daca userul care doreste sa
+                            stearga reteta exista, daca reteta ce va fi stearsa exista , daca userul logat a postat
+                            reteta ce urmeaza a fi stearsa (doar un user care a postat o reteta, o poate sterge).</p>
+            </section>
         </section>
 
         <section id="retetefavoriteback">
@@ -775,39 +795,121 @@
 
 
         </section>
-        <section typeof="sa:Teamwork" class="main_container">
-            <h2>Lucru in echipa</h2>
-            <p>Pentru a distribui taskurile si manageria timpul de lucru, am organizat saptamanal intalniri pe
-                Discord,
-                unde am discutat lucrul pe saptamana curenta si taskurile pentru urmatoarea saptamana. Am lucrat
-                impreuna la pagini
-                si la integrarea lor continua.
-            </p>
-            <p>Am tinut legatura constant, iar atunci când cineva se afla intr-un impas, am incercat cu totii sa
-                rezolvam problema.</p>
-            <ul>
-                <li>
-                    <h3>Boghiu Georgiana-Viorica</h3>
-                    <p>
-                        A lucrat la paginile: Index, Contul meu, Adauga reteta.
-
-                    </p>
-                </li>
-                <li>
-                    <h3>Cernat Roxana Monica</h3>
-                    <p>
-                        A lucrat la paginile: Index, Afisare reteta, Favorite, mockup interfata.
-                    </p>
-                </li>
-                <li>
-                    <h3>Formagiu Michael-Gabriel</h3>
-                    <p>
-                        A lucrat la paginile: Index, Retete, Login, Inregistrare.
-                    </p>
-                </li>
-            </ul>
+        <section id="diagram">
+            <h3>Diagrama aplicatiei</h3>
+            <figure typeof="sa:image">
+                <img src="../images/documentatie/doc/Diagrama_aplicatiei.png">
+                <figcaption>Diagrama aplicatiei MVC</figcaption>
+            </figure>
         </section>
-    </section>
+        <section>
+            <section id="teamwork">
+                <h2>Lucru in echipa</h2>
+                <p>Pentru a distribui taskurile si manageria timpul de lucru, am organizat saptamanal intalniri pe
+                    Discord,
+                    unde am discutat lucrul pe saptamana curenta si taskurile pentru urmatoarea saptamana. Am lucrat
+                    impreuna la pagini
+                    si la integrarea lor continua.
+                </p>
+                <p>Am tinut legatura constant, iar atunci când cineva se afla intr-un impas, am incercat cu totii sa
+                    rezolvam problema.</p>
+                <ul>
+                    <li>
+                        <h3>Boghiu Georgiana-Viorica</h3>
+                        <p>
+                            Partea 1: A lucrat la paginile: Index, Contul meu, Adauga reteta.
+
+                        </p>
+                        <p>
+                            Partea 2: A lucrat la: GET = /getFilter , /recipe,  /recipes/user, /recipes/filter, /check_favorites,
+                            POST = /recipes , /login, /register
+                            PUT = /change ,/grant, /restrict, /rankings.
+                            Integrare Front-Back:->lucrul cu localStorage,
+                            ->descarcare clasamente
+                            ->handler stergere/adaugare favorite
+                            -> handler stergere favorite
+                            -> lucrul cu serverul de fisiere si imagini
+                        </p>
+                    </li>
+                    <li>
+                        <h3>Cernat Roxana Monica</h3>
+                        <p>
+                            Partea 1: Index, Afisare reteta, Favorite, mockup interfata.
+                        </p>
+                        <p>
+                            Partea 2: POST /comment addComment,
+                            GET /comment getComments,
+                            DELETE /comment deleteComment,
+                            
+                            GET /favorites getFavorites, 
+                            PUT /favorites/add addFavorite,
+                            PUT /favorites/remove removeFavorite,
+                            
+                            GET /get_user getUser,
+                            
+                            search care se afla in getMostPopular,
+                            
+                            legatura front back pentrubuton admin si functiile,
+                            grant restrict pe pagina de admin.
+                            
+                            
+                            
+                            Descrierea API-ului in swagger si  Ghidul utilizatorului
+                        </p>
+                    </li>
+                    <li>
+                        <h3>Formagiu Michael-Gabriel</h3>
+                        <p>
+                            Partea 1: Index, Retete, Login, Inregistrare.
+                            
+                        </p>
+                        <p>
+                            Partea2:POST /insertFilter,
+                            GET /getFilter,
+                            GET /recipes,
+                            GET /recipes/user?id={user_id},
+                            POST /recipes,
+                            GET /recipe?id={recipe_id},
+                            PUT /recipe?uid={user_id}&rid={recipe_id},
+                            DELETE /recipe?uid={user_id}&rid={recipe_id},
+                            
+                            responsiveness la pagini pe partea de front,
+                            
+                            legatura front-back la contul meu, error handling cu redirectarea catre paginile de eroare dupa raspunsul de la API,
+                            recipe_cards generare html dinamic
+                        </p>
+                    </li>
+                </ul>
+
+            </section>
+            <section typeof="sa:Ajutor" class="main_container">
+                <h2>Resurse externe</h2>
+                <ul>
+                    <li>
+                        <a href="https://trello.com/b/xNxQQMsn/tw%22%3ETrello">Trello</a>  pentru organizarea si distribuirea task-urilor membrilor echipei si monitorizarea progresului.
+                    </li>
+                    <li>
+                        <a href="https://discord.com/%22%3EDiscord">Discord</a> pentru a organiza intalniri si zile de lucru impreuna pentru integrarea proiectului.
+                    </li>
+                    <li>
+                        <a href="https://github.com/georgianaB20/WebTechnologiesProject%22%3EGithub">Github</a> pentru publicarea proiectului.
+                    </li>
+                    <li>
+                        <a href="https://developer.mozilla.org/en-US/%22%3EMDN">devMozilla</a>, 
+                        <a href="https://www.w3schools.com/%22%3Ew3schools">w3schools</a>, 
+                        <a href="https://css-tricks.com/%22%3Ecss-tricks">css-tricks</a> pentru a ne documenta in realizarea proiectului.
+        
+                    </li>
+                    <li>
+                        <a href="https://validator.w3.org/">HTML validator</a>,
+                        <a href="http://csslint.net/%22%3ECSS Lint">CSS validator</a> pentru validarea codului de HTML, respectiv CSS.
+                    
+                    </li>
+                    <li>
+                        <a href="https://github.com/stefanT9/Routing-In-NodeJs">Routing in NodeJs</a> pentru preluarea modelului de routing in nodeJs 
+                        </li>
+                </ul>
+            </section>
 
 
 
