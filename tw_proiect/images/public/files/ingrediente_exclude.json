@@ -1,22 +1,82 @@
 [
     {
+        "name": "oua",
+        "excludes": 10,
+        "includes": 1
+    },
+    {
+        "name": "cartofi",
+        "excludes": 5,
+        "includes": 10
+    },
+    {
+        "name": "carne de pui",
+        "excludes": 4,
+        "includes": 5
+    },
+    {
         "name": "lapte",
-        "excludes": 1,
+        "excludes": 3,
         "includes": 0
     },
     {
-        "name": "oua",
-        "excludes": 1,
+        "name": "ceapa",
+        "excludes": 3,
+        "includes": 0
+    },
+    {
+        "name": "ulei",
+        "excludes": 2,
         "includes": 0
     },
     {
         "name": "rosii",
+        "excludes": 1,
+        "includes": 15
+    },
+    {
+        "name": "sare",
+        "excludes": 1,
+        "includes": 1
+    },
+    {
+        "name": "ciocolata",
+        "excludes": 1,
+        "includes": 0
+    },
+    {
+        "name": "branza",
+        "excludes": 0,
+        "includes": 1
+    },
+    {
+        "name": "carne",
+        "excludes": 0,
+        "includes": 5
+    },
+    {
+        "name": "marar",
         "excludes": 0,
         "includes": 2
     },
     {
-        "name": "cartofi",
+        "name": "leustean",
         "excludes": 0,
         "includes": 1
+    },
+    {
+        "name": "lamaie",
+        "excludes": 0,
+        "includes": 10
+    },
+    {
+        "name": "carne de vita",
+        "excludes": 0,
+        "includes": 0
+    },
+    {
+        "name": "pui",
+        "excludes": 0,
+        "includes": 0
     }
 ]

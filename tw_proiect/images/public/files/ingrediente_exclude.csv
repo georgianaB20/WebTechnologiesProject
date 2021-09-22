@@ -1,5 +1,17 @@
 name,excludes,includes
-"lapte",1,0
-"oua",1,0
-"rosii",0,2
-"cartofi",0,1
+"oua",10,1
+"cartofi",5,10
+"carne de pui",4,5
+"lapte",3,0
+"ceapa",3,0
+"ulei",2,0
+"rosii",1,15
+"sare",1,1
+"ciocolata",1,0
+"branza",0,1
+"carne",0,5
+"marar",0,2
+"leustean",0,1
+"lamaie",0,10
+"carne de vita",0,0
+"pui",0,0
