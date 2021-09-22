@@ -1,61 +1,81 @@
 [
     {
         "name": "rosii",
-        "includes": 3,
+        "includes": 15,
         "excludes": 1
     },
     {
+        "name": "cartofi",
+        "includes": 10,
+        "excludes": 5
+    },
+    {
+        "name": "lamaie",
+        "includes": 10,
+        "excludes": 0
+    },
+    {
         "name": "carne",
+        "includes": 5,
+        "excludes": 0
+    },
+    {
+        "name": "carne de pui",
+        "includes": 5,
+        "excludes": 4
+    },
+    {
+        "name": "marar",
         "includes": 2,
         "excludes": 0
     },
     {
-        "name": "cartofi",
+        "name": "oua",
+        "includes": 1,
+        "excludes": 10
+    },
+    {
+        "name": "branza",
+        "includes": 1,
+        "excludes": 0
+    },
+    {
+        "name": "sare",
+        "includes": 1,
+        "excludes": 1
+    },
+    {
+        "name": "leustean",
         "includes": 1,
         "excludes": 0
     },
     {
         "name": "lapte",
         "includes": 0,
-        "excludes": 2
-    },
-    {
-        "name": "oua",
-        "includes": 0,
         "excludes": 3
-    },
-    {
-        "name": "branza",
-        "includes": 0,
-        "excludes": 0
     },
     {
         "name": "ulei",
         "includes": 0,
-        "excludes": 0
-    },
-    {
-        "name": "rulei",
-        "includes": 0,
-        "excludes": 0
-    },
-    {
-        "name": "sare",
-        "includes": 0,
-        "excludes": 0
-    },
-    {
-        "name": "marar",
-        "includes": 0,
-        "excludes": 0
-    },
-    {
-        "name": "leustean",
-        "includes": 0,
-        "excludes": 0
+        "excludes": 2
     },
     {
         "name": "ciocolata",
+        "includes": 0,
+        "excludes": 1
+    },
+    {
+        "name": "ceapa",
+        "includes": 0,
+        "excludes": 3
+    },
+    {
+        "name": "carne de vita",
+        "includes": 0,
+        "excludes": 0
+    },
+    {
+        "name": "pui",
         "includes": 0,
         "excludes": 0
     }

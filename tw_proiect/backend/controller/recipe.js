@@ -659,7 +659,7 @@ function search(req, res, headers) {
 
 async function insert_update_ingredient(iname, type) {
     iname = iname.toLowerCase().trim()
-    let ingredient = await Ingredient.findOne({name: iname})
+    let ingredient = await Ingredient.findOne({ name: iname })
     if (ingredient === null) {
         if (type === "include")
             ingredient = new Ingredient({ name: iname, includes: 1, excludes: 0 })

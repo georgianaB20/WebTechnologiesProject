@@ -1,43 +1,5 @@
 [
     {
-
-        "titlu": "Tiramisu",
-        "ingrediente": [
-            "1 ceapa",
-            "smth",
-            "200 gr carne tocata",
-            "2 catei de usturoi netocate"
-        ],
-        "descriere": "jhfbahlbfbgfbhagfbh",
-        "popularitate": 1
-    },
-    {
-        "titlu": "Fursecuri americane",
-        "ingrediente": [
-            "250 g unt gras (82% grăsime)",
-            "275 g zahăr brun",
-            "195 g zahăr alb",
-            "3 ouă mari",
-            "330 g făină",
-            "4 g sare",
-            "6 g bicarbonat de sodiu",
-            "15 ml esență de vanilie",
-            "300 g chips-uri de ciocolată"
-        ],
-        "descriere": "Am pregătit pentru tine o rețetă din care rezultă între 50 și 60 de astfel de fursecuri. Iată care sunt pașii:\r\n\r\nÎntr-un bol, amestecă făină, sarea și bicarbonatul de sodiu bine, cu ajutorul unei furculițe, sfărâmând orice cocoloașe.\r\nÎntr-un bol separat, adaugă zahărul alb, zahărul brun și untul. Untul trebuie să fie moale, la temperatura camerei sau chiar mai cald. Amestecă bine totul, până se formează o pastă uniformă de culoarea caramelului.\r\nAdaugă, pe rând, ouăle în compoziția de unt și zahăr. Amestecă până se omogenizează ingredientele.\r\nAdaugă esența de vanilie și continuă să amesteci.\r\nÎn crema de unt, zahăr și ouă începe să adaugi treptat făina, amestecând vertiginos. Nu o adăuga pe toată odată, pentru că vor rămâne cocoloașe în aluat.\r\nCând ai un aluat moale, adaugă și chips-urile de ciocolată. Încorporează-le bine, cu ajutorul unei spatule sau a unei furculițe.\r\nAluatul format se lasă la frigider. Ideal este să fie lăsat aproximativ două ore, pentru o textură desăvârșită după coacere, dar dacă te grăbești, îl poți lăsa și jumătate de oră.\r\nTapetează o tavă lată cu hârtie de copt. Pe ea adaugă biluțe de mărime medie din aluat, păstrând o distanță de câțiva centimetri între ele, întrucât ele se vor întinde la coacere.\r\nSe coc la o temperatură de 180 de grade Celsius, timp de 10-12 minute. Se scot de la cuptor când devin aurii pe margine. Fursecurile trebuie să fie încă moi, dar nu te speria – ele se vor întări odată ce le pui pe o farfurie cu ajutorul unei spatule, ajungând să aibă acea textură irezistibilă: moi la interior și fragede pe margini.",
-        "popularitate": 1
-    },
-    {
-        "titlu": "Friptura",
-        "ingrediente": [
-            "rosii",
-            "paste",
-            "200 gr carne tocata"
-        ],
-        "descriere": "wefrewfewfwefw",
-        "popularitate": 0
-    },
-    {
         "titlu": "Supa simpla cu rosii",
         "ingrediente": [
             " 1,5 kilograme de rosii coapte (preferabil prunisoare)",
